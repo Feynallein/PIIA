@@ -17,6 +17,7 @@ public class Main extends Application {
         a.setPlante(p);
         a.setMeteo(m);
         p.setMeteo(m);
+        p.setAgenda(a);
 
         // 16:9
         Scene scene = new Scene(a, WIDTH, HEIGHT);
