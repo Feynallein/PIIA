@@ -45,8 +45,8 @@ public class Plante extends BorderPane {
     private void previewPlante(){
         FlowPane layout = new FlowPane();
         plante = new ImageView(("example.jpg"));
-        plante.setFitHeight(200);
-        plante.setFitWidth(150);
+        plante.setFitHeight(500);
+        plante.setFitWidth(400);
         layout.getChildren().add(plante);
         setCenter(layout);
 
