@@ -1,7 +1,6 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -27,17 +26,12 @@ public class Main extends Application {
     }
 
     private VBox createLeftMenu(){
-        Button b1 = new Button("", new ImageView("/plante.jpg"));
-        b1.setPrefHeight(HEIGHT/3.);
-        b1.setMaxWidth(50);
-
-        Button b2 = new Button("", new ImageView("/plante.jpg"));
-        b2.setPrefHeight(HEIGHT/3.);
-        b2.setMaxWidth(50.);
-
-        Button b3 = new Button("", new ImageView("/plante.jpg"));
-        b3.setPrefHeight(HEIGHT/3.);
-        b3.setMaxWidth(50);
+        Button b1 = new Button("agenda");
+        b1.setPrefSize(225, 50);
+        Button b2 = new Button("plantedex");
+        b2.setPrefSize(225, 50);
+        Button b3 = new Button("meteo");
+        b3.setPrefSize(225, 50);
         return new VBox(b1, b2, b3);
     }
 
