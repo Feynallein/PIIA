@@ -1,3 +1,5 @@
+package PIIA.Plante;
+
 import javafx.animation.FadeTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.skin.ButtonSkin;

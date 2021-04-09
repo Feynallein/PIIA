@@ -1,4 +1,7 @@
-import javafx.scene.control.Button;
+package PIIA;
+
+import PIIA.Agenda.Agenda;
+import PIIA.Plante.Plante;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 

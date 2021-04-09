@@ -1,4 +1,8 @@
-import javafx.event.EventHandler;
+package PIIA.Plante;
+
+import PIIA.Agenda.Agenda;
+import PIIA.Main;
+import PIIA.Meteo;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,8 +12,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Plante extends BorderPane {
@@ -85,7 +87,7 @@ public class Plante extends BorderPane {
         }
 
         VBox ajouter = new VBox();
-        Button b = new Button("Ajouter Plante");
+        Button b = new Button("Ajouter PIIA.Plantes.Plante");
         b.setSkin(new MyButtonSkin(b));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth())/3, Main.HEIGHT/10f);
         ajouter.getChildren().add(b);

@@ -1,3 +1,7 @@
+package PIIA;
+
+import PIIA.Agenda.Agenda;
+import PIIA.Plante.Plante;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,12 +21,9 @@ public class Main extends Application {
         a.setPlante(p);
         a.setMeteo(m);
         p.setMeteo(m);
-        p.setAgenda(a);
-        m.setAgenda(a);
-        m.setPlante(p);
 
         // 16:9
-        Scene scene = new Scene(p, WIDTH, HEIGHT);
+        Scene scene = new Scene(a, WIDTH, HEIGHT);
         stage.setTitle("Agenda Horticulture");
         stage.setScene(scene);
         stage.show();
