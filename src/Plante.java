@@ -94,7 +94,6 @@ public class Plante extends BorderPane {
         gb.add(right,0,1);
         gb.add(ajouter,0,2);
         setRight(gb);
-        //setRight(right);
     }
 
     private void setButtonActions(){
