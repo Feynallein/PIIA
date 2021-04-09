@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.FileInputStream;
@@ -38,18 +39,21 @@ public class Plante extends BorderPane {
 
         listPlante();
         previewPlante();
+        setAgenda(agenda);
     }
 
 
-
     private void previewPlante(){
+        GridPane gb = new GridPane();
+        gb.setHgap(50);
+        gb.setVgap(50);
         FlowPane layout = new FlowPane();
         plante = new ImageView(("example.jpg"));
         plante.setFitHeight(500);
         plante.setFitWidth(400);
         layout.getChildren().add(plante);
-        setCenter(layout);
-
+        gb.add(layout, 2,2);
+        setCenter(gb);
 
         System.out.println(plantes);
     }
@@ -60,6 +64,9 @@ public class Plante extends BorderPane {
     }
 
     private void listPlante(){
+        GridPane gb = new GridPane();
+        gb.setHgap(50);
+        gb.setVgap(50);
         VBox names = new VBox();
         for(int i = 0; i<7;i++){
             int index = i;
@@ -76,7 +83,18 @@ public class Plante extends BorderPane {
         for(VBox vb : noms){
             right.getChildren().add(vb);
         }
-        setRight(right);
+
+        VBox ajouter = new VBox();
+        Button b = new Button("Ajouter Plante");
+        b.setSkin(new MyButtonSkin(b));
+        b.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth())/3, Main.HEIGHT/10f);
+        ajouter.getChildren().add(b);
+
+
+        gb.add(right,0,1);
+        gb.add(ajouter,0,2);
+        setRight(gb);
+        //setRight(right);
     }
 
     private void setButtonActions(){

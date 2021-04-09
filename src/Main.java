@@ -18,9 +18,11 @@ public class Main extends Application {
         a.setMeteo(m);
         p.setMeteo(m);
         p.setAgenda(a);
+        m.setAgenda(a);
+        m.setPlante(p);
 
         // 16:9
-        Scene scene = new Scene(a, WIDTH, HEIGHT);
+        Scene scene = new Scene(p, WIDTH, HEIGHT);
         stage.setTitle("Agenda Horticulture");
         stage.setScene(scene);
         stage.show();
