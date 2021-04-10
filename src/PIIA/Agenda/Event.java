@@ -5,22 +5,22 @@ import javafx.scene.paint.Color;
 import java.time.LocalDate;
 
 public class Event {
-    private final Color color;
     private final LocalDate date;
     private final int startingTime;
     private final int endingTime;
     private final String label;
+    private Filter filter;
 
-    public Event(Color color, LocalDate date, int startingTime, int endingTime, String label) {
-        this.color = color;
+    public Event(Filter filter, LocalDate date, int startingTime, int endingTime, String label) {
+        this.filter = filter;
         this.date = date;
         this.startingTime = startingTime;
         this.endingTime = endingTime;
         this.label = label;
     }
 
-    public Event(Color color, LocalDate date, int startingTime, String label) {
-        this.color = color;
+    public Event(Filter filter, LocalDate date, int startingTime, String label) {
+        this.filter = filter;
         this.date = date;
         this.startingTime = startingTime;
         this.endingTime = startingTime + 1;
@@ -28,7 +28,7 @@ public class Event {
     }
 
     public Color getColor() {
-        return color;
+        return filter.getColor();
     }
 
     public LocalDate getDay() {

@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Agenda a = new Agenda(createLeftMenu());
+        Agenda a = new Agenda(createLeftMenu(), stage);
         Plante p = new Plante(createLeftMenu(), a);
         Meteo m = new Meteo(createLeftMenu(), p, a);
 
