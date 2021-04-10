@@ -87,7 +87,7 @@ public class Plante extends BorderPane {
         }
 
         VBox ajouter = new VBox();
-        Button b = new Button("Ajouter PIIA.Plantes.Plante");
+        Button b = new Button("Ajouter Plante");
         b.setSkin(new MyButtonSkin(b));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth())/3, Main.HEIGHT/10f);
         ajouter.getChildren().add(b);
