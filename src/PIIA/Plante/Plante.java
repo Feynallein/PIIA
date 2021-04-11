@@ -13,6 +13,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -62,7 +65,14 @@ public class Plante extends BorderPane {
         plante.setFitHeight(500);
         plante.setFitWidth(400);
         layout.getChildren().add(plante);
-        gb.add(layout, 2,2);
+
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
+        Text titre = new Text("Liste des Plantes :" );
+        titre.setUnderline(true);
+        titre.setFont(font);
+
+        gb.add(titre,1,0);
+        gb.add(layout, 1,2);
         setCenter(gb);
 
         System.out.println(plantes);
@@ -110,6 +120,7 @@ public class Plante extends BorderPane {
         b.setSkin(new MyButtonSkin(b));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - ajouter.getPrefWidth())/3, Main.HEIGHT/10f);
         ajouter.getChildren().add(b);
+
 
 
         gb.add(scroll,0,1);
