@@ -3,8 +3,11 @@ package PIIA.Plante;
 import PIIA.Agenda.Agenda;
 import PIIA.Main;
 import PIIA.Meteo;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -88,6 +91,7 @@ public class Plante extends BorderPane {
         gb.setHgap(50);
         gb.setVgap(50);
 
+        //Création de la liste
         for(int i = 0; i<7;i++){
             int index = i;
             String text = "No." + (i+1) +" " + plantes.get(i);
@@ -103,8 +107,10 @@ public class Plante extends BorderPane {
         for(VBox vb : noms){
             plantList.getChildren().add(vb);
         }
+        //Ajout de la liste dans un ScrollPane
         scroll.setContent(plantList);
 
+        //Bouton pour ajouter une nouvelle plante
         VBox ajouter = new VBox();
         Button b = new Button("Ajouter Plante");
         b.setOnMouseClicked(mouseEvent -> {
@@ -121,8 +127,25 @@ public class Plante extends BorderPane {
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - ajouter.getPrefWidth())/3, Main.HEIGHT/10f);
         ajouter.getChildren().add(b);
 
+        //Bouton de tri de la liste
+        ObservableList<String> filtres =
+                FXCollections.observableArrayList(
+                        "No.",
+                        "Alphabetique",
+                        "Date d'ajout"
+                );
+        final ComboBox comboBox = new ComboBox(filtres);
+        comboBox.getItems().addAll();
+        comboBox.getSelectionModel().select(0); //La liste est triée par numéro par défaut
 
+        Text filtresT = new Text("Trier par : ");
+        GridPane subGb = new GridPane();
+        subGb.setHgap(20);
+        subGb.setVgap(20);
+        subGb.add(filtresT,4,0);
+        subGb.add(comboBox,5,0);
 
+        gb.add(subGb,0,0);
         gb.add(scroll,0,1);
         gb.add(ajouter,0,2);
 
