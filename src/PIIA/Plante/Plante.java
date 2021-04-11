@@ -27,9 +27,8 @@ import java.util.ArrayList;
 public class Plante extends BorderPane {
     private final VBox left;
     private final VBox plantList = new VBox();
-    private ImageView plante;
-    private ArrayList<Image> preview = new ArrayList<>();
-    private ArrayList<String> plantes = new ArrayList<>();
+    private ImageView imagePlante;
+    private ArrayList<FichePlante> plantes = new ArrayList<>();
     private final ArrayList<VBox> noms = new ArrayList<>();
     private ScrollPane scroll = new ScrollPane();
 
@@ -43,13 +42,13 @@ public class Plante extends BorderPane {
         setButtonActions();
 
         //Remplissage de la liste
-        addImagePlante("abelia.jpg");
-        addImagePlante("example.jpg");
-        addImagePlante("lychnis.jpg");
-        addImagePlante("Macchia.jpg");
-        addImagePlante("plante.jpg");
-        addImagePlante("sedum.jpg");
-        addImagePlante("silene.jpg");
+        addPlante(new FichePlante("Abelia","abelia.jpg" ,this));
+        addPlante(new FichePlante("Example","example.jpg" ,this));
+        addPlante(new FichePlante("Lychnis","lychnis.jpg",this ));
+        addPlante(new FichePlante("Macchia","Macchia.jpg" ,this));
+        addPlante(new FichePlante("Plante","plante.jpg" ,this));
+        addPlante(new FichePlante("Sedum","sedum.jpg",this ));
+        addPlante(new FichePlante("Silene","silene.jpg",this ));
 
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setPrefHeight((Main.HEIGHT/10f) * 7);
@@ -64,10 +63,10 @@ public class Plante extends BorderPane {
         gb.setHgap(50);
         gb.setVgap(50);
         FlowPane layout = new FlowPane();
-        plante = new ImageView(("example.jpg"));
-        plante.setFitHeight(500);
-        plante.setFitWidth(400);
-        layout.getChildren().add(plante);
+        imagePlante = new ImageView(("example.jpg"));
+        imagePlante.setFitHeight(500);
+        imagePlante.setFitWidth(400);
+        layout.getChildren().add(imagePlante);
 
         Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         Text titre = new Text("Liste des Plantes :" );
@@ -81,9 +80,10 @@ public class Plante extends BorderPane {
         System.out.println(plantes);
     }
 
-    private void addImagePlante(String path){
-        preview.add(new Image(path));
-        plantes.add(path);
+    private void addPlante(FichePlante fp){
+        plantes.add(fp);
+        //preview.add(new Image(path));
+        //plantes.add(path);
     }
 
     private void listPlante(){
@@ -94,10 +94,11 @@ public class Plante extends BorderPane {
         //Création de la liste
         for(int i = 0; i<7;i++){
             int index = i;
-            String text = "No." + (i+1) +" " + plantes.get(i);
+            String text = "No." + (i+1) +" " + plantes.get(i).getNom();
             VBox box = new VBox();
             Button b = new Button(text);
-            b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> plante.setImage(preview.get(index)));
+            b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> imagePlante.setImage(plantes.get(index).getImage()));
+            b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(plantes.get(index)));
             b.setSkin(new MyButtonSkin(b));
             b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth())/3, Main.HEIGHT/10f);
             b.setText(text);
@@ -152,13 +153,15 @@ public class Plante extends BorderPane {
         setRight(gb);
     }
 
-    public void addPlante(String nomPlante){
-        addImagePlante("sedum.jpg");
+    public void createPlante(String nomPlante){
+        //addPlante("sedum.jpg");
+        addPlante(new FichePlante(nomPlante,"sedum.jpg",this));
         int index = noms.size();
         String text = "No." + (index+1) +" " + nomPlante;
         VBox box = new VBox();
         Button b = new Button(text);
-        b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> plante.setImage(preview.get(index)));
+        b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> imagePlante.setImage(plantes.get(index).getImage()));
+        b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(plantes.get(index)));
         b.setSkin(new MyButtonSkin(b));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth())/3, Main.HEIGHT/10f);
         b.setText(text);
@@ -176,7 +179,6 @@ public class Plante extends BorderPane {
     }
 
 
-
     public void setMeteo(Meteo meteo) {
         this.meteo = meteo;
     }
@@ -185,4 +187,11 @@ public class Plante extends BorderPane {
         this.agenda = agenda;
     }
 
+    public ArrayList<VBox> getNoms() {
+        return noms;
+    }
+
+    public ArrayList<FichePlante> getPlantes() {
+        return plantes;
+    }
 }
