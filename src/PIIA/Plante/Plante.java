@@ -42,13 +42,13 @@ public class Plante extends BorderPane {
         setButtonActions();
 
         //Remplissage de la liste
-        /*addPlante(new FichePlante("Abelia","abelia.jpg" ,this));
-        addPlante(new FichePlante("Example","example.jpg" ,this));
-        addPlante(new FichePlante("Lychnis","lychnis.jpg",this ));
-        addPlante(new FichePlante("Macchia","Macchia.jpg" ,this));
-        addPlante(new FichePlante("Plante","plante.jpg" ,this));
-        addPlante(new FichePlante("Sedum","sedum.jpg",this ));
-        addPlante(new FichePlante("Silene","silene.jpg",this ));*/
+        /*addPlante(new FichePlante("Abelia","abelia.jpg" ,left));
+        addPlante(new FichePlante("Example","example.jpg" ,left));
+        addPlante(new FichePlante("Lychnis","lychnis.jpg",left ));
+        addPlante(new FichePlante("Macchia","Macchia.jpg" ,left));
+        addPlante(new FichePlante("Plante","plante.jpg" ,left));
+        addPlante(new FichePlante("Sedum","sedum.jpg",left ));
+        addPlante(new FichePlante("Silene","silene.jpg",left ));*/
 
         addPlante(new FichePlante("Abelia","abelia.jpg" ));
         addPlante(new FichePlante("Example","example.jpg" ));
