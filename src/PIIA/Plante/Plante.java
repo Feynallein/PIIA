@@ -26,10 +26,10 @@ import java.util.ArrayList;
 
 public class Plante extends BorderPane {
     private final VBox left;
-    private final VBox plantList = new VBox();
+    private VBox plantList = new VBox();
     private ImageView imagePlante;
     private ArrayList<FichePlante> plantes = new ArrayList<>();
-    private final ArrayList<VBox> noms = new ArrayList<>();
+    private static ArrayList<VBox> noms = new ArrayList<>();
     private ScrollPane scroll = new ScrollPane();
 
     private Agenda agenda;
@@ -42,19 +42,28 @@ public class Plante extends BorderPane {
         setButtonActions();
 
         //Remplissage de la liste
-        addPlante(new FichePlante("Abelia","abelia.jpg" ,this));
+        /*addPlante(new FichePlante("Abelia","abelia.jpg" ,this));
         addPlante(new FichePlante("Example","example.jpg" ,this));
         addPlante(new FichePlante("Lychnis","lychnis.jpg",this ));
         addPlante(new FichePlante("Macchia","Macchia.jpg" ,this));
         addPlante(new FichePlante("Plante","plante.jpg" ,this));
         addPlante(new FichePlante("Sedum","sedum.jpg",this ));
-        addPlante(new FichePlante("Silene","silene.jpg",this ));
+        addPlante(new FichePlante("Silene","silene.jpg",this ));*/
+
+        addPlante(new FichePlante("Abelia","abelia.jpg" ));
+        addPlante(new FichePlante("Example","example.jpg" ));
+        addPlante(new FichePlante("Lychnis","lychnis.jpg" ));
+        addPlante(new FichePlante("Macchia","Macchia.jpg" ));
+        addPlante(new FichePlante("Plante","plante.jpg" ));
+        addPlante(new FichePlante("Sedum","sedum.jpg" ));
+        addPlante(new FichePlante("Silene","silene.jpg" ));
 
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setPrefHeight((Main.HEIGHT/10f) * 7);
         listPlante();
         previewPlante();
         setAgenda(agenda);
+        System.out.println(noms.size());
     }
 
 
@@ -155,7 +164,7 @@ public class Plante extends BorderPane {
 
     public void createPlante(String nomPlante){
         //addPlante("sedum.jpg");
-        addPlante(new FichePlante(nomPlante,"sedum.jpg",this));
+        addPlante(new FichePlante(nomPlante,"sedum.jpg"));
         int index = noms.size();
         String text = "No." + (index+1) +" " + nomPlante;
         VBox box = new VBox();
@@ -187,7 +196,7 @@ public class Plante extends BorderPane {
         this.agenda = agenda;
     }
 
-    public ArrayList<VBox> getNoms() {
+    public static ArrayList<VBox> getNoms() {
         return noms;
     }
 
