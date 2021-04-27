@@ -20,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -74,9 +75,16 @@ public class FichePlante extends BorderPane {
         Button ajouter = new Button("Ajouter photo");
         add.getChildren().add(ajouter);
         ajouter.setOnAction(actionEvent -> {
-            File f = fileChooser.showOpenDialog(ajouter.getScene().getWindow());
+            //On ne peut selectionner que des images
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter( "Image", "*.jpg", "*.png", "*.jpeg");
+            FileChooser fc = new FileChooser();
+            fc.getExtensionFilters().add(filter);
+            File f = fc.showOpenDialog(ajouter.getScene().getWindow());
+
+            //Ajout dans les images de la plante associée
             if (f != null) {
-                addPhoto(f.getPath());
+                String imageUrl = "file:///".concat(f.getPath());
+                addPhoto(imageUrl);
             }
         });
 
