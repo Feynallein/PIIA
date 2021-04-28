@@ -62,7 +62,8 @@ public class FichePlante extends BorderPane {
         imagePlante = new ImageView(this.image);
         imagePlante.setFitHeight(500);
         imagePlante.setFitWidth(400);
-        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> System.out.println("yea"));
+
+        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> System.out.println("yea"));       //à modifier après pour afficher l'image en overlay
 
 
         layout.getChildren().add(imagePlante);
@@ -82,7 +83,7 @@ public class FichePlante extends BorderPane {
             FileChooser fc = new FileChooser();
             fc.getExtensionFilters().add(filter);
 
-            File f = fc.showOpenDialog(ajouter.getScene().getWindow());             //à modifier après pour afficher l'image en overlay
+            File f = fc.showOpenDialog(ajouter.getScene().getWindow());
 
 
             //Ajout dans les images de la plante associée
