@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -26,7 +28,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class FichePlante extends BorderPane {
-    private Plante plante;
     private String nom;
     private Image image;
     private HBox plantList = new HBox();
@@ -48,10 +49,22 @@ public class FichePlante extends BorderPane {
     public FichePlante(String nom,String photo){
         this.nom = nom;
         this.image = new Image(photo);
+        images.add(image);
         listPlante();
         previewPlante();
+        infoBox();
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setPrefHeight((Main.HEIGHT/10f));
+    }
+
+    private void infoBox(){
+        GridPane gb = new GridPane();
+        Rectangle rect = new Rectangle(800,500);
+        gb.setHgap(250);
+        rect.setFill(Color.TRANSPARENT);
+        rect.setStroke(Color.BLACK);
+        gb.add(rect,0,0);
+        setRight(gb);
     }
 
     private void previewPlante(){
@@ -63,7 +76,7 @@ public class FichePlante extends BorderPane {
         imagePlante.setFitHeight(500);
         imagePlante.setFitWidth(400);
 
-        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> System.out.println("yea"));       //à modifier après pour afficher l'image en overlay
+        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> System.out.println(images.size()));       //à modifier après pour afficher l'image en overlay
 
 
         layout.getChildren().add(imagePlante);
@@ -107,6 +120,7 @@ public class FichePlante extends BorderPane {
 
     private void listPlante(){
         for(VBox vb : Plante.getNoms()){
+
             plantList.getChildren().add(vb);
         }
         scroll.setContent(plantList);
