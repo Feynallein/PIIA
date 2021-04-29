@@ -60,10 +60,13 @@ public class FichePlante extends BorderPane {
     private void infoBox(){
         GridPane gb = new GridPane();
         Rectangle rect = new Rectangle(800,500);
-        gb.setHgap(250);
+        Rectangle rect2 = new Rectangle(rect.getX(),rect.getY(),800,rect.getHeight()/10);
         rect.setFill(Color.TRANSPARENT);
         rect.setStroke(Color.BLACK);
-        gb.add(rect,0,0);
+        rect2.setFill(Color.TRANSPARENT);
+        rect2.setStroke(Color.BLACK);
+        gb.add(rect2,0,0);
+        gb.add(rect,0,1);
         setRight(gb);
     }
 
