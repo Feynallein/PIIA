@@ -1,11 +1,7 @@
 package PIIA.Plante;
 
 import PIIA.Main;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,12 +14,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -78,9 +70,8 @@ public class FichePlante extends BorderPane {
         imagePlante = new ImageView(this.image);
         imagePlante.setFitHeight(500);
         imagePlante.setFitWidth(400);
-
-        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> System.out.println(images.size()));       //à modifier après pour afficher l'image en overlay
-
+        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(0), Insets.EMPTY))));
+      //à modifier après pour afficher l'image en overlay
 
         layout.getChildren().add(imagePlante);
 
