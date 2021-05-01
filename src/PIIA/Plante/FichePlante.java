@@ -1,7 +1,9 @@
 package PIIA.Plante;
 
 import PIIA.Main;
+import PIIA.Overlay;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,17 +18,24 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 
+import java.beans.EventHandler;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.EventListener;
 
-public class FichePlante extends BorderPane {
+public class FichePlante extends StackPane {
     private String nom;
     private Image image;
     private HBox plantList = new HBox();
     private ArrayList<Image> images = new ArrayList<>();
+    private int indexCurrent = 0;
     private ImageView imagePlante;
     private ScrollPane scroll = new ScrollPane();
     private final FileChooser fileChooser = new FileChooser();
+
+
+    private BorderPane fenetre = new BorderPane();
+    private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
 
 
     /*public FichePlante(String nom,String photo,Plante plante){
@@ -47,6 +56,10 @@ public class FichePlante extends BorderPane {
         infoBox();
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setPrefHeight((Main.HEIGHT/10f));
+
+        this.getChildren().add(fenetre);
+
+
     }
 
     private void infoBox(){
@@ -59,7 +72,80 @@ public class FichePlante extends BorderPane {
         rect2.setStroke(Color.BLACK);
         gb.add(rect2,0,0);
         gb.add(rect,0,1);
-        setRight(gb);
+        fenetre.setRight(gb);
+    }
+
+    private void previewPhotos(){
+        this.getChildren().add(overlay);
+
+        BorderPane bp = new BorderPane();
+        GridPane gb = new GridPane();
+        gb.setHgap(50);
+        gb.setVgap(50);
+        FlowPane layout = new FlowPane();
+        imagePlante = new ImageView((images.get(indexCurrent)));
+        imagePlante.setFitHeight(500);
+        imagePlante.setPreserveRatio(true);
+        layout.getChildren().add(imagePlante);
+
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 12);
+        Text text = new Text(indexCurrent + " / " + (images.size()-1));
+        text.setFont(font);
+        text.setFill(Color.WHITE);
+
+        Button flecheG = new Button("<");
+        flecheG.setOnMouseClicked(mouseEvent -> {
+            if( indexCurrent - 1  < 0) {
+                imagePlante.setImage(images.get(images.size() - 1));
+                indexCurrent = images.size() - 1;
+            }
+            else{
+                imagePlante.setImage(images.get(indexCurrent-1));
+                indexCurrent -= 1;
+            }
+        });
+
+        BorderPane droite = new BorderPane();
+        Button flecheD = new Button(">");
+        flecheD.setOnMouseClicked(mouseEvent -> {
+            if( indexCurrent + 1  > images.size() -1) {
+                imagePlante.setImage(images.get(0));
+                indexCurrent = 0;
+            }
+            else{
+                imagePlante.setImage(images.get(indexCurrent+1));
+                indexCurrent += 1;
+            }
+        });
+
+
+        Button close = new Button("X");
+        close.setOnMouseClicked(mouseEvent -> {
+            this.getChildren().remove(bp);
+            this.getChildren().remove(overlay);
+        });
+        droite.setTop(close);
+        droite.setRight(flecheD);
+        droite.setAlignment(flecheD, Pos.CENTER);
+
+
+
+
+        gb.add(layout, 8,3);
+        gb.add(text,9,4);
+
+        bp.setCenter(gb);
+        bp.setAlignment(gb, Pos.CENTER);
+
+        bp.setLeft(flecheG);
+        bp.setAlignment(flecheG, Pos.CENTER);
+
+        bp.setRight(droite);
+        bp.setAlignment(flecheD, Pos.CENTER);
+
+        //gb.add(layout, 10,3);
+        //gb.add(left,5,3);
+        this.getChildren().add(bp);
     }
 
     private void previewPlante(){
@@ -70,12 +156,12 @@ public class FichePlante extends BorderPane {
         imagePlante = new ImageView(this.image);
         imagePlante.setFitHeight(500);
         imagePlante.setFitWidth(400);
-        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(0), Insets.EMPTY))));
+        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->  previewPhotos());
       //à modifier après pour afficher l'image en overlay
 
         layout.getChildren().add(imagePlante);
 
-        javafx.scene.text.Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         Text titre = new Text(this.nom);
         titre.setUnderline(true);
         titre.setFont(font);
@@ -103,7 +189,7 @@ public class FichePlante extends BorderPane {
         gb.add(titre,1,0);
         gb.add(layout, 1,2);
         gb.add(ajouter,1,3);
-        setCenter(gb);
+        fenetre.setCenter(gb);
 
     }
 
@@ -118,7 +204,7 @@ public class FichePlante extends BorderPane {
             plantList.getChildren().add(vb);
         }
         scroll.setContent(plantList);
-        setTop(scroll);
+        fenetre.setTop(scroll);
     }
 
     public String getNom() {
