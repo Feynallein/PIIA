@@ -4,6 +4,7 @@ import PIIA.Main;
 import PIIA.Overlay;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,10 +19,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 
-import java.beans.EventHandler;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.EventListener;
 
 public class FichePlante extends StackPane {
     private String nom;
@@ -36,22 +35,41 @@ public class FichePlante extends StackPane {
     private BorderPane fenetre = new BorderPane();
     private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
     Text text = new Text();
+    private Plante plante;
 
 
-
-    public FichePlante(String nom,String photo){
+    public FichePlante(String nom,String photo,Plante plante){
+        this.plante = plante;
         this.nom = nom;
         this.image = new Image(photo);
         images.add(image);
         listPlante();
         previewPlante();
         infoBox();
+        bottom();
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.setPrefHeight((Main.HEIGHT/10f));
+
+        fenetre.setPadding(new Insets(10, 10, 0, 10));
+
+        this.getChildren().add(fenetre);
+
+    }
+
+    /*public FichePlante(String nom,String photo){
+        this.nom = nom;
+        this.image = new Image(photo);
+        images.add(image);
+        listPlante();
+        previewPlante();
+        infoBox();
+        bottom();
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setPrefHeight((Main.HEIGHT/10f));
 
         this.getChildren().add(fenetre);
 
-    }
+    }*/
 
     private void infoBox(){
         GridPane gb = new GridPane();
@@ -66,14 +84,30 @@ public class FichePlante extends StackPane {
         fenetre.setRight(gb);
     }
 
+    private void bottom(){
+        BorderPane bp = new BorderPane();
+        bp.setPadding(new Insets(50, 100, 50, 50));
+        //Bouton pour retourner a la liste des plantes
+        ImageView back = new ImageView("back.png");
+        back.setFitHeight(35);
+        back.setFitWidth(50);
+        back.setOnMouseClicked(mouseEvent -> getScene().setRoot(plante));
+        bp.setLeft(back);
+
+        //Bouton pour planifier
+        ImageView plan = new ImageView("plan.png");
+        plan.setFitHeight(50);
+        plan.setFitWidth(200);
+        plan.setOnMouseClicked(mouseEvent -> System.out.println("event")); /** à modifier */
+        bp.setCenter(plan);
+        fenetre.setBottom(bp);
+    }
+
     private void previewPhotos(){
         this.getChildren().add(overlay);
 
         BorderPane bp = new BorderPane();
         GridPane gb = new GridPane();
-        gb.setHgap(100);
-        gb.setPadding(new Insets(10, 50, 10, 10)); //margins around the whole grid
-
         gb.setHgap(50);
         gb.setVgap(50);
         FlowPane layout = new FlowPane();
@@ -88,7 +122,6 @@ public class FichePlante extends StackPane {
         text.setFont(font);
         text.setFill(Color.WHITE);
 
-        //Button flecheG = new Button("<");
         ImageView flecheG = new ImageView("flecheG.png");
         flecheG.setFitHeight(80);
         flecheG.setFitWidth(50);
@@ -161,7 +194,10 @@ public class FichePlante extends StackPane {
         imagePlante.setFitHeight(500);
         imagePlante.setFitWidth(400);
         imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->  previewPhotos());
-      //à modifier après pour afficher l'image en overlay
+
+        imagePlante.setOnMouseEntered(mouseEvent ->  setCursor(Cursor.HAND));
+        imagePlante.setOnMouseExited(mouseEvent ->  setCursor(Cursor.DEFAULT));
+
 
         layout.getChildren().add(imagePlante);
 
@@ -203,10 +239,11 @@ public class FichePlante extends StackPane {
 
 
     private void listPlante(){
-        for(VBox vb : Plante.getNoms()){
+        for(VBox vb : plante.getNoms()){
 
             plantList.getChildren().add(vb);
         }
+        System.out.println("size " +plante.getNoms().size());
         scroll.setContent(plantList);
         fenetre.setTop(scroll);
     }
