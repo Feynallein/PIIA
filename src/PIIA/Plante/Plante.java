@@ -5,6 +5,7 @@ import PIIA.Main;
 import PIIA.Meteo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -63,6 +64,8 @@ public class Plante extends BorderPane {
         listPlante();
         previewPlante();
         setAgenda(agenda);
+
+        setPadding(new Insets(5, 10, 10, 0));
         System.out.println(noms.size());
     }
 
