@@ -28,25 +28,15 @@ public class FichePlante extends StackPane {
     private Image image;
     private HBox plantList = new HBox();
     private ArrayList<Image> images = new ArrayList<>();
-    private int indexCurrent = 0;
+    private int indexCurrent = 0; //L'index de l'image choisis comme photo principale
     private ImageView imagePlante;
     private ScrollPane scroll = new ScrollPane();
-    private final FileChooser fileChooser = new FileChooser();
 
 
     private BorderPane fenetre = new BorderPane();
     private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
 
 
-    /*public FichePlante(String nom,String photo,Plante plante){
-        this.nom = nom;
-        this.plante = plante;
-        this.image = new Image(photo);
-        listPlante();
-        System.out.println(plante.getNoms());
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setPrefHeight((Main.HEIGHT/10f));
-    }*/
     public FichePlante(String nom,String photo){
         this.nom = nom;
         this.image = new Image(photo);
@@ -58,7 +48,6 @@ public class FichePlante extends StackPane {
         scroll.setPrefHeight((Main.HEIGHT/10f));
 
         this.getChildren().add(fenetre);
-
 
     }
 
@@ -95,7 +84,7 @@ public class FichePlante extends StackPane {
 
         Button flecheG = new Button("<");
         flecheG.setOnMouseClicked(mouseEvent -> {
-            if( indexCurrent - 1  < 0) {
+            if( indexCurrent == 0) {
                 imagePlante.setImage(images.get(images.size() - 1));
                 indexCurrent = images.size() - 1;
             }
@@ -108,7 +97,7 @@ public class FichePlante extends StackPane {
         BorderPane droite = new BorderPane();
         Button flecheD = new Button(">");
         flecheD.setOnMouseClicked(mouseEvent -> {
-            if( indexCurrent + 1  > images.size() -1) {
+            if( indexCurrent == images.size() -1) {
                 imagePlante.setImage(images.get(0));
                 indexCurrent = 0;
             }
@@ -132,7 +121,7 @@ public class FichePlante extends StackPane {
 
 
         gb.add(layout, 8,3);
-        gb.add(text,9,4);
+        gb.add(text,8,4);
 
         bp.setCenter(gb);
         bp.setAlignment(gb, Pos.CENTER);
@@ -143,8 +132,7 @@ public class FichePlante extends StackPane {
         bp.setRight(droite);
         bp.setAlignment(flecheD, Pos.CENTER);
 
-        //gb.add(layout, 10,3);
-        //gb.add(left,5,3);
+
         this.getChildren().add(bp);
     }
 
