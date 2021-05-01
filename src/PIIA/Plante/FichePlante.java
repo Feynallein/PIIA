@@ -35,6 +35,8 @@ public class FichePlante extends StackPane {
 
     private BorderPane fenetre = new BorderPane();
     private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
+    Text text = new Text();
+
 
 
     public FichePlante(String nom,String photo){
@@ -81,7 +83,8 @@ public class FichePlante extends StackPane {
         layout.getChildren().add(imagePlante);
 
         Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 12);
-        Text text = new Text(indexCurrent + " / " + (images.size()-1));
+        text.setText((indexCurrent+1) + " / " + (images.size()));
+
         text.setFont(font);
         text.setFill(Color.WHITE);
 
@@ -91,13 +94,16 @@ public class FichePlante extends StackPane {
         flecheG.setFitWidth(50);
         flecheG.setOnMouseClicked(mouseEvent -> {
             if( indexCurrent == 0) {
-                imagePlante.setImage(images.get(images.size() - 1));
                 indexCurrent = images.size() - 1;
+                imagePlante.setImage(images.get(indexCurrent));
+
             }
             else{
-                imagePlante.setImage(images.get(indexCurrent-1));
                 indexCurrent -= 1;
+                imagePlante.setImage(images.get(indexCurrent));
             }
+            text.setText((indexCurrent+1) + " / " + (images.size()));
+
         });
 
         BorderPane droite = new BorderPane();
@@ -106,13 +112,15 @@ public class FichePlante extends StackPane {
         flecheD.setFitWidth(50);
         flecheD.setOnMouseClicked(mouseEvent -> {
             if( indexCurrent == images.size() -1) {
-                imagePlante.setImage(images.get(0));
                 indexCurrent = 0;
+                imagePlante.setImage(images.get(indexCurrent));
             }
             else{
-                imagePlante.setImage(images.get(indexCurrent+1));
                 indexCurrent += 1;
+                imagePlante.setImage(images.get(indexCurrent));
             }
+            text.setText((indexCurrent+1) + " / " + (images.size()));
+
         });
 
 
