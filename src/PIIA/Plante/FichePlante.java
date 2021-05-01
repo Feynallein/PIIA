@@ -69,6 +69,9 @@ public class FichePlante extends StackPane {
 
         BorderPane bp = new BorderPane();
         GridPane gb = new GridPane();
+        gb.setHgap(100);
+        gb.setPadding(new Insets(10, 50, 10, 10)); //margins around the whole grid
+
         gb.setHgap(50);
         gb.setVgap(50);
         FlowPane layout = new FlowPane();
@@ -82,7 +85,10 @@ public class FichePlante extends StackPane {
         text.setFont(font);
         text.setFill(Color.WHITE);
 
-        Button flecheG = new Button("<");
+        //Button flecheG = new Button("<");
+        ImageView flecheG = new ImageView("flecheG.png");
+        flecheG.setFitHeight(80);
+        flecheG.setFitWidth(50);
         flecheG.setOnMouseClicked(mouseEvent -> {
             if( indexCurrent == 0) {
                 imagePlante.setImage(images.get(images.size() - 1));
@@ -95,7 +101,9 @@ public class FichePlante extends StackPane {
         });
 
         BorderPane droite = new BorderPane();
-        Button flecheD = new Button(">");
+        ImageView flecheD = new ImageView("flecheD.png");
+        flecheD.setFitHeight(80);
+        flecheD.setFitWidth(50);
         flecheD.setOnMouseClicked(mouseEvent -> {
             if( indexCurrent == images.size() -1) {
                 imagePlante.setImage(images.get(0));
@@ -108,7 +116,7 @@ public class FichePlante extends StackPane {
         });
 
 
-        Button close = new Button("X");
+        ImageView close = new ImageView("close.png");
         close.setOnMouseClicked(mouseEvent -> {
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
