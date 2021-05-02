@@ -39,8 +39,8 @@ public class FichePlante extends StackPane {
 
     private BorderPane fenetre = new BorderPane();//borderpane pour agencer les différents élements qui composent la fiche
     private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
-    Text text = new Text();
-    TextArea commentaires = new TextArea();        //Zone de texte pour écrire des observations
+    private Text text = new Text();
+    private TextArea commentaires = new TextArea();        //Zone de texte pour écrire des observations
     private Plante plante;
 
 
