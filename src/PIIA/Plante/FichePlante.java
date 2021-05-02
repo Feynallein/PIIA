@@ -80,7 +80,7 @@ public class FichePlante extends StackPane {
     /** Première page d'information de la plante */
     private void infoBox(){
         BorderPane bp = new BorderPane();
-        bp.setPadding(new Insets(10,0,0,0));
+        bp.setPadding(new Insets(20,0,0,0));
         bp.setPrefWidth(infoWidth);
 
         GridPane gb = new GridPane();
@@ -166,7 +166,7 @@ public class FichePlante extends StackPane {
 
     private void observations(){
         BorderPane bp = new BorderPane();
-        bp.setPadding(new Insets(10,0,0,0));
+        bp.setPadding(new Insets(20,0,0,0));
         bp.setPrefWidth(infoWidth);
         GridPane gb = new GridPane();
         gb.setPrefSize(infoWidth,infoHeight);
@@ -235,7 +235,7 @@ public class FichePlante extends StackPane {
 
     private void graphes(){
         BorderPane bp = new BorderPane();
-        bp.setPadding(new Insets(10,0,0,0));
+        bp.setPadding(new Insets(20,0,0,0));
         bp.setPrefWidth(infoWidth);
         GridPane gb = new GridPane();
         gb.setPrefSize(infoWidth,infoHeight);
@@ -306,7 +306,7 @@ public class FichePlante extends StackPane {
     /** Contient les élements en bas de la fenetre */
     private void bottom(){
         BorderPane bp = new BorderPane();
-        bp.setPadding(new Insets(50, 100, 50, 50));
+        bp.setPadding(new Insets(30, 100, 40, 50));
 
         //Bouton pour retourner à la liste des plantes
         ImageView back = new ImageView("back.png");
@@ -448,7 +448,7 @@ public class FichePlante extends StackPane {
         });
 
         //Les différent élément sont agencée dans la gridpane gb
-        gb.add(titre,1,0);
+        gb.add(titre,1,1);
         gb.add(layout, 1,2);
         gb.add(ajouter,1,3);
         fenetre.setCenter(gb);
