@@ -122,16 +122,22 @@ public class FichePlante extends StackPane {
         //Bouton page suivante
         FlowPane suivant = new FlowPane();
         suivant.setPrefWidth(infoWidth/3);
-        suivant.setAlignment(Pos.CENTER);
-        Button next = new Button("page suivante");
+        suivant.setAlignment(Pos.CENTER_LEFT);
+        //Button next = new Button("page suivante");
+        ImageView next = new ImageView("flecheD.png");
+        next.setFitHeight(50);
+        next.setFitWidth(30);
         next.setOnMouseClicked(mouseEvent -> observations());
         suivant.getChildren().add(next);
 
         //Bouton page précédente
         FlowPane precedent = new FlowPane();
         precedent.setPrefWidth(infoWidth/3);
-        precedent.setAlignment(Pos.CENTER);
-        Button before = new Button("page precedente");
+        precedent.setAlignment(Pos.CENTER_RIGHT);
+        //Button before = new Button("page precedente");
+        ImageView before = new ImageView("flecheG.png");
+        before.setFitHeight(50);
+        before.setFitWidth(30);
         before.setOnMouseClicked(mouseEvent -> graphes());
         precedent.getChildren().add(before);
 
@@ -187,16 +193,22 @@ public class FichePlante extends StackPane {
         //Bouton page suivante
         FlowPane suivant = new FlowPane();
         suivant.setPrefWidth(infoWidth/3);
-        suivant.setAlignment(Pos.CENTER);
-        Button next = new Button("page suivante");
+        suivant.setAlignment(Pos.CENTER_LEFT);
+        //Button next = new Button("page suivante");
+        ImageView next = new ImageView("flecheD.png");
+        next.setFitHeight(50);
+        next.setFitWidth(30);
         next.setOnMouseClicked(mouseEvent -> graphes());
         suivant.getChildren().add(next);
 
         //Bouton page précédente
         FlowPane precedent = new FlowPane();
         precedent.setPrefWidth(infoWidth/3);
-        precedent.setAlignment(Pos.CENTER);
-        Button before = new Button("page precedente");
+        precedent.setAlignment(Pos.CENTER_RIGHT);
+        //Button before = new Button("page precedente");
+        ImageView before = new ImageView("flecheG.png");
+        before.setFitHeight(50);
+        before.setFitWidth(30);
         before.setOnMouseClicked(mouseEvent -> infoBox());
         precedent.getChildren().add(before);
 
@@ -249,8 +261,11 @@ public class FichePlante extends StackPane {
         //bouton page suivante
         FlowPane suivant = new FlowPane();
         suivant.setPrefWidth(infoWidth/3);
-        suivant.setAlignment(Pos.CENTER);
-        Button next = new Button("page suivante");
+        suivant.setAlignment(Pos.CENTER_LEFT);
+        //Button next = new Button("page suivante");
+        ImageView next = new ImageView("flecheD.png");
+        next.setFitHeight(50);
+        next.setFitWidth(30);
         next.setOnMouseClicked(mouseEvent -> {
            infoBox();
         });
@@ -259,8 +274,11 @@ public class FichePlante extends StackPane {
         //bouton page précédente
         FlowPane precedent = new FlowPane();
         precedent.setPrefWidth(infoWidth/3);
-        precedent.setAlignment(Pos.CENTER);
-        Button before = new Button("page precedente");
+        precedent.setAlignment(Pos.CENTER_RIGHT);
+        //Button before = new Button("page precedente");
+        ImageView before = new ImageView("flecheG.png");
+        before.setFitHeight(50);
+        before.setFitWidth(30);
         before.setOnMouseClicked(mouseEvent -> observations());
         precedent.getChildren().add(before);
 
