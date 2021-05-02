@@ -9,7 +9,7 @@ public class Overlay extends BorderPane {
     private Rectangle rect;
 
     public Overlay(int x,int y,int width,int height){
-        double alpha = 0.7;
+        double alpha = 0.8;
         Color on = new Color(0, 0, 0, alpha);
         this.rect = new Rectangle(x,y,width,height);
         rect.setFill(on);

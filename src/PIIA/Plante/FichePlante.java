@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -21,6 +22,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.Flow;
 
 public class FichePlante extends StackPane {
     private String nom;
@@ -31,6 +33,9 @@ public class FichePlante extends StackPane {
     private ImageView imagePlante;
     private ScrollPane scroll = new ScrollPane();
 
+    /** dimmension de l'info box*/
+    private int infoWidth = 800;
+    private int infoHeight = 500;
 
     private BorderPane fenetre = new BorderPane();
     private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
@@ -72,16 +77,212 @@ public class FichePlante extends StackPane {
     }*/
 
     private void infoBox(){
+        BorderPane bp = new BorderPane();
+        bp.setPrefWidth(infoWidth);
         GridPane gb = new GridPane();
-        Rectangle rect = new Rectangle(800,500);
-        Rectangle rect2 = new Rectangle(rect.getX(),rect.getY(),800,rect.getHeight()/10);
-        rect.setFill(Color.TRANSPARENT);
-        rect.setStroke(Color.BLACK);
-        rect2.setFill(Color.TRANSPARENT);
-        rect2.setStroke(Color.BLACK);
-        gb.add(rect2,0,0);
-        gb.add(rect,0,1);
-        fenetre.setRight(gb);
+        gb.setPrefSize(infoWidth,infoHeight);
+        gb.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 15);
+        Text text = new Text("Info");
+        text.setFont(font);
+
+        //Title box
+        FlowPane header = new FlowPane();
+        header.setAlignment(Pos.CENTER);
+        header.setPrefWidth(infoWidth);
+        header.getChildren().add(text);
+        header.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        //Dates clées
+        FlowPane date = new FlowPane();
+        date.setPrefWidth(infoWidth/2);
+        date.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        //Mesures
+        FlowPane mesure = new FlowPane();
+        mesure.setPrefWidth(infoWidth/2);
+        mesure.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+
+        BorderPane sub = new BorderPane();
+        sub.setPrefWidth(infoWidth);
+        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        FlowPane suivant = new FlowPane();
+        suivant.setPrefWidth(infoWidth/3);
+        suivant.setAlignment(Pos.CENTER);
+        Button next = new Button("page suivante");
+        next.setOnMouseClicked(mouseEvent -> {
+            observations();
+        });
+        suivant.getChildren().add(next);
+
+        FlowPane precedent = new FlowPane();
+        precedent.setPrefWidth(infoWidth/3);
+
+        precedent.setAlignment(Pos.CENTER);
+        Button before = new Button("page precedente");
+        before.setOnMouseClicked(mouseEvent -> {
+            graphes();
+
+        });
+        precedent.getChildren().add(before);
+
+        sub.setRight(suivant);
+        sub.setLeft(precedent);
+
+        ImageView page1 = new ImageView("p1.png");
+        FlowPane centre = new FlowPane();
+        centre.setAlignment(Pos.CENTER);
+        centre.setPrefWidth(infoWidth/3);
+
+        centre.getChildren().add(page1);
+
+        sub.setCenter(centre);
+
+
+
+        bp.setTop(header);
+        bp.setLeft(date);
+        bp.setRight(mesure);
+        bp.setBottom(sub);
+
+
+        fenetre.setRight(bp);
+    }
+
+    private void observations(){
+        BorderPane bp = new BorderPane();
+        bp.setPrefWidth(infoWidth);
+        GridPane gb = new GridPane();
+        gb.setPrefSize(infoWidth,infoHeight);
+        gb.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 15);
+        Text text = new Text("Observations / Notes");
+        text.setFont(font);
+
+        //Title box
+        FlowPane header = new FlowPane();
+        header.setAlignment(Pos.CENTER);
+        header.setPrefWidth(infoWidth);
+        header.getChildren().add(text);
+        header.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        bp.setTop(header);
+
+        TextArea area = new TextArea();
+        BorderPane sub = new BorderPane();
+        sub.setPrefWidth(infoWidth);
+        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        FlowPane suivant = new FlowPane();
+        suivant.setPrefWidth(infoWidth/3);
+        suivant.setAlignment(Pos.CENTER);
+        Button next = new Button("page suivante");
+        next.setOnMouseClicked(mouseEvent -> {
+            //bp.setRight(null);
+            graphes();
+        });
+        suivant.getChildren().add(next);
+
+        FlowPane precedent = new FlowPane();
+        precedent.setPrefWidth(infoWidth/3);
+
+        precedent.setAlignment(Pos.CENTER);
+        Button before = new Button("page precedente");
+        before.setOnMouseClicked(mouseEvent -> {
+            //bp.setLeft(null);
+            infoBox();
+        });
+        precedent.getChildren().add(before);
+
+        sub.setRight(suivant);
+        sub.setLeft(precedent);
+
+        ImageView page1 = new ImageView("p2.png");
+        FlowPane centre = new FlowPane();
+        centre.setAlignment(Pos.CENTER);
+        centre.setPrefWidth(infoWidth/3);
+
+        centre.getChildren().add(page1);
+
+        sub.setCenter(centre);
+        bp.setCenter(area);
+        bp.setBottom(sub);
+
+        fenetre.setRight(bp);
+    }
+
+    private void graphes(){
+        BorderPane bp = new BorderPane();
+        bp.setPrefWidth(infoWidth);
+        GridPane gb = new GridPane();
+        gb.setPrefSize(infoWidth,infoHeight);
+        gb.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 15);
+        Text text = new Text("Graphes");
+        text.setFont(font);
+
+        //Title box
+        FlowPane header = new FlowPane();
+        header.setAlignment(Pos.CENTER);
+        header.setPrefWidth(infoWidth);
+        header.getChildren().add(text);
+        header.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        bp.setTop(header);
+
+        TextArea area = new TextArea();
+        BorderPane sub = new BorderPane();
+        sub.setPrefWidth(infoWidth);
+        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        FlowPane suivant = new FlowPane();
+        suivant.setPrefWidth(infoWidth/3);
+        suivant.setAlignment(Pos.CENTER);
+        Button next = new Button("page suivante");
+        next.setOnMouseClicked(mouseEvent -> {
+           infoBox();
+        });
+        suivant.getChildren().add(next);
+
+        FlowPane precedent = new FlowPane();
+        precedent.setPrefWidth(infoWidth/3);
+
+        precedent.setAlignment(Pos.CENTER);
+        Button before = new Button("page precedente");
+        before.setOnMouseClicked(mouseEvent -> observations());
+        precedent.getChildren().add(before);
+
+        sub.setRight(suivant);
+        sub.setLeft(precedent);
+
+        ImageView page1 = new ImageView("p3.png");
+        FlowPane centre = new FlowPane();
+        centre.setAlignment(Pos.CENTER);
+        centre.setPrefWidth(infoWidth/3);
+
+        centre.getChildren().add(page1);
+
+        sub.setCenter(centre);
+        bp.setCenter(area);
+        bp.setBottom(sub);
+
+        fenetre.setRight(bp);
     }
 
     private void bottom(){
