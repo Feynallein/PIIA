@@ -27,8 +27,8 @@ import java.util.concurrent.Flow;
 public class FichePlante extends StackPane {
     private String nom;
     private Image image;
-    private HBox plantList = new HBox();
-    private ArrayList<Image> images = new ArrayList<>();
+    private HBox plantList = new HBox(); //liste des plantes au dessus de la fenetre
+    private ArrayList<Image> images = new ArrayList<>(); //la liste des images de la plante
     private int indexCurrent = 0; //L'index de l'image choisis comme photo principale
     private ImageView imagePlante;
     private ScrollPane scroll = new ScrollPane();
@@ -37,7 +37,7 @@ public class FichePlante extends StackPane {
     private int infoWidth = 800;
     private int infoHeight = 500;
 
-    private BorderPane fenetre = new BorderPane();
+    private BorderPane fenetre = new BorderPane();//borderpane pour agencer les différents élements qui composent la fiche
     private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
     Text text = new Text();
     private Plante plante;
@@ -76,9 +76,11 @@ public class FichePlante extends StackPane {
 
     }*/
 
+    /** Première page d'information de la plante */
     private void infoBox(){
         BorderPane bp = new BorderPane();
         bp.setPrefWidth(infoWidth);
+
         GridPane gb = new GridPane();
         gb.setPrefSize(infoWidth,infoHeight);
         gb.setBorder(new Border(new BorderStroke(Color.BLACK,
@@ -88,7 +90,7 @@ public class FichePlante extends StackPane {
         Text text = new Text("Info");
         text.setFont(font);
 
-        //Title box
+        //Titre de la page
         FlowPane header = new FlowPane();
         header.setAlignment(Pos.CENTER);
         header.setPrefWidth(infoWidth);
@@ -109,44 +111,40 @@ public class FichePlante extends StackPane {
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 
-        BorderPane sub = new BorderPane();
+
+        BorderPane sub = new BorderPane(); //va contenir les boutons pour faire défiler les pages
         sub.setPrefWidth(infoWidth);
         sub.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
+        //Bouton page suivante
         FlowPane suivant = new FlowPane();
         suivant.setPrefWidth(infoWidth/3);
         suivant.setAlignment(Pos.CENTER);
         Button next = new Button("page suivante");
-        next.setOnMouseClicked(mouseEvent -> {
-            observations();
-        });
+        next.setOnMouseClicked(mouseEvent -> observations());
         suivant.getChildren().add(next);
 
+        //Bouton page précédente
         FlowPane precedent = new FlowPane();
         precedent.setPrefWidth(infoWidth/3);
-
         precedent.setAlignment(Pos.CENTER);
         Button before = new Button("page precedente");
-        before.setOnMouseClicked(mouseEvent -> {
-            graphes();
-
-        });
+        before.setOnMouseClicked(mouseEvent -> graphes());
         precedent.getChildren().add(before);
 
+        //on place les boutons à droite et à gauche dans la borderpane sub
         sub.setRight(suivant);
         sub.setLeft(precedent);
 
+        //L'image au centre de la borderpane sub indique dans quelle page on se situe
         ImageView page1 = new ImageView("p1.png");
         FlowPane centre = new FlowPane();
         centre.setAlignment(Pos.CENTER);
         centre.setPrefWidth(infoWidth/3);
-
         centre.getChildren().add(page1);
 
         sub.setCenter(centre);
-
-
 
         bp.setTop(header);
         bp.setLeft(date);
@@ -169,7 +167,7 @@ public class FichePlante extends StackPane {
         Text text = new Text("Observations / Notes");
         text.setFont(font);
 
-        //Title box
+        //Titre de la page (ici Observation)
         FlowPane header = new FlowPane();
         header.setAlignment(Pos.CENTER);
         header.setPrefWidth(infoWidth);
@@ -177,46 +175,42 @@ public class FichePlante extends StackPane {
         header.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        bp.setTop(header);
-
-        TextArea area = new TextArea();
-        BorderPane sub = new BorderPane();
+        TextArea area = new TextArea();        //Zone de texte pour écrire des observations
+        BorderPane sub = new BorderPane();     //va contenir les boutons pour faire défiler les pages
         sub.setPrefWidth(infoWidth);
         sub.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
+
+        //Bouton page suivante
         FlowPane suivant = new FlowPane();
         suivant.setPrefWidth(infoWidth/3);
         suivant.setAlignment(Pos.CENTER);
         Button next = new Button("page suivante");
-        next.setOnMouseClicked(mouseEvent -> {
-            //bp.setRight(null);
-            graphes();
-        });
+        next.setOnMouseClicked(mouseEvent -> graphes());
         suivant.getChildren().add(next);
 
+        //Bouton page précédente
         FlowPane precedent = new FlowPane();
         precedent.setPrefWidth(infoWidth/3);
-
         precedent.setAlignment(Pos.CENTER);
         Button before = new Button("page precedente");
-        before.setOnMouseClicked(mouseEvent -> {
-            //bp.setLeft(null);
-            infoBox();
-        });
+        before.setOnMouseClicked(mouseEvent -> infoBox());
         precedent.getChildren().add(before);
 
+        //on place les boutons à droite et à gauche dans la borderpane sub
         sub.setRight(suivant);
         sub.setLeft(precedent);
 
+        //L'image au centre de la borderpane sub indique dans quelle page on se situe
         ImageView page1 = new ImageView("p2.png");
         FlowPane centre = new FlowPane();
         centre.setAlignment(Pos.CENTER);
         centre.setPrefWidth(infoWidth/3);
-
         centre.getChildren().add(page1);
-
         sub.setCenter(centre);
+
+        bp.setTop(header);
         bp.setCenter(area);
         bp.setBottom(sub);
 
@@ -235,7 +229,7 @@ public class FichePlante extends StackPane {
         Text text = new Text("Graphes");
         text.setFont(font);
 
-        //Title box
+        //Titre de la page (ici Graphes)
         FlowPane header = new FlowPane();
         header.setAlignment(Pos.CENTER);
         header.setPrefWidth(infoWidth);
@@ -243,14 +237,13 @@ public class FichePlante extends StackPane {
         header.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        bp.setTop(header);
 
-        TextArea area = new TextArea();
-        BorderPane sub = new BorderPane();
+        BorderPane sub = new BorderPane(); //va contenir les boutons pour faire défiler les pages
         sub.setPrefWidth(infoWidth);
         sub.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
+        //bouton page suivante
         FlowPane suivant = new FlowPane();
         suivant.setPrefWidth(infoWidth/3);
         suivant.setAlignment(Pos.CENTER);
@@ -260,42 +253,45 @@ public class FichePlante extends StackPane {
         });
         suivant.getChildren().add(next);
 
+        //bouton page précédente
         FlowPane precedent = new FlowPane();
         precedent.setPrefWidth(infoWidth/3);
-
         precedent.setAlignment(Pos.CENTER);
         Button before = new Button("page precedente");
         before.setOnMouseClicked(mouseEvent -> observations());
         precedent.getChildren().add(before);
 
-        sub.setRight(suivant);
-        sub.setLeft(precedent);
 
+        //L'image au centre de la borderpane sub indique dans quelle page on se situe
         ImageView page1 = new ImageView("p3.png");
         FlowPane centre = new FlowPane();
         centre.setAlignment(Pos.CENTER);
         centre.setPrefWidth(infoWidth/3);
-
         centre.getChildren().add(page1);
 
         sub.setCenter(centre);
-        bp.setCenter(area);
+        sub.setRight(suivant);
+        sub.setLeft(precedent);
+
+        bp.setTop(header);
         bp.setBottom(sub);
 
         fenetre.setRight(bp);
     }
 
+    /** Contient les élements en bas de la fenetre */
     private void bottom(){
         BorderPane bp = new BorderPane();
         bp.setPadding(new Insets(50, 100, 50, 50));
-        //Bouton pour retourner a la liste des plantes
+
+        //Bouton pour retourner à la liste des plantes
         ImageView back = new ImageView("back.png");
         back.setFitHeight(35);
         back.setFitWidth(50);
         back.setOnMouseClicked(mouseEvent -> getScene().setRoot(plante));
         bp.setLeft(back);
 
-        //Bouton pour planifier
+        //Bouton pour planifier un evenement associé à la plante
         ImageView plan = new ImageView("plan.png");
         plan.setFitHeight(50);
         plan.setFitWidth(200);
@@ -304,10 +300,11 @@ public class FichePlante extends StackPane {
         fenetre.setBottom(bp);
     }
 
+    /** Affiche en overlay les images associées à la plante */
     private void previewPhotos(){
-        this.getChildren().add(overlay);
+        this.getChildren().add(overlay); //permet de créer le fond noir
 
-        BorderPane bp = new BorderPane();
+        BorderPane bp = new BorderPane(); //va permettre l'agencement des différents éléments de la fenetre
         GridPane gb = new GridPane();
         gb.setHgap(50);
         gb.setVgap(50);
@@ -319,10 +316,10 @@ public class FichePlante extends StackPane {
 
         Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 12);
         text.setText((indexCurrent+1) + " / " + (images.size()));
-
         text.setFont(font);
         text.setFill(Color.WHITE);
 
+        //Bouton pour défiler les photos à gauche
         ImageView flecheG = new ImageView("flecheG.png");
         flecheG.setFitHeight(80);
         flecheG.setFitWidth(50);
@@ -340,6 +337,7 @@ public class FichePlante extends StackPane {
 
         });
 
+        //Bouton pour défiler les photos à droite
         BorderPane droite = new BorderPane();
         ImageView flecheD = new ImageView("flecheD.png");
         flecheD.setFitHeight(80);
@@ -354,10 +352,9 @@ public class FichePlante extends StackPane {
                 imagePlante.setImage(images.get(indexCurrent));
             }
             text.setText((indexCurrent+1) + " / " + (images.size()));
-
         });
 
-
+        //Bouton pour fermer l'overlay
         ImageView close = new ImageView("close.png");
         close.setOnMouseClicked(mouseEvent -> {
             this.getChildren().remove(bp);
@@ -366,8 +363,6 @@ public class FichePlante extends StackPane {
         droite.setTop(close);
         droite.setRight(flecheD);
         droite.setAlignment(flecheD, Pos.CENTER);
-
-
 
 
         gb.add(layout, 8,3);
@@ -386,22 +381,24 @@ public class FichePlante extends StackPane {
         this.getChildren().add(bp);
     }
 
+    /** Affiche l'image de la plante */
     private void previewPlante(){
-        GridPane gb = new GridPane();
+        GridPane gb = new GridPane(); //va permettre l'agencement des elements dans la fenetre
         gb.setHgap(50);
         gb.setVgap(10);
-        FlowPane layout = new FlowPane();
+        FlowPane layout = new FlowPane(); //va contenir l'image de la plante
         imagePlante = new ImageView(this.image);
         imagePlante.setFitHeight(500);
         imagePlante.setFitWidth(400);
         imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->  previewPhotos());
 
+        //indique que l'image est cliquable
         imagePlante.setOnMouseEntered(mouseEvent ->  setCursor(Cursor.HAND));
         imagePlante.setOnMouseExited(mouseEvent ->  setCursor(Cursor.DEFAULT));
 
+        layout.getChildren().add(imagePlante); //ajout de l'image dans le FlowPane
 
-        layout.getChildren().add(imagePlante);
-
+        //Police d'écriture et affichage du nom
         Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         Text titre = new Text(this.nom);
         titre.setUnderline(true);
@@ -413,12 +410,11 @@ public class FichePlante extends StackPane {
         add.getChildren().add(ajouter);
         ajouter.setOnAction(actionEvent -> {
             //On ne peut selectionner que des images
-            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter( "Image", "*.jpg", "*.png", "*.jpeg");
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter( "Image (.jpg, .png, .jpeg)", "*.jpg", "*.png", "*.jpeg");
             FileChooser fc = new FileChooser();
             fc.getExtensionFilters().add(filter);
 
             File f = fc.showOpenDialog(ajouter.getScene().getWindow());
-
 
             //Ajout dans les images de la plante associée
             if (f != null) {
@@ -427,6 +423,7 @@ public class FichePlante extends StackPane {
             }
         });
 
+        //Les différent élément sont agencée dans la gridpane gb
         gb.add(titre,1,0);
         gb.add(layout, 1,2);
         gb.add(ajouter,1,3);
@@ -434,11 +431,14 @@ public class FichePlante extends StackPane {
 
     }
 
+    /** Ajoute une photo dans la liste des images associée à la plante */
+
     private void addPhoto(String path){
         this.images.add(new Image(path));
     }
 
 
+    /** Liste des plantes au dessus */
     private void listPlante(){
         for(VBox vb : plante.getNoms()){
 
