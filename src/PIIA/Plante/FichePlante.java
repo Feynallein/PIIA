@@ -40,6 +40,7 @@ public class FichePlante extends StackPane {
     private BorderPane fenetre = new BorderPane();//borderpane pour agencer les différents élements qui composent la fiche
     private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
     Text text = new Text();
+    TextArea commentaires = new TextArea();        //Zone de texte pour écrire des observations
     private Plante plante;
 
 
@@ -176,7 +177,6 @@ public class FichePlante extends StackPane {
         header.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        TextArea area = new TextArea();        //Zone de texte pour écrire des observations
         BorderPane sub = new BorderPane();     //va contenir les boutons pour faire défiler les pages
         sub.setPadding(new Insets(5,0,0,0));
         sub.setPrefWidth(infoWidth);
@@ -213,7 +213,7 @@ public class FichePlante extends StackPane {
         sub.setCenter(centre);
 
         bp.setTop(header);
-        bp.setCenter(area);
+        bp.setCenter(commentaires);
         bp.setBottom(sub);
 
         fenetre.setRight(bp);
