@@ -80,6 +80,7 @@ public class FichePlante extends StackPane {
     /** Première page d'information de la plante */
     private void infoBox(){
         BorderPane bp = new BorderPane();
+        bp.setPadding(new Insets(10,0,0,0));
         bp.setPrefWidth(infoWidth);
 
         GridPane gb = new GridPane();
@@ -165,6 +166,7 @@ public class FichePlante extends StackPane {
 
     private void observations(){
         BorderPane bp = new BorderPane();
+        bp.setPadding(new Insets(10,0,0,0));
         bp.setPrefWidth(infoWidth);
         GridPane gb = new GridPane();
         gb.setPrefSize(infoWidth,infoHeight);
@@ -233,6 +235,7 @@ public class FichePlante extends StackPane {
 
     private void graphes(){
         BorderPane bp = new BorderPane();
+        bp.setPadding(new Insets(10,0,0,0));
         bp.setPrefWidth(infoWidth);
         GridPane gb = new GridPane();
         gb.setPrefSize(infoWidth,infoHeight);
