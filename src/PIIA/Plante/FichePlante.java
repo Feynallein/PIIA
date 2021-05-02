@@ -113,9 +113,10 @@ public class FichePlante extends StackPane {
 
 
         BorderPane sub = new BorderPane(); //va contenir les boutons pour faire défiler les pages
+        sub.setPadding(new Insets(5,0,0,0));
         sub.setPrefWidth(infoWidth);
-        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        /*sub.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));*/
 
         //Bouton page suivante
         FlowPane suivant = new FlowPane();
@@ -177,9 +178,10 @@ public class FichePlante extends StackPane {
 
         TextArea area = new TextArea();        //Zone de texte pour écrire des observations
         BorderPane sub = new BorderPane();     //va contenir les boutons pour faire défiler les pages
+        sub.setPadding(new Insets(5,0,0,0));
         sub.setPrefWidth(infoWidth);
-        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        /*sub.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));*/
 
 
         //Bouton page suivante
@@ -239,9 +241,10 @@ public class FichePlante extends StackPane {
 
 
         BorderPane sub = new BorderPane(); //va contenir les boutons pour faire défiler les pages
+        sub.setPadding(new Insets(5,0,0,0));
         sub.setPrefWidth(infoWidth);
-        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        /*sub.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));*/
 
         //bouton page suivante
         FlowPane suivant = new FlowPane();
