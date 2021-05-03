@@ -467,16 +467,20 @@ public class FichePlante extends StackPane {
         });
         mesure.getChildren().add(b);
         layout.setBottom(mesure);
+
+
         bp.setRight(layout);
 
     }
 
     public void ajouterMesure(String nom, String valeur, String unite,BorderPane bp){
         FlowPane layout = new FlowPane();
+        VBox m = new VBox();
         layout.setAlignment(Pos.CENTER_LEFT);
         Text text = new Text(nom + " :" + valeur + " " + unite);
         layout.getChildren().add(text);
-        mesures.getChildren().add(layout);
+        //mesures.getChildren().add(layout);
+        mesures.getChildren().add(m);
     }
 
     private void littleCalendar(){

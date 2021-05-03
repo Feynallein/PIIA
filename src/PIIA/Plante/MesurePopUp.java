@@ -42,11 +42,11 @@ public class MesurePopUp extends GridPane {
         /* Done !*/
         Button b = new Button("Done !");
         b.setOnMouseClicked(mouseEvent -> {
-            if (!nameTF.getText().equals("") ) {
+
                 //plante.createPlante(nameTF.getText());
                 fp.ajouterMesure(nameTF.toString(),valeurTF.toString(),comboBox.getId(),fp.getFenetre());
                 ((Stage) b.getScene().getWindow()).close();
-            }
+            
         });
         add(b, 0, 9);
     }
