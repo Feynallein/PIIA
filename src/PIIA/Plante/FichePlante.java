@@ -5,8 +5,10 @@ import PIIA.Overlay;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -20,6 +22,7 @@ import javafx.stage.FileChooser;
 
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class FichePlante extends StackPane {
@@ -375,6 +378,9 @@ public class FichePlante extends StackPane {
         Text plantation = new Text("Date de plantation : ");
         plantation.setFont(font);
         Button bPlantation = new Button("Cliquer pour ajouter une date");
+        bPlantation.setOnMouseClicked(mouseEvent -> {
+
+        });
 
 
         Text rempotage = new Text("Date de rempotage : ");
@@ -411,6 +417,26 @@ public class FichePlante extends StackPane {
 
 
         bp.setLeft(date);
+    }
+
+    private void littleCalendar(){
+        overlay = new Overlay(-10,0,(int)fenetre.getWidth(),(int)fenetre.getHeight());
+        this.getChildren().add(overlay); //permet de créer le fond noir
+
+        BorderPane bp = new BorderPane();
+        DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
+
+        bp.setCenter(datePickerSkin.getPopupContent());
+
+
+        //Bouton pour fermer l'overlay
+        ImageView close = new ImageView("close.png");
+        close.setOnMouseClicked(mouseEvent -> {
+            this.getChildren().remove(bp);
+            this.getChildren().remove(overlay);
+        });
+        bp.setBottom(close);
+        this.getChildren().add(bp);
     }
 
     /**Page pour les notes */
@@ -570,7 +596,7 @@ public class FichePlante extends StackPane {
         ImageView plan = new ImageView("plan.png");
         plan.setFitHeight(50);
         plan.setFitWidth(200);
-        plan.setOnMouseClicked(mouseEvent -> System.out.println("event")); /** à modifier */
+        plan.setOnMouseClicked(mouseEvent -> littleCalendar()); /** à modifier */
         bp.setCenter(plan);
         fenetre.setBottom(bp);
     }
