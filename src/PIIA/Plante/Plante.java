@@ -170,7 +170,7 @@ public class Plante extends BorderPane {
 
     public void createPlante(String nomPlante){
         //addPlante("sedum.jpg");
-        addPlante(new FichePlante(nomPlante,"sedum.jpg",this));
+        addPlante(new FichePlante(nomPlante,this));
         int index = noms.size();
         String text = "No." + (index+1) +" " + nomPlante;
         VBox box = new VBox();

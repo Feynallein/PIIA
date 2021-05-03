@@ -62,6 +62,22 @@ public class FichePlante extends StackPane {
 
     }
 
+    public FichePlante(String nom,Plante plante){
+        this.plante = plante;
+        this.nom = nom;
+        listPlante();
+        previewPlante();
+        infoBox();
+        bottom();
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.setPrefHeight((Main.HEIGHT/10f));
+
+        fenetre.setPadding(new Insets(10, 10, 0, 10));
+
+        this.getChildren().add(fenetre);
+
+    }
+
     /*public FichePlante(String nom,String photo){
         this.nom = nom;
         this.image = new Image(photo);
@@ -76,6 +92,195 @@ public class FichePlante extends StackPane {
         this.getChildren().add(fenetre);
 
     }*/
+
+
+
+    /** Affiche en overlay les images associées à la plante */
+    private void previewPhotos(){
+        this.getChildren().add(overlay); //permet de créer le fond noir
+
+        BorderPane bp = new BorderPane(); //va permettre l'agencement des différents éléments de la fenetre
+        GridPane gb = new GridPane();
+        gb.setHgap(50);
+        gb.setVgap(50);
+        if(!images.isEmpty()) {
+            FlowPane layout = new FlowPane();
+            imagePlante = new ImageView((images.get(indexCurrent)));
+            imagePlante.setFitHeight(500);
+            imagePlante.setPreserveRatio(true);
+            layout.getChildren().add(imagePlante);
+            gb.add(layout, 8,3);
+        }
+
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 12);
+        text.setText((indexCurrent+1) + " / " + (images.size()));
+        text.setFont(font);
+        text.setFill(Color.WHITE);
+
+        //Bouton pour défiler les photos à gauche
+        ImageView flecheG = new ImageView("flecheG.png");
+        flecheG.setFitHeight(80);
+        flecheG.setFitWidth(50);
+        flecheG.setOnMouseClicked(mouseEvent -> {
+            if( indexCurrent == 0) {
+                indexCurrent = images.size() - 1;
+                imagePlante.setImage(images.get(indexCurrent));
+
+            }
+            else{
+                indexCurrent -= 1;
+                imagePlante.setImage(images.get(indexCurrent));
+            }
+            text.setText((indexCurrent+1) + " / " + (images.size()));
+
+        });
+
+        //Bouton pour défiler les photos à droite
+        BorderPane droite = new BorderPane();
+        ImageView flecheD = new ImageView("flecheD.png");
+        flecheD.setFitHeight(80);
+        flecheD.setFitWidth(50);
+        flecheD.setOnMouseClicked(mouseEvent -> {
+            if( indexCurrent == images.size() -1) {
+                indexCurrent = 0;
+                imagePlante.setImage(images.get(indexCurrent));
+            }
+            else{
+                indexCurrent += 1;
+                imagePlante.setImage(images.get(indexCurrent));
+            }
+            text.setText((indexCurrent+1) + " / " + (images.size()));
+        });
+
+        //Bouton pour fermer l'overlay
+        ImageView close = new ImageView("close.png");
+        close.setOnMouseClicked(mouseEvent -> {
+            this.getChildren().remove(bp);
+            this.getChildren().remove(overlay);
+        });
+        droite.setTop(close);
+        droite.setRight(flecheD);
+        droite.setAlignment(flecheD, Pos.CENTER);
+
+
+        //Bouton definir photo comme défault
+        VBox add = new VBox();
+        Button b = new Button("Definir comme photo principale");
+        add.getChildren().add(b);
+        b.setOnMouseClicked(mouseEvent -> setDefaultImage(indexCurrent));
+
+
+        gb.add(text,8,4);
+        gb.add(b,9,4);
+
+        bp.setCenter(gb);
+        bp.setAlignment(gb, Pos.CENTER);
+
+        bp.setLeft(flecheG);
+        bp.setAlignment(flecheG, Pos.CENTER);
+
+        bp.setRight(droite);
+        bp.setAlignment(flecheD, Pos.CENTER);
+
+
+        this.getChildren().add(bp);
+    }
+
+    /** Affiche l'image de la plante */
+    private void previewPlante(){
+        GridPane gb = new GridPane(); //va permettre l'agencement des elements dans la fenetre
+        gb.setHgap(50);
+        gb.setVgap(10);
+        FlowPane layout = new FlowPane(); //va contenir l'image de la plante
+        imagePlante = new ImageView(this.image);
+        imagePlante.setFitHeight(500);
+        imagePlante.setFitWidth(400);
+        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->  previewPhotos());
+
+        //indique que l'image est cliquable
+        imagePlante.setOnMouseEntered(mouseEvent ->  setCursor(Cursor.HAND));
+        imagePlante.setOnMouseExited(mouseEvent ->  setCursor(Cursor.DEFAULT));
+
+        layout.getChildren().add(imagePlante); //ajout de l'image dans le FlowPane
+
+        //Police d'écriture et affichage du nom
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
+        Text titre = new Text(this.nom);
+        titre.setUnderline(true);
+        titre.setFont(font);
+
+        //Bouton ajouter une photo
+        VBox add = new VBox();
+        Button ajouter = new Button("Ajouter photo");
+        add.getChildren().add(ajouter);
+        ajouter.setOnAction(actionEvent -> {
+            //On ne peut selectionner que des images
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter( "Image (.jpg, .png, .jpeg)", "*.jpg", "*.png", "*.jpeg");
+            FileChooser fc = new FileChooser();
+            fc.getExtensionFilters().add(filter);
+
+            File f = fc.showOpenDialog(ajouter.getScene().getWindow());
+
+            //Ajout dans les images de la plante associée
+            if (f != null) {
+                String imageUrl = "file:///".concat(f.getPath());
+                addPhoto(imageUrl);
+            }
+        });
+
+
+
+        //Les différent élément sont agencée dans la gridpane gb
+        gb.add(titre,1,1);
+        gb.add(layout, 1,2);
+        gb.add(ajouter,1,3);
+        fenetre.setCenter(gb);
+
+    }
+
+    /** Ajoute une photo dans la liste des images associée à la plante */
+
+    private void addPhoto(String path){
+        this.images.add(new Image(path));
+        if(this.images.size() == 1){ //Si la fiche n'a qu'une seule image
+            this.image = this.images.get(0); //elle est définie automatiquement comme image par défaut
+            fenetre.setCenter(null);
+            previewPlante();
+        }
+    }
+
+    private void setDefaultImage(int i){
+        this.image = this.images.get(i);
+        fenetre.setCenter(null);
+
+        //actualisation de l'affichage
+        previewPlante();
+        this.getChildren().remove(this.getChildren().size()-1);
+        this.getChildren().remove(overlay);
+
+    }
+
+
+    /** Liste des plantes au dessus */
+    public void listPlante(){
+        plantList.getChildren().clear();
+        //Création de la liste
+        for(int i = 0; i<Plante.getPlantes().size();i++){
+            int index = i;
+            String text = "No." + (i+1) +" " + Plante.getPlantes().get(i).getNom();
+            VBox box = new VBox();
+            Button b = new Button(text);
+            b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(Plante.getPlantes().get(index)));
+            b.setSkin(new MyButtonSkin(b));
+            b.setPrefSize((Main.WIDTH - plante.getLeftMenu().getPrefWidth() - box.getPrefWidth())/5, Main.HEIGHT/10f);
+            b.setText(text);
+            box.getChildren().add(b);
+            plantList.getChildren().add(box);
+        }
+        System.out.println("size " + Plante.getNoms().size());
+        scroll.setContent(plantList);
+        fenetre.setTop(scroll);
+    }
 
     /** Première page d'information de la plante */
     private void infoBox(){
@@ -164,6 +369,7 @@ public class FichePlante extends StackPane {
         fenetre.setRight(bp);
     }
 
+    /**Page pour les notes */
     private void observations(){
         BorderPane bp = new BorderPane();
         bp.setPadding(new Insets(20,0,0,0));
@@ -233,6 +439,7 @@ public class FichePlante extends StackPane {
         fenetre.setRight(bp);
     }
 
+    /** Page des graphes */
     private void graphes(){
         BorderPane bp = new BorderPane();
         bp.setPadding(new Insets(20,0,0,0));
@@ -270,7 +477,7 @@ public class FichePlante extends StackPane {
         next.setFitHeight(50);
         next.setFitWidth(30);
         next.setOnMouseClicked(mouseEvent -> {
-           infoBox();
+            infoBox();
         });
         suivant.getChildren().add(next);
 
@@ -322,165 +529,6 @@ public class FichePlante extends StackPane {
         plan.setOnMouseClicked(mouseEvent -> System.out.println("event")); /** à modifier */
         bp.setCenter(plan);
         fenetre.setBottom(bp);
-    }
-
-    /** Affiche en overlay les images associées à la plante */
-    private void previewPhotos(){
-        this.getChildren().add(overlay); //permet de créer le fond noir
-
-        BorderPane bp = new BorderPane(); //va permettre l'agencement des différents éléments de la fenetre
-        GridPane gb = new GridPane();
-        gb.setHgap(50);
-        gb.setVgap(50);
-        FlowPane layout = new FlowPane();
-        imagePlante = new ImageView((images.get(indexCurrent)));
-        imagePlante.setFitHeight(500);
-        imagePlante.setPreserveRatio(true);
-        layout.getChildren().add(imagePlante);
-
-        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 12);
-        text.setText((indexCurrent+1) + " / " + (images.size()));
-        text.setFont(font);
-        text.setFill(Color.WHITE);
-
-        //Bouton pour défiler les photos à gauche
-        ImageView flecheG = new ImageView("flecheG.png");
-        flecheG.setFitHeight(80);
-        flecheG.setFitWidth(50);
-        flecheG.setOnMouseClicked(mouseEvent -> {
-            if( indexCurrent == 0) {
-                indexCurrent = images.size() - 1;
-                imagePlante.setImage(images.get(indexCurrent));
-
-            }
-            else{
-                indexCurrent -= 1;
-                imagePlante.setImage(images.get(indexCurrent));
-            }
-            text.setText((indexCurrent+1) + " / " + (images.size()));
-
-        });
-
-        //Bouton pour défiler les photos à droite
-        BorderPane droite = new BorderPane();
-        ImageView flecheD = new ImageView("flecheD.png");
-        flecheD.setFitHeight(80);
-        flecheD.setFitWidth(50);
-        flecheD.setOnMouseClicked(mouseEvent -> {
-            if( indexCurrent == images.size() -1) {
-                indexCurrent = 0;
-                imagePlante.setImage(images.get(indexCurrent));
-            }
-            else{
-                indexCurrent += 1;
-                imagePlante.setImage(images.get(indexCurrent));
-            }
-            text.setText((indexCurrent+1) + " / " + (images.size()));
-        });
-
-        //Bouton pour fermer l'overlay
-        ImageView close = new ImageView("close.png");
-        close.setOnMouseClicked(mouseEvent -> {
-            this.getChildren().remove(bp);
-            this.getChildren().remove(overlay);
-        });
-        droite.setTop(close);
-        droite.setRight(flecheD);
-        droite.setAlignment(flecheD, Pos.CENTER);
-
-
-        gb.add(layout, 8,3);
-        gb.add(text,8,4);
-
-        bp.setCenter(gb);
-        bp.setAlignment(gb, Pos.CENTER);
-
-        bp.setLeft(flecheG);
-        bp.setAlignment(flecheG, Pos.CENTER);
-
-        bp.setRight(droite);
-        bp.setAlignment(flecheD, Pos.CENTER);
-
-
-        this.getChildren().add(bp);
-    }
-
-    /** Affiche l'image de la plante */
-    private void previewPlante(){
-        GridPane gb = new GridPane(); //va permettre l'agencement des elements dans la fenetre
-        gb.setHgap(50);
-        gb.setVgap(10);
-        FlowPane layout = new FlowPane(); //va contenir l'image de la plante
-        imagePlante = new ImageView(this.image);
-        imagePlante.setFitHeight(500);
-        imagePlante.setFitWidth(400);
-        imagePlante.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->  previewPhotos());
-
-        //indique que l'image est cliquable
-        imagePlante.setOnMouseEntered(mouseEvent ->  setCursor(Cursor.HAND));
-        imagePlante.setOnMouseExited(mouseEvent ->  setCursor(Cursor.DEFAULT));
-
-        layout.getChildren().add(imagePlante); //ajout de l'image dans le FlowPane
-
-        //Police d'écriture et affichage du nom
-        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
-        Text titre = new Text(this.nom);
-        titre.setUnderline(true);
-        titre.setFont(font);
-
-        //Bouton ajouter une photo
-        VBox add = new VBox();
-        Button ajouter = new Button("Ajouter photo");
-        add.getChildren().add(ajouter);
-        ajouter.setOnAction(actionEvent -> {
-            //On ne peut selectionner que des images
-            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter( "Image (.jpg, .png, .jpeg)", "*.jpg", "*.png", "*.jpeg");
-            FileChooser fc = new FileChooser();
-            fc.getExtensionFilters().add(filter);
-
-            File f = fc.showOpenDialog(ajouter.getScene().getWindow());
-
-            //Ajout dans les images de la plante associée
-            if (f != null) {
-                String imageUrl = "file:///".concat(f.getPath());
-                addPhoto(imageUrl);
-            }
-        });
-
-        //Les différent élément sont agencée dans la gridpane gb
-        gb.add(titre,1,1);
-        gb.add(layout, 1,2);
-        gb.add(ajouter,1,3);
-        fenetre.setCenter(gb);
-
-    }
-
-    /** Ajoute une photo dans la liste des images associée à la plante */
-
-    private void addPhoto(String path){
-        this.images.add(new Image(path));
-    }
-
-
-    /** Liste des plantes au dessus */
-    public void listPlante(){
-        plantList.getChildren().clear();
-        //Création de la liste
-        for(int i = 0; i<Plante.getPlantes().size();i++){
-            int index = i;
-            String text = "No." + (i+1) +" " + Plante.getPlantes().get(i).getNom();
-            VBox box = new VBox();
-            Button b = new Button(text);
-            b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(Plante.getPlantes().get(index)));
-            b.setSkin(new MyButtonSkin(b));
-            b.setPrefSize((Main.WIDTH - plante.getLeftMenu().getPrefWidth() - box.getPrefWidth())/5, Main.HEIGHT/10f);
-            b.setText(text);
-            box.getChildren().add(b);
-            plantList.getChildren().add(box);
-        }
-        System.out.println("size " + Plante.getNoms().size());
-        scroll.setContent(plantList);
-        fenetre.setTop(scroll);
     }
 
     public String getNom() {
