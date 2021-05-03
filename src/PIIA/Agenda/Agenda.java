@@ -6,6 +6,7 @@ import PIIA.Plante.Plante;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,9 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -47,11 +46,12 @@ public class Agenda extends BorderPane {
 
         /* Examples of filters & events */
         filters.add(new Filter("School", Color.GREEN));
-        filters.add(new Filter("Work", Color.LIGHTCYAN));
-        events.add(new Event(filters.get(1), LocalDate.now().with(week[0]), 12, "Event 1"));
-        events.add(new Event(filters.get(2), LocalDate.now().with(week[5]), 12, 16, "Event 2"));
-        events.add(new Event(filters.get(2), LocalDate.of(2021, 5, 12), 12, 16, "Event 3"));
+        filters.add(new Filter("Work", Color.BLUEVIOLET));
+        events.add(new Event(filters.get(1), LocalDate.now().with(week[0]), 12, "Event 1", ""));
+        events.add(new Event(filters.get(2), LocalDate.now().with(week[5]), 12, 16, "Event 2", "plante au pif"));
+        events.add(new Event(filters.get(2), LocalDate.of(2021, 5, 12), 12, 16, "Event 3", ""));
 
+        this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
         this.left = left;
         this.stage = stage;
         this.setLeft(left);
@@ -65,6 +65,9 @@ public class Agenda extends BorderPane {
     private void filterButton() {
         Button button = new Button("Ajouter un filtre");
         button.setPrefSize(225, 50);
+        button.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        button.setTextFill(Color.WHITE);
         button.setOnMouseClicked(mouseEvent -> {
             final Stage eventPopUp = new Stage();
             eventPopUp.setTitle("Filter Creator");
@@ -82,6 +85,7 @@ public class Agenda extends BorderPane {
         VBox box = new VBox();
         for (Filter f : filters) {
             CheckBox checkBox = new CheckBox(f.getName());
+            checkBox.setTextFill(f.getColor());
             checkBox.setSelected(f.isTicked());
             checkBox.setPrefWidth(left.getPrefWidth());
             checkBox.setOnMouseClicked(mouseEvent -> {
@@ -114,7 +118,7 @@ public class Agenda extends BorderPane {
                 txt = new Text(i + ":00");
                 txt.setFont(new Font(23));
             }
-
+            txt.setFill(Color.WHITE);
             names.getChildren().add(txt);
         }
 
@@ -122,11 +126,12 @@ public class Agenda extends BorderPane {
 
         for (int i = 0; i < 7; i++) {
             VBox box = new VBox();
-            Cell dayCell = new Cell(stage, this, filters);
+            Cell dayCell = new Cell(stage, this, filters, DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(LocalDate.now())
+                    .equals(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(datePicker.getValue().with(week[i]))));
 
             /* Adding the name of the week */
             dayCell.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth()) / 7, Main.HEIGHT / 25f);
-            dayCell.setText(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(datePicker.getValue().with(week[i])));
+            dayCell.setText(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(datePicker.getValue().with(week[i])), "");
             box.getChildren().add(dayCell);
 
             /* Adding other cells */
@@ -164,6 +169,7 @@ public class Agenda extends BorderPane {
 
     private void littleAgenda() {
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
+        datePicker.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
         datePickerSkin.getPopupContent().setOnMouseClicked(mouseEvent -> {
             center = new HBox();
             days.clear();
