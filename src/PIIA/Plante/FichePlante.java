@@ -36,7 +36,7 @@ public class FichePlante extends StackPane {
     private int infoHeight = 500;
 
     private BorderPane fenetre = new BorderPane();//borderpane pour agencer les différents élements qui composent la fiche
-    private Overlay overlay = new Overlay(-10,0,Main.WIDTH,Main.HEIGHT);
+    private Overlay overlay;
     private Text text = new Text();
     private TextArea commentaires = new TextArea();        //Zone de texte pour écrire des observations
     private Plante plante;
@@ -78,6 +78,7 @@ public class FichePlante extends StackPane {
 
     /** Affiche en overlay les images associées à la plante */
     private void previewPhotos(){
+        overlay = new Overlay(-10,0,(int)fenetre.getWidth(),(int)fenetre.getHeight());
         this.getChildren().add(overlay); //permet de créer le fond noir
 
         BorderPane bp = new BorderPane(); //va permettre l'agencement des différents éléments de la fenetre
@@ -294,10 +295,11 @@ public class FichePlante extends StackPane {
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         //Dates clées
-        FlowPane date = new FlowPane();
+        /*FlowPane date = new FlowPane();
         date.setPrefWidth(infoWidth/2);
         date.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));*/
+        dateClef(bp);
 
         //Mesures
         FlowPane mesure = new FlowPane();
@@ -349,12 +351,22 @@ public class FichePlante extends StackPane {
         sub.setCenter(centre);
 
         bp.setTop(header);
-        bp.setLeft(date);
         bp.setRight(mesure);
         bp.setBottom(sub);
 
 
         fenetre.setRight(bp);
+    }
+
+    private void dateClef(BorderPane bp){
+        FlowPane date = new FlowPane();
+        date.setPrefWidth(infoWidth/2);
+        date.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+
+
+        bp.setLeft(date);
     }
 
     /**Page pour les notes */
