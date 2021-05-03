@@ -39,6 +39,8 @@ public class Plante extends BorderPane {
         this.agenda = agenda;
         setButtonActions();
 
+        this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
+
         //Remplissage de la liste
         addPlante(new FichePlante("Abelia","abelia.jpg" ,this));
         addPlante(new FichePlante("Example","example.jpg" ,this));
