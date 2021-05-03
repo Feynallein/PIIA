@@ -31,7 +31,7 @@ public class EventPopUp extends GridPane {
         this.plantIdx = idx;
         this.setHgap(10);
         this.setVgap(3);
-        display(null, null, filters);
+        display(null, -1, filters);
     }
 
     private void display(LocalDate date, int startingTime, ArrayList<Filter> filters) {
@@ -50,6 +50,9 @@ public class EventPopUp extends GridPane {
         Text dateT = new Text("Date :");
         add(dateT, 0, yPos);
 
+        if(date == null) {
+
+        }
         TextField dateTF = new TextField(date.toString());
         dateTF.setDisable(true);
         add(dateTF, 1, yPos);
@@ -60,6 +63,9 @@ public class EventPopUp extends GridPane {
         Text startingTimeT = new Text("Starting time :");
         add(startingTimeT, 0, yPos);
 
+        if(startingTime == -1) {
+
+        }
         TextField startingTimeTF = new TextField(startingTime + ":00");
         startingTimeTF.setDisable(true);
         add(startingTimeTF, 1, yPos);
