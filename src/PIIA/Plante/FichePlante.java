@@ -3,6 +3,7 @@ package PIIA.Plante;
 import PIIA.Agenda.EventPopUp;
 import PIIA.Main;
 import PIIA.Overlay;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -28,6 +29,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FichePlante extends StackPane {
     private String nom;
@@ -430,7 +432,8 @@ public class FichePlante extends StackPane {
         this.getChildren().add(overlay); //permet de créer le fond noir
 
         BorderPane bp = new BorderPane(); //pour agencer
-        DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
+        DatePicker datePicker = new DatePicker(LocalDate.now());
+        DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
         bp.setCenter(datePickerSkin.getPopupContent());
 
         //Bouton pour fermer l'overlay
@@ -449,16 +452,18 @@ public class FichePlante extends StackPane {
                 idx = i;
         }
 
-        LocalDate date = null; //todo: faire que ca soit la date choisi par l'utilisateur avec le petit calendrier dans l'overlay
-
-        //??
-        eventPopUp.setTitle("Event Creator");
-        eventPopUp.initModality(Modality.APPLICATION_MODAL);
-        eventPopUp.initOwner(plante.getAgenda().getStage());
-        EventPopUp popUp = new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), idx);
-        Scene popUpScene = new Scene(popUp);
-        eventPopUp.setScene(popUpScene);
-        eventPopUp.show();
+        int finalIdx = idx;
+        datePickerSkin.getPopupContent().setOnMouseClicked(mouseEvent -> {
+            LocalDate date = datePicker.getValue();
+            //??
+            eventPopUp.setTitle("Event Creator");
+            eventPopUp.initModality(Modality.APPLICATION_MODAL);
+            eventPopUp.initOwner(plante.getAgenda().getStage());
+            EventPopUp popUp = new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), finalIdx);
+            Scene popUpScene = new Scene(popUp);
+            eventPopUp.setScene(popUpScene);
+            eventPopUp.show();
+        });
     }
 
     /**Page pour les notes */

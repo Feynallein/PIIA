@@ -51,6 +51,7 @@ public class EventPopUp extends GridPane {
         Text dateT = new Text("Date :");
         add(dateT, 0, yPos);
 
+        System.out.println(date);
         TextField dateTF = new TextField(date.toString());
         dateTF.setDisable(true);
         add(dateTF, 1, yPos);
