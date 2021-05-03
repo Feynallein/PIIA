@@ -26,7 +26,7 @@ public class FilterPopUp extends GridPane {
 
         /* Color */
         ColorPicker colorPicker = new ColorPicker();
-        //faire que ca choisi une coulor random non présente
+        //todo: proposition : mettre un couleur aléatoire non deja prise par un filtre existant?
         add(colorPicker, 1, 2);
 
         Rectangle rectangle = new Rectangle(50, 25);
