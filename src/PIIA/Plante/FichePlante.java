@@ -387,7 +387,7 @@ public class FichePlante extends StackPane {
         plantation.setFont(font);
         Button bPlantation = new Button("Cliquer pour ajouter une date");
         bPlantation.setOnMouseClicked(mouseEvent -> {
-
+            ajoutDate("Arrosage de la plante : " + this.nom);
         });
 
 
@@ -428,6 +428,46 @@ public class FichePlante extends StackPane {
     }
 
     private void littleCalendar(){
+        overlay = new Overlay(-10,0,(int)fenetre.getWidth(),(int)fenetre.getHeight());
+        this.getChildren().add(overlay); //permet de créer le fond noir
+
+        BorderPane bp = new BorderPane(); //pour agencer
+        DatePicker datePicker = new DatePicker(LocalDate.now());
+        DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
+        bp.setCenter(datePickerSkin.getPopupContent());
+
+        //Bouton pour fermer l'overlay
+        ImageView close = new ImageView("close.png");
+        close.setOnMouseClicked(mouseEvent -> {
+            this.getChildren().remove(bp);
+            this.getChildren().remove(overlay);
+        });
+        bp.setBottom(close);
+        this.getChildren().add(bp);
+
+        //on recupere l'id de la fiche
+        int idx = -1;
+        for(int i = 0; i< plante.getPlantes().size(); i++){
+            if(plante.getPlantes().get(i) == this)
+                idx = i;
+        }
+
+        int finalIdx = idx;
+        datePickerSkin.getPopupContent().setOnMouseClicked(mouseEvent -> {
+            LocalDate date = datePicker.getValue();
+            this.getChildren().remove(bp);
+            this.getChildren().remove(overlay);
+            eventPopUp.setTitle("Event Creator");
+            eventPopUp.initModality(Modality.APPLICATION_MODAL);
+            eventPopUp.initOwner(plante.getAgenda().getStage());
+            EventPopUp popUp = new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), finalIdx);
+            Scene popUpScene = new Scene(popUp);
+            eventPopUp.setScene(popUpScene);
+            eventPopUp.show();
+        });
+    }
+
+    private void ajoutDate(String text){
         overlay = new Overlay(-10,0,(int)fenetre.getWidth(),(int)fenetre.getHeight());
         this.getChildren().add(overlay); //permet de créer le fond noir
 
