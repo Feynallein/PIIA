@@ -21,25 +21,32 @@ public class EventPopUp extends GridPane {
     }
 
     private void display(LocalDate date, int startingTime, ArrayList<Filter> filters) {
+        /* Label */
+        Text labelT = new Text("Event's name :");
+        add(labelT, 0, 0);
+
+        TextField labelTF = new TextField();
+        add(labelTF, 1, 0);
+
         /* Date */
         Text dateT = new Text("Date :");
-        add(dateT, 0, 0);
+        add(dateT, 0, 1);
 
         TextField dateTF = new TextField(date.toString());
         dateTF.setDisable(true);
-        add(dateTF, 1, 0);
+        add(dateTF, 1, 1);
 
         /* Starting time */
-        Text startingTimeT = new Text("Starting time : ");
-        add(startingTimeT, 0, 1);
+        Text startingTimeT = new Text("Starting time :");
+        add(startingTimeT, 0, 2);
 
         TextField startingTimeTF = new TextField(startingTime + ":00");
         startingTimeTF.setDisable(true);
-        add(startingTimeTF, 1, 1);
+        add(startingTimeTF, 1, 2);
 
         /* Ending time */
         Text endingTimeT = new Text("Ending time : ");
-        add(endingTimeT, 0, 3);
+        add(endingTimeT, 0, 4);
 
         ObservableList<String> arr = FXCollections.observableArrayList();
         for (int i = startingTime + 1; i < 24; i++) {
@@ -48,11 +55,11 @@ public class EventPopUp extends GridPane {
         ComboBox<String> endingTimeBc = new ComboBox<>(arr);
         endingTimeBc.setValue(arr.get(0));
         endingTimeBc.setVisibleRowCount(7);
-        add(endingTimeBc, 1, 3);
+        add(endingTimeBc, 1, 4);
 
         /* Filters */
-        Text filtersT = new Text("Filter : ");
-        add(filtersT, 0, 7);
+        Text filtersT = new Text("Filter :");
+        add(filtersT, 0, 8);
 
         ObservableList<String> filtersArr = FXCollections.observableArrayList();
         for (Filter f : filters) {
@@ -61,17 +68,10 @@ public class EventPopUp extends GridPane {
         ComboBox<String> filtersCb = new ComboBox<>(filtersArr);
         filtersCb.setValue(filtersArr.get(0));
         filtersCb.setVisibleRowCount(5);
-        add(filtersCb, 1, 7);
-
-        /* Label */
-        Text labelT = new Text("Label : ");
-        add(labelT, 0, 8);
-
-        TextField labelTF = new TextField();
-        add(labelTF, 1, 8);
+        add(filtersCb, 1, 8);
 
         /* Done !*/
-        Button b = new Button("Done !");
+        Button b = new Button("Ok");
         b.setOnMouseClicked(mouseEvent -> {
             Filter selectedFilter = null;
             for (Filter f : filters) {
