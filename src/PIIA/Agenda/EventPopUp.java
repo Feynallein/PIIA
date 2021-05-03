@@ -11,12 +11,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EventPopUp extends GridPane {
     private final Agenda agenda;
-    private int plantIdx;
+    private final int plantIdx;
 
     public EventPopUp(Agenda agenda, LocalDate date, int startingTime, ArrayList<Filter> filters) {
         this.agenda = agenda;
@@ -51,7 +52,6 @@ public class EventPopUp extends GridPane {
         add(dateT, 0, yPos);
 
         if(date == null) {
-
         }
         TextField dateTF = new TextField(date.toString());
         dateTF.setDisable(true);
@@ -64,11 +64,22 @@ public class EventPopUp extends GridPane {
         add(startingTimeT, 0, yPos);
 
         if(startingTime == -1) {
-
+            ObservableList<String> array = FXCollections.observableArrayList();
+            for (int i = 0; i < 24; i++) {
+                array.add(i + ":00");
+            }
+            ComboBox<String> startingTimeCB = new ComboBox<>(array);
+            startingTimeCB.setValue(array.get(0));
+            startingTimeCB.setVisibleRowCount(7);
+            add(startingTimeCB, 1, yPos);
+            String[] splits = startingTimeCB.getValue().split(":");
+            startingTime = Integer.parseInt(splits[0]);
         }
-        TextField startingTimeTF = new TextField(startingTime + ":00");
-        startingTimeTF.setDisable(true);
-        add(startingTimeTF, 1, yPos);
+        else {
+            TextField startingTimeTF = new TextField(startingTime + ":00");
+            startingTimeTF.setDisable(true);
+            add(startingTimeTF, 1, yPos);
+        }
 
         yPos++;
 
@@ -138,6 +149,8 @@ public class EventPopUp extends GridPane {
 
         /* Done !*/
         Button b = new Button("Ok");
+        int finalStartingTime = startingTime;
+        LocalDate finalDate = date;
         b.setOnMouseClicked(mouseEvent -> {
             Filter selectedFilter = null;
             for (Filter f : filters) {
@@ -147,7 +160,7 @@ public class EventPopUp extends GridPane {
                 }
             }
             String[] splits = endingTimeCB.getValue().split(":");
-            agenda.createNewEvent(new Event(selectedFilter, date, startingTime, Integer.parseInt(splits[0]), labelTF.getText()));
+            agenda.createNewEvent(new Event(selectedFilter, finalDate, finalStartingTime, Integer.parseInt(splits[0]), labelTF.getText()));
             ((Stage) b.getScene().getWindow()).close();
         });
         add(b, 0, yPos);
