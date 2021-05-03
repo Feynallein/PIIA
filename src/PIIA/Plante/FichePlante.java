@@ -13,7 +13,6 @@ import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -22,7 +21,6 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.Flow;
 
 public class FichePlante extends StackPane {
     private String nom;
@@ -270,8 +268,15 @@ public class FichePlante extends StackPane {
             String text = "No." + (i+1) +" " + Plante.getPlantes().get(i).getNom();
             VBox box = new VBox();
             Button b = new Button(text);
+            if(Plante.getPlantes().get(i) == this) {
+                b.setBackground(new Background(new BackgroundFill(Color.GREEN, null, new Insets(0, 0, 0, 0))));
+
+            }else{
+                b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+                b.setSkin(new TransparentButton(b));
+            }
             b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(Plante.getPlantes().get(index)));
-            b.setSkin(new MyButtonSkin(b));
+
             b.setPrefSize((Main.WIDTH - plante.getLeftMenu().getPrefWidth() - box.getPrefWidth())/5, Main.HEIGHT/10f);
             b.setText(text);
             box.getChildren().add(b);

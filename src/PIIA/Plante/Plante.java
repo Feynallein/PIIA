@@ -10,13 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -112,7 +109,8 @@ public class Plante extends BorderPane {
             Button b = new Button(text);
             b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> imagePlante.setImage(plantes.get(index).getImage()));
             b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(plantes.get(index)));
-            b.setSkin(new MyButtonSkin(b));
+            b.setSkin(new TransparentButton(b));
+            b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,new Insets(0,0,0,0))));
             b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth())/3, Main.HEIGHT/10f);
             b.setText(text);
             box.getChildren().add(b);
@@ -137,7 +135,7 @@ public class Plante extends BorderPane {
             eventPopUp.setScene(popUpScene);
             eventPopUp.show();
         });
-        b.setSkin(new MyButtonSkin(b));
+        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,new Insets(0,0,0,0))));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - ajouter.getPrefWidth())/3, Main.HEIGHT/10f);
         ajouter.getChildren().add(b);
 
@@ -177,7 +175,8 @@ public class Plante extends BorderPane {
         Button b = new Button(text);
         b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> imagePlante.setImage(plantes.get(index).getImage()));
         b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(plantes.get(index)));
-        b.setSkin(new MyButtonSkin(b));
+        b.setSkin(new TransparentButton(b));
+        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,new Insets(0,0,0,0))));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth())/3, Main.HEIGHT/10f);
         b.setText(text);
         box.getChildren().add(b);
