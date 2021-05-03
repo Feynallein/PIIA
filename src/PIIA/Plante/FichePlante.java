@@ -379,36 +379,60 @@ public class FichePlante extends StackPane {
 
         GridPane gp = new GridPane();
         gp.setAlignment(Pos.CENTER_LEFT);
-        gp.setHgap(infoHeight/9);
+        gp.setHgap(20);
         gp.setVgap(infoHeight/8);
         int column = 1;
         Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 10);
         Text plantation = new Text("Date de plantation : ");
         plantation.setFont(font);
+
         Button bPlantation = new Button("Cliquer pour ajouter une date");
         bPlantation.setOnMouseClicked(mouseEvent -> {
-
+            ajoutDate("Arrosage de la plante " + this.nom, bPlantation);
         });
+        bPlantation.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+        bPlantation.setSkin(new TransparentButton(bPlantation));
 
 
         Text rempotage = new Text("Date de rempotage : ");
         rempotage.setFont(font);
         Button bRempotage = new Button("Cliquer pour ajouter une date");
+        bRempotage.setOnMouseClicked(mouseEvent -> {
+            ajoutDate("Arrosage de la plante " + this.nom, bRempotage);
+        });
+        bRempotage.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+        bRempotage.setSkin(new TransparentButton(bRempotage));
 
 
         Text arrosage = new Text("Date d'arrosage : ");
         arrosage.setFont(font);
         Button bArrosage = new Button("Cliquer pour ajouter une date");
+        bArrosage.setOnMouseClicked(mouseEvent -> {
+            ajoutDate("Arrosage de la plante " + this.nom, bArrosage);
+        });
+        bArrosage.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+        bArrosage.setSkin(new TransparentButton(bArrosage));
 
 
         Text entretien = new Text("Date d'entretien/ coupe : ");
         entretien.setFont(font);
-        Button bEntretion = new Button("Cliquer pour ajouter une date");
+        Button bEntretien = new Button("Cliquer pour ajouter une date");
+        bEntretien.setOnMouseClicked(mouseEvent -> {
+            ajoutDate("Arrosage de la plante " + this.nom, bEntretien);
+        });
+        bEntretien.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+        bEntretien.setSkin(new TransparentButton(bEntretien));
 
 
         Text recolte = new Text("Date de recolte : ");
         recolte.setFont(font);
         Button bRecolte = new Button("Cliquer pour ajouter une date");
+        bRecolte.setOnMouseClicked(mouseEvent -> {
+            ajoutDate("Arrosage de la plante " + this.nom, bRecolte);
+        });
+        bRecolte.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+        bRecolte.setSkin(new TransparentButton(bRecolte));
+
         gp.add(plantation,column,0);
         gp.add(rempotage,column,1);
         gp.add(arrosage,column,2);
@@ -418,7 +442,7 @@ public class FichePlante extends StackPane {
         gp.add(bPlantation,column +1, 0);
         gp.add(bRempotage,column +1, 1);
         gp.add(bArrosage,column +1, 2);
-        gp.add(bEntretion,column +1, 3);
+        gp.add(bEntretien,column +1, 3);
         gp.add(bRecolte,column +1, 4);
         date.getChildren().add(gp);
 
@@ -461,6 +485,47 @@ public class FichePlante extends StackPane {
             eventPopUp.initModality(Modality.APPLICATION_MODAL);
             eventPopUp.initOwner(plante.getAgenda().getStage());
             EventPopUp popUp = new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), finalIdx);
+            Scene popUpScene = new Scene(popUp);
+            eventPopUp.setScene(popUpScene);
+            eventPopUp.show();
+        });
+    }
+
+    private void ajoutDate(String text, Button b){
+        overlay = new Overlay(-10,0,(int)fenetre.getWidth(),(int)fenetre.getHeight());
+        this.getChildren().add(overlay); //permet de créer le fond noir
+
+        BorderPane bp = new BorderPane(); //pour agencer
+        DatePicker datePicker = new DatePicker(LocalDate.now());
+        DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
+        bp.setCenter(datePickerSkin.getPopupContent());
+
+        //Bouton pour fermer l'overlay
+        ImageView close = new ImageView("close.png");
+        close.setOnMouseClicked(mouseEvent -> {
+            this.getChildren().remove(bp);
+            this.getChildren().remove(overlay);
+        });
+        bp.setBottom(close);
+        this.getChildren().add(bp);
+
+        //on recupere l'id de la fiche
+        int idx = -1;
+        for(int i = 0; i< plante.getPlantes().size(); i++){
+            if(plante.getPlantes().get(i) == this)
+                idx = i;
+        }
+
+        int finalIdx = idx;
+        datePickerSkin.getPopupContent().setOnMouseClicked(mouseEvent -> {
+            LocalDate date = datePicker.getValue();
+            b.setText(date.toString());
+            this.getChildren().remove(bp);
+            this.getChildren().remove(overlay);
+            eventPopUp.setTitle("Event Creator");
+            eventPopUp.initModality(Modality.APPLICATION_MODAL);
+            eventPopUp.initOwner(plante.getAgenda().getStage());
+            EventPopUp popUp = new EventPopUp(plante.getAgenda(), date, text, plante.getAgenda().getFilters(), finalIdx);
             Scene popUpScene = new Scene(popUp);
             eventPopUp.setScene(popUpScene);
             eventPopUp.show();
