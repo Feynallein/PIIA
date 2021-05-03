@@ -463,7 +463,8 @@ public class FichePlante extends StackPane {
 
 
     /** Liste des plantes au dessus */
-    private void listPlante(){
+    public void listPlante(){
+        plantList.getChildren().clear();
         //Création de la liste
         for(int i = 0; i<Plante.getPlantes().size();i++){
             int index = i;

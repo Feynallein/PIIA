@@ -163,6 +163,8 @@ public class Plante extends BorderPane {
         gb.add(scroll,0,1);
         gb.add(ajouter,0,2);
 
+        for(FichePlante fp : plantes) fp.listPlante(); //maj de la liste de plantes de chaque fiche plante
+
         setRight(gb);
     }
 
@@ -184,6 +186,8 @@ public class Plante extends BorderPane {
         for(VBox vb : noms){
             plantList.getChildren().add(vb);
         }
+
+        for(FichePlante fp : plantes) fp.listPlante(); //maj de la liste des plantes de chaque plante
     }
 
     private void setButtonActions(){
