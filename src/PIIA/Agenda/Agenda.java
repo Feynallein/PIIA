@@ -169,6 +169,10 @@ public class Agenda extends BorderPane {
         left.getChildren().get(2).setOnMouseClicked(mouseEvent -> getScene().setRoot(meteo));
     }
 
+    public ArrayList<Filter> getFilters(){
+        return filters;
+    }
+
     public void setPlante(Plante plante) {
         this.plante = plante;
     }

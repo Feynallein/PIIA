@@ -29,7 +29,7 @@ public class EventPopUp extends GridPane {
 
     public EventPopUp(Agenda agenda, ArrayList<Filter> filters, int idx) {
         this.agenda = agenda;
-        this.plantIdx = idx;
+        this.plantIdx = idx + 1;
         this.setHgap(10);
         this.setVgap(3);
         display(null, -1, filters);
@@ -52,6 +52,7 @@ public class EventPopUp extends GridPane {
         add(dateT, 0, yPos);
 
         if(date == null) {
+
         }
         TextField dateTF = new TextField(date.toString());
         dateTF.setDisable(true);
