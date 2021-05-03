@@ -433,7 +433,6 @@ public class FichePlante extends StackPane {
         DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
         bp.setCenter(datePickerSkin.getPopupContent());
 
-
         //Bouton pour fermer l'overlay
         ImageView close = new ImageView("close.png");
         close.setOnMouseClicked(mouseEvent -> {
@@ -450,15 +449,16 @@ public class FichePlante extends StackPane {
                 idx = i;
         }
 
+        LocalDate date = null; //todo: faire que ca soit la date choisi par l'utilisateur avec le petit calendrier dans l'overlay
+
         //??
         eventPopUp.setTitle("Event Creator");
         eventPopUp.initModality(Modality.APPLICATION_MODAL);
         eventPopUp.initOwner(plante.getAgenda().getStage());
-        EventPopUp popUp = new EventPopUp(plante.getAgenda(), plante.getAgenda().getFilters(), idx);
+        EventPopUp popUp = new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), idx);
         Scene popUpScene = new Scene(popUp);
         eventPopUp.setScene(popUpScene);
         eventPopUp.show();
-
     }
 
     /**Page pour les notes */

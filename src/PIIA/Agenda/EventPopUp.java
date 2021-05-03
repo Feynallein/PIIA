@@ -27,12 +27,12 @@ public class EventPopUp extends GridPane {
         display(date, startingTime, filters);
     }
 
-    public EventPopUp(Agenda agenda, ArrayList<Filter> filters, int idx) {
+    public EventPopUp(Agenda agenda, LocalDate date, ArrayList<Filter> filters, int idx) {
         this.agenda = agenda;
         this.plantIdx = idx + 1;
         this.setHgap(10);
         this.setVgap(3);
-        display(null, -1, filters);
+        display(date, -1, filters);
     }
 
     private void display(LocalDate date, int startingTime, ArrayList<Filter> filters) {
@@ -51,9 +51,6 @@ public class EventPopUp extends GridPane {
         Text dateT = new Text("Date :");
         add(dateT, 0, yPos);
 
-        if(date == null) {
-
-        }
         TextField dateTF = new TextField(date.toString());
         dateTF.setDisable(true);
         add(dateTF, 1, yPos);
@@ -151,7 +148,6 @@ public class EventPopUp extends GridPane {
         /* Done !*/
         Button b = new Button("Ok");
         int finalStartingTime = startingTime;
-        LocalDate finalDate = date;
         b.setOnMouseClicked(mouseEvent -> {
             Filter selectedFilter = null;
             for (Filter f : filters) {
@@ -161,7 +157,7 @@ public class EventPopUp extends GridPane {
                 }
             }
             String[] splits = endingTimeCB.getValue().split(":");
-            agenda.createNewEvent(new Event(selectedFilter, finalDate, finalStartingTime, Integer.parseInt(splits[0]), labelTF.getText()));
+            agenda.createNewEvent(new Event(selectedFilter, date, finalStartingTime, Integer.parseInt(splits[0]), labelTF.getText()));
             ((Stage) b.getScene().getWindow()).close();
         });
         add(b, 0, yPos);
