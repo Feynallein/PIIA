@@ -30,6 +30,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.Flow;
 
 public class FichePlante extends StackPane {
     private String nom;
@@ -488,17 +489,24 @@ public class FichePlante extends StackPane {
         this.getChildren().add(overlay); //permet de créer le fond noir
 
         BorderPane bp = new BorderPane(); //pour agencer
+        FlowPane fp = new FlowPane();
+        fp.setAlignment(Pos.CENTER);
         DatePicker datePicker = new DatePicker(LocalDate.now());
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
-        bp.setCenter(datePickerSkin.getPopupContent());
+        datePickerSkin.getPopupContent().resize(800,800);
+        fp.getChildren().add(datePickerSkin.getPopupContent());
+
+        bp.setCenter(fp);
 
         //Bouton pour fermer l'overlay
+        BorderPane sub = new BorderPane();
         ImageView close = new ImageView("close.png");
         close.setOnMouseClicked(mouseEvent -> {
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
         });
-        bp.setBottom(close);
+        sub.setTop(close);
+        bp.setRight(close);
         this.getChildren().add(bp);
 
         //on recupere l'id de la fiche
@@ -528,19 +536,24 @@ public class FichePlante extends StackPane {
         this.getChildren().add(overlay); //permet de créer le fond noir
 
         BorderPane bp = new BorderPane(); //pour agencer
+        FlowPane fp = new FlowPane();
+        fp.setAlignment(Pos.CENTER);
         DatePicker datePicker = new DatePicker(LocalDate.now());
-        datePicker.setPrefHeight(500);
-        datePicker.setPrefWidth(500);
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
-        bp.setCenter(datePickerSkin.getPopupContent());
+        datePickerSkin.getPopupContent().resize(800,800);
+        fp.getChildren().add(datePickerSkin.getPopupContent());
+
+        bp.setCenter(fp);
 
         //Bouton pour fermer l'overlay
+        BorderPane sub = new BorderPane();
         ImageView close = new ImageView("close.png");
         close.setOnMouseClicked(mouseEvent -> {
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
         });
-        bp.setBottom(close);
+        sub.setTop(close);
+        bp.setRight(close);
         this.getChildren().add(bp);
 
         //on recupere l'id de la fiche
