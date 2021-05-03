@@ -205,6 +205,8 @@ public class FichePlante extends StackPane {
         //Bouton ajouter une photo
         VBox add = new VBox();
         Button ajouter = new Button("Ajouter photo");
+        ajouter.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+        ajouter.setSkin(new TransparentButton(ajouter));
         add.getChildren().add(ajouter);
         ajouter.setOnAction(actionEvent -> {
             //On ne peut selectionner que des images
@@ -306,10 +308,6 @@ public class FichePlante extends StackPane {
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         //Dates clées
-        /*FlowPane date = new FlowPane();
-        date.setPrefWidth(infoWidth/2);
-        date.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));*/
         dateClef(bp);
 
         //Mesures
@@ -497,6 +495,8 @@ public class FichePlante extends StackPane {
 
         BorderPane bp = new BorderPane(); //pour agencer
         DatePicker datePicker = new DatePicker(LocalDate.now());
+        datePicker.setPrefHeight(500);
+        datePicker.setPrefWidth(500);
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
         bp.setCenter(datePickerSkin.getPopupContent());
 
