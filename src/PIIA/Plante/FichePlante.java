@@ -76,23 +76,6 @@ public class FichePlante extends StackPane {
 
     }
 
-    /*public FichePlante(String nom,String photo){
-        this.nom = nom;
-        this.image = new Image(photo);
-        images.add(image);
-        listPlante();
-        previewPlante();
-        infoBox();
-        bottom();
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setPrefHeight((Main.HEIGHT/10f));
-
-        this.getChildren().add(fenetre);
-
-    }*/
-
-
-
     /** Affiche en overlay les images associées à la plante */
     private void previewPhotos(){
         this.getChildren().add(overlay); //permet de créer le fond noir
@@ -162,14 +145,14 @@ public class FichePlante extends StackPane {
 
 
         //Bouton definir photo comme défault
-        VBox add = new VBox();
-        Button b = new Button("Definir comme photo principale");
-        add.getChildren().add(b);
-        b.setOnMouseClicked(mouseEvent -> setDefaultImage(indexCurrent));
+            VBox add = new VBox();
+            Button b = new Button("Definir comme photo principale");
+            add.getChildren().add(b);
+            b.setOnMouseClicked(mouseEvent -> setDefaultImage(indexCurrent));
+            gb.add(b,9,4);
 
 
         gb.add(text,8,4);
-        gb.add(b,9,4);
 
         bp.setCenter(gb);
         bp.setAlignment(gb, Pos.CENTER);
