@@ -3,9 +3,11 @@ package PIIA;
 import PIIA.Agenda.Agenda;
 import PIIA.Plante.Plante;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -32,10 +34,22 @@ public class Main extends Application {
     private VBox createLeftMenu(){
         Button b1 = new Button("agenda");
         b1.setPrefSize(225, 50);
+        b1.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        b1.setTextFill(Color.WHITE);
+        b1.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
         Button b2 = new Button("plantedex");
         b2.setPrefSize(225, 50);
+        b2.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        b2.setTextFill(Color.WHITE);
+        b2.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
         Button b3 = new Button("meteo");
         b3.setPrefSize(225, 50);
+        b3.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        b3.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        b3.setTextFill(Color.WHITE);
+
         return new VBox(b1, b2, b3);
     }
 

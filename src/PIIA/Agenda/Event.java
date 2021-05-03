@@ -10,21 +10,24 @@ public class Event {
     private final int endingTime;
     private final String label;
     private final Filter filter;
+    private final String plantName;
 
-    public Event(Filter filter, LocalDate date, int startingTime, int endingTime, String label) {
+    public Event(Filter filter, LocalDate date, int startingTime, int endingTime, String label, String plantName) {
         this.filter = filter;
         this.date = date;
         this.startingTime = startingTime;
         this.endingTime = endingTime;
         this.label = label;
+        this.plantName = plantName;
     }
 
-    public Event(Filter filter, LocalDate date, int startingTime, String label) {
+    public Event(Filter filter, LocalDate date, int startingTime, String label, String plantName) {
         this.filter = filter;
         this.date = date;
         this.startingTime = startingTime;
         this.endingTime = startingTime + 1;
         this.label = label;
+        this.plantName = plantName;
     }
 
     public Color getColor() {
@@ -49,5 +52,9 @@ public class Event {
 
     public Filter getFilter(){
         return filter;
+    }
+
+    public String getPlantName(){
+        return plantName;
     }
 }

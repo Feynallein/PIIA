@@ -166,7 +166,7 @@ public class EventPopUp extends GridPane {
                 }
             }
             String[] splits = endingTimeCB.getValue().split(":");
-            agenda.createNewEvent(new Event(selectedFilter, date, finalStartingTime, Integer.parseInt(splits[0]), labelTF.getText()));
+            agenda.createNewEvent(new Event(selectedFilter, date, finalStartingTime, Integer.parseInt(splits[0]), labelTF.getText(), plantCB.getValue()));
             ((Stage) b.getScene().getWindow()).close();
         });
         add(b, 0, yPos);
