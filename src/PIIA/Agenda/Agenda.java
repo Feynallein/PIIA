@@ -35,6 +35,7 @@ public class Agenda extends BorderPane {
     private Meteo meteo;
     private final VBox left;
     private HBox center = new HBox();
+    private DatePicker datePicker = new DatePicker(LocalDate.now());
     private final ArrayList<VBox> days = new ArrayList<>();
     private final DayOfWeek[] week = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
     private final ArrayList<Event> events = new ArrayList<>();
@@ -124,7 +125,7 @@ public class Agenda extends BorderPane {
 
             /* Adding the name of the week */
             dayCell.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth()) / 7, Main.HEIGHT / 25f);
-            dayCell.setText(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(LocalDate.now().with(week[i])));
+            dayCell.setText(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(datePicker.getValue().with(week[i])));
             box.getChildren().add(dayCell);
 
             /* Adding other cells */
@@ -160,7 +161,12 @@ public class Agenda extends BorderPane {
     }
 
     private void littleAgenda() {
-        DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
+        DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
+        datePickerSkin.getPopupContent().setOnMouseClicked(mouseEvent -> {
+            center = new HBox();
+            days.clear();
+            bigAgenda();
+        });
         left.getChildren().add(datePickerSkin.getPopupContent());
     }
 
