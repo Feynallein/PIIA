@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EventPopUp extends GridPane {
-    private Agenda agenda;
+    private final Agenda agenda;
 
     public EventPopUp(Agenda agenda, LocalDate date, int startingTime, ArrayList<Filter> filters) {
         this.agenda = agenda;
@@ -55,7 +55,7 @@ public class EventPopUp extends GridPane {
         add(filtersT, 0, 7);
 
         ObservableList<String> filtersArr = FXCollections.observableArrayList();
-        for(Filter f : filters){
+        for (Filter f : filters) {
             filtersArr.add(f.getName());
         }
         ComboBox<String> filtersCb = new ComboBox<>(filtersArr);
@@ -74,8 +74,8 @@ public class EventPopUp extends GridPane {
         Button b = new Button("Done !");
         b.setOnMouseClicked(mouseEvent -> {
             Filter selectedFilter = null;
-            for(Filter f : filters){
-                if(f.getName().equals(filtersCb.getValue())){
+            for (Filter f : filters) {
+                if (f.getName().equals(filtersCb.getValue())) {
                     selectedFilter = f;
                     break;
                 }

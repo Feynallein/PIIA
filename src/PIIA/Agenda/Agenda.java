@@ -5,12 +5,14 @@ import PIIA.Meteo;
 import PIIA.Plante.Plante;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.skin.DatePickerSkin;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -31,12 +33,12 @@ import java.util.ArrayList;
 public class Agenda extends BorderPane {
     private Plante plante;
     private Meteo meteo;
-    private VBox left;
+    private final VBox left;
     private HBox center = new HBox();
     private final ArrayList<VBox> days = new ArrayList<>();
     private final DayOfWeek[] week = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
-    private ArrayList<Event> events = new ArrayList<>();
-    private ArrayList<Filter> filters = new ArrayList<>();
+    private final ArrayList<Event> events = new ArrayList<>();
+    private final ArrayList<Filter> filters = new ArrayList<>();
     private final Stage stage;
 
     public Agenda(VBox left, final Stage stage) {
@@ -78,11 +80,25 @@ public class Agenda extends BorderPane {
         VBox box = new VBox();
         for (Filter f : filters) {
             CheckBox checkBox = new CheckBox(f.getName());
-            checkBox.setSelected(true);
+            checkBox.setSelected(f.isTicked());
             checkBox.setPrefWidth(left.getPrefWidth());
+            checkBox.setOnMouseClicked(mouseEvent -> {
+                if(checkBox.isSelected()) f.tick();
+                else f.unTick();
+                center = new HBox();
+                days.clear();
+                bigAgenda();
+            });
             box.getChildren().add(checkBox);
         }
         left.getChildren().add(box);
+    }
+
+    private boolean checkIfFilterIsTicked(Filter filter){
+        for(Filter f : filters){
+            if(f == filter && f.isTicked()) return true;
+        }
+        return false;
     }
 
     private void bigAgenda() {
@@ -118,7 +134,7 @@ public class Agenda extends BorderPane {
                 cell.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth()) / 7, Main.HEIGHT / 25f);
 
                 for (Event e : events) {
-                    if (e.getDay().compareTo(LocalDate.now().with(week[i])) == 0 && e.getStartingTime() <= j && e.getEndingTime() > j) {
+                    if (e.getDay().compareTo(LocalDate.now().with(week[i])) == 0 && e.getStartingTime() <= j && e.getEndingTime() > j && checkIfFilterIsTicked(e.getFilter())) {
                         cell.addEvent(e, e.getStartingTime() == j);
                     }
                 }
