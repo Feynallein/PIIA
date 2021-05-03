@@ -26,8 +26,9 @@ public class EventPopUp extends GridPane {
         display(date, startingTime, filters);
     }
 
-    public EventPopUp(Agenda agenda, ArrayList<Filter> filters) {
+    public EventPopUp(Agenda agenda, ArrayList<Filter> filters, int idx) {
         this.agenda = agenda;
+        this.plantIdx = idx;
         this.setHgap(10);
         this.setVgap(3);
         display(null, null, filters);
