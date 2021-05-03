@@ -1,11 +1,7 @@
 package PIIA.Agenda;
 
-import javafx.beans.value.ObservableBooleanValue;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -41,32 +37,33 @@ public class Cell extends Region {
         this.stage = stage;
         this.agenda = agenda;
         this.filters = filters;
-        if(currentWeek) setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        if (currentWeek)
+            setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         updateOnClick();
     }
 
-    public void setTime(int time){
+    public void setTime(int time) {
         this.startingTime = time;
     }
 
-    public void setDate(LocalDate date){
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public void setText(String text){
+    public void setText(String text) {
         this.hasEvent = true;
         updateOnClick();
         StackPane pane = new StackPane(new Text(text));
         getChildren().setAll(pane);
     }
 
-    public void addEvent(Event e, boolean hasLabel){
+    public void addEvent(Event e, boolean hasLabel) {
         setBackground(new Background(new BackgroundFill(e.getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
-        if(hasLabel) setText(e.getLabel());
+        if (hasLabel) setText(e.getLabel());
     }
 
-    private void updateOnClick(){
-        if(!this.hasEvent) setOnMouseClicked(mouseEvent -> {
+    private void updateOnClick() {
+        if (!this.hasEvent) setOnMouseClicked(mouseEvent -> {
             final Stage eventPopUp = new Stage();
             eventPopUp.setTitle("Event Creator");
             eventPopUp.initModality(Modality.APPLICATION_MODAL);

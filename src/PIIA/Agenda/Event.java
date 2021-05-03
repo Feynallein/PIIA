@@ -9,7 +9,7 @@ public class Event {
     private final int startingTime;
     private final int endingTime;
     private final String label;
-    private Filter filter;
+    private final Filter filter;
 
     public Event(Filter filter, LocalDate date, int startingTime, int endingTime, String label) {
         this.filter = filter;
@@ -43,7 +43,11 @@ public class Event {
         return endingTime;
     }
 
-    public String getLabel(){
+    public String getLabel() {
         return label;
+    }
+
+    public Filter getFilter(){
+        return filter;
     }
 }

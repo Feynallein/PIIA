@@ -3,12 +3,14 @@ package PIIA.Agenda;
 import javafx.scene.paint.Color;
 
 public class Filter {
-    private String name;
-    private Color color;
+    private final String name;
+    private final Color color;
+    private boolean isTicked;
 
     public Filter(String name, Color color) {
         this.name = name;
         this.color = color;
+        this.isTicked = true;
     }
 
     public String getName() {
@@ -17,5 +19,17 @@ public class Filter {
 
     public Color getColor() {
         return color;
+    }
+
+    public void unTick(){
+        isTicked = false;
+    }
+
+    public void tick(){
+        isTicked = true;
+    }
+
+    public boolean isTicked() {
+        return isTicked;
     }
 }
