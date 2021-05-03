@@ -169,7 +169,6 @@ public class Agenda extends BorderPane {
 
     private void littleAgenda() {
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
-        datePicker.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
         datePickerSkin.getPopupContent().setOnMouseClicked(mouseEvent -> {
             center = new HBox();
             days.clear();
