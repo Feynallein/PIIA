@@ -50,6 +50,7 @@ public class Agenda extends BorderPane {
         filters.add(new Filter("Work", Color.LIGHTCYAN));
         events.add(new Event(filters.get(1), LocalDate.now().with(week[0]), 12, "Event 1"));
         events.add(new Event(filters.get(2), LocalDate.now().with(week[5]), 12, 16, "Event 2"));
+        events.add(new Event(filters.get(2), LocalDate.of(2021, 5, 12), 12, 16, "Event 3"));
 
         this.left = left;
         this.stage = stage;
@@ -131,11 +132,12 @@ public class Agenda extends BorderPane {
             /* Adding other cells */
             for (int j = 0; j < 24; j++) {
                 Cell cell = new Cell(LocalDate.now().with(week[i]), j, stage, this, filters, DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(LocalDate.now())
-                        .equals(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(LocalDate.now().with(week[i]))));
+                        .equals(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(datePicker.getValue().with(week[i]))));
                 cell.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth()) / 7, Main.HEIGHT / 25f);
 
+                /* Displaying the event if there is one */
                 for (Event e : events) {
-                    if (e.getDay().compareTo(LocalDate.now().with(week[i])) == 0 && e.getStartingTime() <= j && e.getEndingTime() > j && checkIfFilterIsTicked(e.getFilter())) {
+                    if (e.getDay().compareTo(datePicker.getValue().with(week[i])) == 0 && e.getStartingTime() <= j && e.getEndingTime() > j && checkIfFilterIsTicked(e.getFilter())) {
                         cell.addEvent(e, e.getStartingTime() == j);
                     }
                 }

@@ -29,7 +29,7 @@ public class Cell extends Region {
         updateOnClick();
     }
 
-    public Cell(LocalDate date, int startingTime, Stage stage, Agenda agenda, ArrayList<Filter> filters, boolean currentWeek) {
+    public Cell(LocalDate date, int startingTime, Stage stage, Agenda agenda, ArrayList<Filter> filters, boolean currentDay) {
         this.hasEvent = false;
         setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         this.date = date;
@@ -37,7 +37,7 @@ public class Cell extends Region {
         this.stage = stage;
         this.agenda = agenda;
         this.filters = filters;
-        if (currentWeek)
+        if (currentDay)
             setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         updateOnClick();
     }
