@@ -39,7 +39,7 @@ public class Plante extends BorderPane {
         this.agenda = agenda;
         setButtonActions();
 
-        this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
+        //this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
 
         //Remplissage de la liste
         addPlante(new FichePlante("Abelia","abelia.jpg" ,this));
@@ -49,14 +49,6 @@ public class Plante extends BorderPane {
         addPlante(new FichePlante("Plante","plante.jpg" ,this));
         addPlante(new FichePlante("Sedum","sedum.jpg",this ));
         addPlante(new FichePlante("Silene","silene.jpg",this ));
-
-        /*addPlante(new FichePlante("Abelia","abelia.jpg" ));
-        addPlante(new FichePlante("Example","example.jpg" ));
-        addPlante(new FichePlante("Lychnis","lychnis.jpg" ));
-        addPlante(new FichePlante("Macchia","Macchia.jpg" ));
-        addPlante(new FichePlante("Plante","plante.jpg" ));
-        addPlante(new FichePlante("Sedum","sedum.jpg" ));
-        addPlante(new FichePlante("Silene","silene.jpg" ));*/
 
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setPrefHeight((Main.HEIGHT/10f) * 7);
