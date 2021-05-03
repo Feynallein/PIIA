@@ -24,7 +24,7 @@ public class EventPopUp extends GridPane {
         this.setHgap(10);
         this.setVgap(3);
         plantIdx = 0;
-        display(date, startingTime, filters);
+        display(date, startingTime, "", filters);
     }
 
     public EventPopUp(Agenda agenda, LocalDate date, ArrayList<Filter> filters, int idx) {
@@ -32,17 +32,26 @@ public class EventPopUp extends GridPane {
         this.plantIdx = idx + 1;
         this.setHgap(10);
         this.setVgap(3);
-        display(date, -1, filters);
+        display(date, -1, "", filters);
     }
 
-    private void display(LocalDate date, int startingTime, ArrayList<Filter> filters) {
+    public EventPopUp(Agenda agenda, LocalDate date, String name, ArrayList<Filter> filters, int idx) {
+        this.agenda = agenda;
+        this.plantIdx = idx + 1;
+        this.setHgap(10);
+        this.setVgap(3);
+        display(date, -1, name, filters);
+    }
+
+    private void display(LocalDate date, int startingTime, String name, ArrayList<Filter> filters) {
         int yPos = 0;
 
         /* Label */
         Text labelT = new Text("Event's name :");
         add(labelT, 0, yPos);
 
-        TextField labelTF = new TextField();
+        TextField labelTF = new TextField(name);
+        if(!name.equals("")) labelTF.setDisable(true);
         add(labelTF, 1, yPos);
 
         yPos++;
