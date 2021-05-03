@@ -363,6 +363,50 @@ public class FichePlante extends StackPane {
         date.setPrefWidth(infoWidth/2);
         date.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        date.setAlignment(Pos.CENTER_LEFT);
+
+
+        GridPane gp = new GridPane();
+        gp.setAlignment(Pos.CENTER_LEFT);
+        gp.setHgap(infoHeight/9);
+        gp.setVgap(infoHeight/8);
+        int column = 1;
+        Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 10);
+        Text plantation = new Text("Date de plantation : ");
+        plantation.setFont(font);
+        Button bPlantation = new Button("Cliquer pour ajouter une date");
+
+
+        Text rempotage = new Text("Date de rempotage : ");
+        rempotage.setFont(font);
+        Button bRempotage = new Button("Cliquer pour ajouter une date");
+
+
+        Text arrosage = new Text("Date d'arrosage : ");
+        arrosage.setFont(font);
+        Button bArrosage = new Button("Cliquer pour ajouter une date");
+
+
+        Text entretien = new Text("Date d'entretien/ coupe : ");
+        entretien.setFont(font);
+        Button bEntretion = new Button("Cliquer pour ajouter une date");
+
+
+        Text recolte = new Text("Date de recolte : ");
+        recolte.setFont(font);
+        Button bRecolte = new Button("Cliquer pour ajouter une date");
+        gp.add(plantation,column,0);
+        gp.add(rempotage,column,1);
+        gp.add(arrosage,column,2);
+        gp.add(entretien,column,3);
+        gp.add(recolte,column,4);
+
+        gp.add(bPlantation,column +1, 0);
+        gp.add(bRempotage,column +1, 1);
+        gp.add(bArrosage,column +1, 2);
+        gp.add(bEntretion,column +1, 3);
+        gp.add(bRecolte,column +1, 4);
+        date.getChildren().add(gp);
 
 
 
