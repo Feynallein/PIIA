@@ -13,30 +13,38 @@ public class FilterPopUp extends GridPane {
 
     public FilterPopUp(Agenda agenda) {
         this.agenda = agenda;
+        this.setHgap(10);
+        this.setVgap(3);
         display();
     }
 
     private void display() {
+        int yPos = 0;
+
         /* Label */
         Text labelT = new Text("Filter's name :");
-        add(labelT, 0, 0);
+        add(labelT, 0, yPos);
 
         TextField labelTF = new TextField();
-        add(labelTF, 1, 0);
+        add(labelTF, 1, yPos);
+
+        yPos++;
 
         /* Color */
         Text colorLT = new Text("Color :");
-        add(colorLT, 0, 2);
+        add(colorLT, 0, yPos);
 
         ColorPicker colorPicker = new ColorPicker();
         //todo: proposition : mettre un couleur aléatoire non deja prise par un filtre existant?
-        add(colorPicker, 1, 3);
+        add(colorPicker, 1, yPos);
 
         Rectangle rectangle = new Rectangle(50, 25);
         rectangle.setFill(colorPicker.getValue());
-        add(rectangle, 0, 3);
+        add(rectangle, 0, yPos);
 
         colorPicker.setOnAction(actionEvent -> rectangle.setFill(colorPicker.getValue()));
+
+        yPos++;
 
         /* Done !*/
         Button b = new Button("Ok");
@@ -46,7 +54,7 @@ public class FilterPopUp extends GridPane {
                 ((Stage) b.getScene().getWindow()).close();
             }
         });
-        add(b, 0, 9);
+        add(b, 0, yPos);
     }
 }
 
