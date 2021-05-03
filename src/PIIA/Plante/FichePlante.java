@@ -464,11 +464,20 @@ public class FichePlante extends StackPane {
 
     /** Liste des plantes au dessus */
     private void listPlante(){
-        for(VBox vb : plante.getNoms()){
-
-            plantList.getChildren().add(vb);
+        //Création de la liste
+        for(int i = 0; i<Plante.getPlantes().size();i++){
+            int index = i;
+            String text = "No." + (i+1) +" " + Plante.getPlantes().get(i).getNom();
+            VBox box = new VBox();
+            Button b = new Button(text);
+            b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(Plante.getPlantes().get(index)));
+            b.setSkin(new MyButtonSkin(b));
+            b.setPrefSize((Main.WIDTH - plante.getLeftMenu().getPrefWidth() - box.getPrefWidth())/5, Main.HEIGHT/10f);
+            b.setText(text);
+            box.getChildren().add(b);
+            plantList.getChildren().add(box);
         }
-        System.out.println("size " +plante.getNoms().size());
+        System.out.println("size " + Plante.getNoms().size());
         scroll.setContent(plantList);
         fenetre.setTop(scroll);
     }

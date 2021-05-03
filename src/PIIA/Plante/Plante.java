@@ -29,7 +29,7 @@ public class Plante extends BorderPane {
     private final VBox left;
     private VBox plantList = new VBox();
     private ImageView imagePlante;
-    private ArrayList<FichePlante> plantes = new ArrayList<>();
+    private static ArrayList<FichePlante> plantes = new ArrayList<>();
     private static ArrayList<VBox> noms = new ArrayList<>();
     private ScrollPane scroll = new ScrollPane();
 
@@ -64,6 +64,7 @@ public class Plante extends BorderPane {
         listPlante();
         previewPlante();
         setAgenda(agenda);
+
 
         setPadding(new Insets(5, 10, 10, 0));
         System.out.println(noms.size());
@@ -104,7 +105,7 @@ public class Plante extends BorderPane {
         gb.setVgap(50);
 
         //Création de la liste
-        for(int i = 0; i<7;i++){
+        for(int i = 0; i<plantes.size();i++){
             int index = i;
             String text = "No." + (i+1) +" " + plantes.get(i).getNom();
             VBox box = new VBox();
@@ -128,7 +129,7 @@ public class Plante extends BorderPane {
         Button b = new Button("Ajouter Plante");
         b.setOnMouseClicked(mouseEvent -> {
             final Stage eventPopUp = new Stage();
-            eventPopUp.setTitle("Event Pop Up");
+            eventPopUp.setTitle("Ajouter une plante");
             eventPopUp.initModality(Modality.APPLICATION_MODAL);
             //eventPopUp.initOwner(stage);
             PlantePopUp popUp = new PlantePopUp(this);
@@ -203,7 +204,11 @@ public class Plante extends BorderPane {
         return noms;
     }
 
-    public ArrayList<FichePlante> getPlantes() {
+    public static ArrayList<FichePlante> getPlantes() {
         return plantes;
+    }
+
+    public VBox getLeftMenu() {
+        return left;
     }
 }
