@@ -212,4 +212,6 @@ public class Plante extends BorderPane {
     public VBox getLeftMenu() {
         return left;
     }
+
+
 }

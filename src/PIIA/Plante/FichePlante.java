@@ -39,6 +39,7 @@ public class FichePlante extends StackPane {
     private int indexCurrent = 0; //L'index de l'image choisis comme photo principale
     private ImageView imagePlante;
     private ScrollPane scroll = new ScrollPane();
+    private VBox mesures = new VBox();
 
     /** dimmension de l'info box*/
     private int infoWidth = 800;
@@ -311,11 +312,7 @@ public class FichePlante extends StackPane {
         dateClef(bp);
 
         //Mesures
-        FlowPane mesure = new FlowPane();
-        mesure.setPrefWidth(infoWidth/2);
-        mesure.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
+        mesure(bp);
 
 
         BorderPane sub = new BorderPane(); //va contenir les boutons pour faire défiler les pages
@@ -360,7 +357,6 @@ public class FichePlante extends StackPane {
         sub.setCenter(centre);
 
         bp.setTop(header);
-        bp.setRight(mesure);
         bp.setBottom(sub);
 
 
@@ -447,6 +443,40 @@ public class FichePlante extends StackPane {
 
 
         bp.setLeft(date);
+    }
+
+    private void mesure(BorderPane bp){
+        BorderPane layout = new BorderPane();
+        FlowPane mesure = new FlowPane();
+        mesure.setAlignment(Pos.CENTER);
+        mesure.setPrefWidth(infoWidth/2);
+        layout.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        Button b = new Button("Ajouter une mesure");
+        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, Insets.EMPTY)));
+        b.setSkin(new TransparentButton(b));
+        b.setOnMouseClicked(mouseEvent -> {
+            final Stage eventPopUp = new Stage();
+            eventPopUp.setTitle("Nouvelle Mesure");
+            eventPopUp.initModality(Modality.APPLICATION_MODAL);
+            //eventPopUp.initOwner(stage);
+            MesurePopUp popUp = new MesurePopUp(this);
+            Scene popUpScene = new Scene(popUp);
+            eventPopUp.setScene(popUpScene);
+            eventPopUp.show();
+        });
+        mesure.getChildren().add(b);
+        layout.setBottom(mesure);
+        bp.setRight(layout);
+
+    }
+
+    public void ajouterMesure(String nom, String valeur, String unite,BorderPane bp){
+        FlowPane layout = new FlowPane();
+        layout.setAlignment(Pos.CENTER_LEFT);
+        Text text = new Text(nom + " :" + valeur + " " + unite);
+        layout.getChildren().add(text);
+        mesures.getChildren().add(layout);
     }
 
     private void littleCalendar(){
@@ -702,4 +732,6 @@ public class FichePlante extends StackPane {
     public Image getImage() {
         return image;
     }
+
+    public BorderPane getFenetre(){return fenetre;}
 }
