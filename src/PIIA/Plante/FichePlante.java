@@ -1,10 +1,12 @@
 package PIIA.Plante;
 
+import PIIA.Agenda.EventPopUp;
 import PIIA.Main;
 import PIIA.Overlay;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -19,6 +21,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 
 import java.io.File;
@@ -37,6 +41,8 @@ public class FichePlante extends StackPane {
     /** dimmension de l'info box*/
     private int infoWidth = 800;
     private int infoHeight = 500;
+
+    final Stage eventPopUp = new Stage();
 
     private BorderPane fenetre = new BorderPane();//borderpane pour agencer les différents élements qui composent la fiche
     private Overlay overlay;
@@ -423,9 +429,8 @@ public class FichePlante extends StackPane {
         overlay = new Overlay(-10,0,(int)fenetre.getWidth(),(int)fenetre.getHeight());
         this.getChildren().add(overlay); //permet de créer le fond noir
 
-        BorderPane bp = new BorderPane();
+        BorderPane bp = new BorderPane(); //pour agencer
         DatePickerSkin datePickerSkin = new DatePickerSkin(new DatePicker(LocalDate.now()));
-
         bp.setCenter(datePickerSkin.getPopupContent());
 
 
@@ -437,6 +442,23 @@ public class FichePlante extends StackPane {
         });
         bp.setBottom(close);
         this.getChildren().add(bp);
+
+        //on recupere l'id de la fiche
+        int idx = -1;
+        for(int i = 0; i< plante.getPlantes().size(); i++){
+            if(plante.getPlantes().get(i) == this)
+                idx = i;
+        }
+
+        //??
+        eventPopUp.setTitle("Event Creator");
+        eventPopUp.initModality(Modality.APPLICATION_MODAL);
+        eventPopUp.initOwner(plante.getAgenda().getStage());
+        EventPopUp popUp = new EventPopUp(plante.getAgenda(), plante.getAgenda().getFilters(), idx);
+        Scene popUpScene = new Scene(popUp);
+        eventPopUp.setScene(popUpScene);
+        eventPopUp.show();
+
     }
 
     /**Page pour les notes */
@@ -598,6 +620,7 @@ public class FichePlante extends StackPane {
         plan.setFitWidth(200);
         plan.setOnMouseClicked(mouseEvent -> littleCalendar()); /** à modifier */
         bp.setCenter(plan);
+
         fenetre.setBottom(bp);
     }
 

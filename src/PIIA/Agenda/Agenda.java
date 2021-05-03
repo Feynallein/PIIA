@@ -173,6 +173,10 @@ public class Agenda extends BorderPane {
         return filters;
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     public void setPlante(Plante plante) {
         this.plante = plante;
     }

@@ -203,6 +203,10 @@ public class Plante extends BorderPane {
         this.agenda = agenda;
     }
 
+    public Agenda getAgenda() {
+        return agenda;
+    }
+
     public static ArrayList<VBox> getNoms() {
         return noms;
     }
