@@ -68,7 +68,7 @@ public class Cell extends Region {
     private void updateOnClick(){
         if(!this.hasEvent) setOnMouseClicked(mouseEvent -> {
             final Stage eventPopUp = new Stage();
-            eventPopUp.setTitle("Event Pop Up");
+            eventPopUp.setTitle("Event Creator");
             eventPopUp.initModality(Modality.APPLICATION_MODAL);
             eventPopUp.initOwner(stage);
             EventPopUp popUp = new EventPopUp(agenda, date, startingTime, filters);
