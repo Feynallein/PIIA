@@ -25,8 +25,10 @@ public class PlantePopUp extends GridPane {
         /* Done !*/
         Button b = new Button("Done !");
         b.setOnMouseClicked(mouseEvent -> {
-            plante.createPlante(nameTF.getText());
-            ((Stage) b.getScene().getWindow()).close();
+            if (!nameTF.getText().equals("")) {
+                plante.createPlante(nameTF.getText());
+                ((Stage) b.getScene().getWindow()).close();
+            }
         });
         add(b, 0, 9);
     }
