@@ -60,7 +60,6 @@ public class Plante extends BorderPane {
 
 
         setPadding(new Insets(5, 10, 10, 0));
-        System.out.println(noms.size());
     }
 
 
@@ -82,8 +81,6 @@ public class Plante extends BorderPane {
         gb.add(titre, 1, 0);
         gb.add(layout, 1, 2);
         setCenter(gb);
-
-        System.out.println(plantes);
     }
 
     private void addPlante(FichePlante fp) {

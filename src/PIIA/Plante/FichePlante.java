@@ -276,7 +276,6 @@ public class FichePlante extends StackPane {
             box.getChildren().add(b);
             plantList.getChildren().add(box);
         }
-        System.out.println("size " + Plante.getNoms().size());
         scroll.setContent(plantList);
         fenetre.setTop(scroll);
     }
