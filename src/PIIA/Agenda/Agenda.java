@@ -23,13 +23,13 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 public class Agenda extends BorderPane {
+    public final static DayOfWeek[] week = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
     private Plante plante;
     private Meteo meteo;
     private final VBox left;
     private HBox center = new HBox();
     private final DatePicker datePicker = new DatePicker(LocalDate.now());
     private final ArrayList<VBox> days = new ArrayList<>();
-    private final DayOfWeek[] week = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
     private final ArrayList<Event> events = new ArrayList<>();
     private final ArrayList<Filter> filters = new ArrayList<>();
     private final Stage stage;
