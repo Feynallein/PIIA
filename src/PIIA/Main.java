@@ -1,7 +1,7 @@
 package PIIA;
 
 import PIIA.Agenda.Agenda;
-import PIIA.Meteo.Meteo;
+import PIIA.Meteo.Weather;
 import PIIA.Plante.Plante;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -19,11 +19,11 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Agenda a = new Agenda(createLeftMenu(), stage);
         Plante p = new Plante(createLeftMenu(), a);
-        Meteo m = new Meteo(createLeftMenu(), p, a);
+        Weather w = new Weather(createLeftMenu(), p, a);
 
         a.setPlante(p);
-        a.setMeteo(m);
-        p.setMeteo(m);
+        a.setWeather(w);
+        p.setWeather(w);
 
         // 16:9
         Scene scene = new Scene(a, WIDTH, HEIGHT);

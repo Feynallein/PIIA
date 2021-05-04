@@ -3,6 +3,7 @@ package PIIA.Meteo;
 import PIIA.Agenda.Agenda;
 import PIIA.Plante.Plante;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.layout.*;
@@ -19,45 +20,68 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class Meteo extends BorderPane {
+public class Weather extends BorderPane {
     private final Agenda agenda;
     private Plante plante;
     private final VBox left;
-    private final ArrayList<HashMap<String, String>> forecastWeather = new ArrayList<>();
+    private final ArrayList<HashMap<String, String>> forecastWeather;
     private final HashMap<String, String> weather;
     public static final String[] months = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"};
     public static final String[] days = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
 
-    public Meteo(VBox left, Plante plante, Agenda agenda) {
+    public Weather(VBox left, Plante plante, Agenda agenda) {
         this.left = left;
         this.setLeft(left);
         this.plante = plante;
         this.agenda = agenda;
         setButtonActions();
+
+        /* Getting the weather */
         getWeather();
-        for(int i = 1; i < 2 + 7; i++){
-            getForecastWeather(i);
-            String path = "Resources/WeatherXML/forecastWeather" + i + ".xml";
-            forecastWeather.add(XmlDomParser.forecastParse(path));
-        }
+        getForecastWeather();
+        forecastWeather = XmlDomParser.forecastParse("Resources/WeatherXML/forecastWeather.xml");
         weather = XmlDomParser.parse("Resources/WeatherXML/weather.xml");
+
+        /* Display things */
         this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
-        top();
         center();
-        right();
+        this.setRight(new VBox(informationPane(), nextDayForecastPane()));
         left.getChildren().add(new DatePickerSkin(new DatePicker()).getPopupContent());
     }
 
-    private void right(){
-        VBox box = new VBox();
-        box.getChildren().add(informationPane());
-        this.setRight(box);
+    private FlowPane dayPane(int i){
+        int size = 10;
+        String[] splits = forecastWeather.get(i).get("date").split("-");
+        Text date = txt(days[(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2 + i)%7] + " " + splits[2] + " " + months[Integer.parseInt(splits[1])] + " " + splits[0], size);
+        Text min = txt("Température min : " + forecastWeather.get(i).get("temperatureMin") + "°C", size);
+        Text max = txt("Température max : " + forecastWeather.get(i).get("temperatureMax") + "°C", size);
+        Text weatherTxt = txt("Météo globale : " + forecastWeather.get(i).get("weather"), size);
+        Text clouds = txt("Climat du jour  : " + forecastWeather.get(i).get("clouds"), size);
+        Text precipitationProbability = txt("Probabilité de précipitations : " + forecastWeather.get(i).get("precipitationProbability"), size);
+
+        VBox box = new VBox(date, min, max, weatherTxt, clouds, precipitationProbability);
+        box.setMaxWidth(180);
+        box.setMinWidth(180);
+
+        FlowPane flowPane = new FlowPane(box);
+        flowPane.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        flowPane.setMaxWidth(box.getMaxWidth());
+        flowPane.setMinWidth(box.getMinWidth());
+        return flowPane;
     }
 
-    private FlowPane informationPane(){
+    private GridPane nextDayForecastPane() {
+        GridPane res = new GridPane();
+        for(int i = 1; i < forecastWeather.size(); i++){
+            res.add(dayPane(i), (i-1)%2, (i-1)/2);
+        }
+        return res;
+    }
+
+    private FlowPane informationPane() {
         int size = 25;
         Text weatherTxt = txt("Météo globale : " + forecastWeather.get(0).get("weather"), size);
-        Text clouds = txt("Climat du jour  : " + weather.get("clouds"), size);
+        Text clouds = txt("Climat du jour  : " + weather.get("clouds"), size - 3);
         Text gust = txt("Moyenne des rafales : " + forecastWeather.get(0).get("windGust") + " m/s", size);
         Text wind = txt("Vitesse du vent : " + weather.get("windSpeed") + " m/s", size);
         Text windDir = txt("Direction du vent : " + weather.get("windDirection"), size);
@@ -68,13 +92,17 @@ public class Meteo extends BorderPane {
         Text actualPrecipitation = txt("Precipitation en cours : " + (weather.get("precipitation").equals("no") ? "aucune" : weather.get("precipitationType")), size);
 
         VBox box = new VBox(weatherTxt, clouds, gust, wind, windDir, humidity, precipitationProbability, precipitationType, precipitationVolume, actualPrecipitation);
+        box.setMaxWidth(360);
+        box.setMinWidth(360);
+
         FlowPane flowPane = new FlowPane(box);
         flowPane.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        flowPane.setMaxWidth(box.getWidth());
+        flowPane.setMaxWidth(box.getMaxWidth());
+        flowPane.setMinWidth(box.getMinWidth());
         return flowPane;
     }
 
-    private VBox temperaturePane(){
+    private VBox temperaturePane() {
         int titleSize = 30;
         int valueSize = 35;
 
@@ -122,10 +150,11 @@ public class Meteo extends BorderPane {
         FlowPane flowPane = new FlowPane(pane);
         flowPane.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         flowPane.setMaxWidth(pane.getWidth());
+
         return new VBox(txt, flowPane);
     }
 
-    private VBox feelsLikePane(){
+    private VBox feelsLikePane() {
         int titleSize = 30;
         int valueSize = 35;
 
@@ -164,23 +193,16 @@ public class Meteo extends BorderPane {
         return new VBox(txt, flowPane);
     }
 
-    private Text txt(String s, int size){
+    private Text txt(String s, int size) {
         Text text = new Text(s);
         text.setFill(Color.WHITE);
         text.setFont(new Font(size));
         return text;
     }
 
-    private void top(){
-
-    }
-
-    private void center(){
-        VBox box = new VBox();
-
+    private void center() {
         /* Date */
         String[] splits = LocalDate.now().toString().split("-");
-        System.out.println(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
         Text date = txt(days[Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2] + " " + splits[2] + " " + months[Integer.parseInt(splits[1])] + " " + splits[0], 50);
 
         /* Time */
@@ -193,25 +215,18 @@ public class Meteo extends BorderPane {
         Text temperatureFeelsLike = txt("Ressentie : " + weather.get("feelsLike") + "°C", 60);
 
         /* Weather */
-        Text clouds = txt("Météo actuelle : " + weather.get("clouds"), 50);
+        Text clouds = txt("Météo actuelle : " + weather.get("clouds"), 40);
 
-        box.getChildren().add(date);
-        box.getChildren().add(time);
-        box.getChildren().add(temperature);
-        box.getChildren().add(temperatureFeelsLike);
-        box.getChildren().add(clouds);
-        box.getChildren().add(temperaturePane());
-        box.getChildren().add(feelsLikePane());
-        this.setCenter(box);
+        this.setCenter(new VBox(date, time, temperature, temperatureFeelsLike, clouds, temperaturePane(), feelsLikePane()));
     }
 
-    private void getForecastWeather(int cnt){
-        String api = "https://api.openweathermap.org/data/2.5/forecast/daily?q=Paris&cnt=" + cnt + "&mode=xml&appid=d5d132013b7e8d4712976e55c8e2121b&units=metric&lang=fr";
-        String path = "Resources/WeatherXML/forecastWeather" + cnt + ".xml";
+    private void getForecastWeather() {
+        String api = "https://api.openweathermap.org/data/2.5/forecast/daily?q=Paris&cnt=11&mode=xml&appid=d5d132013b7e8d4712976e55c8e2121b&units=metric&lang=fr";
+        String path = "Resources/WeatherXML/forecastWeather.xml";
         generateXML(api, path);
     }
 
-    private void getWeather(){
+    private void getWeather() {
         String api = "https://api.openweathermap.org/data/2.5/weather?q=Paris&units=metric&lang=fr&appid=d5d132013b7e8d4712976e55c8e2121b&mode=xml";
         String path = "Resources/WeatherXML/weather.xml";
         generateXML(api, path);
@@ -225,7 +240,7 @@ public class Meteo extends BorderPane {
             HttpURLConnection c = (HttpURLConnection) url.openConnection();
             c.setRequestMethod("GET");
             try (var reader = new BufferedReader(new InputStreamReader(c.getInputStream()))) {
-                for (String line; (line = reader.readLine()) != null;) {
+                for (String line; (line = reader.readLine()) != null; ) {
                     writer.write(line);
                 }
             }
