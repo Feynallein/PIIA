@@ -6,7 +6,6 @@ import PIIA.PopUp.PopUp;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -21,8 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+
 
 
 import java.io.File;
@@ -43,8 +41,6 @@ public class FichePlante extends StackPane {
      */
     private final int infoWidth = 800;
     private final int infoHeight = 500;
-
-    final Stage eventPopUp = new Stage();
 
     private final BorderPane fenetre = new BorderPane();//borderpane pour agencer les différents élements qui composent la fiche
     private Overlay overlay;
@@ -305,10 +301,6 @@ public class FichePlante extends StackPane {
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         //Dates clées
-        /*FlowPane date = new FlowPane();
-        date.setPrefWidth(infoWidth/2);
-        date.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));*/
         dateClef(bp);
 
         //Mesures
@@ -443,17 +435,22 @@ public class FichePlante extends StackPane {
         this.getChildren().add(overlay); //permet de créer le fond noir
 
         BorderPane bp = new BorderPane(); //pour agencer
+        FlowPane fp = new FlowPane();
+        fp.setAlignment(Pos.CENTER);
         DatePicker datePicker = new DatePicker(LocalDate.now());
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
-        bp.setCenter(datePickerSkin.getPopupContent());
+        fp.getChildren().add(datePickerSkin.getPopupContent());
+        bp.setCenter(fp);
 
         //Bouton pour fermer l'overlay
+        BorderPane sub = new BorderPane();
         ImageView close = new ImageView("close.png");
         close.setOnMouseClicked(mouseEvent -> {
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
         });
-        bp.setBottom(close);
+        sub.setTop(close);
+        bp.setRight(close);
         this.getChildren().add(bp);
 
         //on recupere l'id de la fiche
@@ -478,17 +475,22 @@ public class FichePlante extends StackPane {
         this.getChildren().add(overlay); //permet de créer le fond noir
 
         BorderPane bp = new BorderPane(); //pour agencer
+        FlowPane fp = new FlowPane();
+        fp.setAlignment(Pos.CENTER);
         DatePicker datePicker = new DatePicker(LocalDate.now());
         DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
-        bp.setCenter(datePickerSkin.getPopupContent());
+        fp.getChildren().add(datePickerSkin.getPopupContent());
+        bp.setCenter(fp);
 
         //Bouton pour fermer l'overlay
+        BorderPane sub = new BorderPane();
         ImageView close = new ImageView("close.png");
         close.setOnMouseClicked(mouseEvent -> {
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
         });
-        bp.setBottom(close);
+        sub.setTop(close);
+        bp.setRight(close);
         this.getChildren().add(bp);
 
         //on recupere l'id de la fiche
@@ -505,7 +507,7 @@ public class FichePlante extends StackPane {
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
             new PopUp(plante.getAgenda().getStage(),
-                    new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), finalIdx), "Planifier un événement");
+                    new EventPopUp(plante.getAgenda(), date,text, plante.getAgenda().getFilters(), finalIdx), "Planifier un événement");
         });
     }
 
@@ -670,7 +672,7 @@ public class FichePlante extends StackPane {
         ImageView plan = new ImageView("plan.png");
         plan.setFitHeight(50);
         plan.setFitWidth(200);
-        plan.setOnMouseClicked(mouseEvent -> littleCalendar()); /** à modifier */
+        plan.setOnMouseClicked(mouseEvent -> littleCalendar());
         bp.setCenter(plan);
 
         fenetre.setBottom(bp);
@@ -680,7 +682,7 @@ public class FichePlante extends StackPane {
         return nom;
     }
 
-    public Image getImage() {
+    Image getImage() {
         return image;
     }
 }
