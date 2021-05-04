@@ -1,8 +1,8 @@
 package PIIA.Plante;
 
-import PIIA.Agenda.EventPopUp;
 import PIIA.Main;
 import PIIA.Overlay;
+import PIIA.PopUp.EventPopUp;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

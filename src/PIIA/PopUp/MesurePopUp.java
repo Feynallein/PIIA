@@ -1,25 +1,26 @@
-package PIIA.Plante;
+package PIIA.PopUp;
 
+import PIIA.Plante.FichePlante;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class MesurePopUp extends GridPane {
+public class MesurePopUp extends PopUpPane {
     private FichePlante fp;
 
     public MesurePopUp(FichePlante fp) {
+        super();
         this.fp = fp;
         display();
     }
 
-    private void display() {
+    @Override
+    void display() {
         /* Mesure */
-        setHgap(10);
         Text nameT = new Text("Nom de la mesure :");
         add(nameT, 0, 0);
 
@@ -44,7 +45,7 @@ public class MesurePopUp extends GridPane {
         b.setOnMouseClicked(mouseEvent -> {
 
                 //plante.createPlante(nameTF.getText());
-                fp.ajouterMesure(nameTF.toString(),valeurTF.toString(),comboBox.getId(),fp.getFenetre());
+                //fp.ajouterMesure(nameTF.toString(),valeurTF.toString(),comboBox.getId(),fp.getFenetre());
                 ((Stage) b.getScene().getWindow()).close();
             
         });

@@ -96,6 +96,7 @@ public class EventPopUp extends PopUpPane {
             add(startingTimeCB, 1, yPos);
             String[] splits = startingTimeCB.getValue().split(":");
             startingTime = Integer.parseInt(splits[0]);
+            System.out.println(startingTime);
         } else {
             TextField startingTimeTF = new TextField(startingTime + ":00");
             startingTimeTF.setDisable(true);
