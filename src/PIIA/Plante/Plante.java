@@ -3,6 +3,8 @@ package PIIA.Plante;
 import PIIA.Agenda.Agenda;
 import PIIA.Main;
 import PIIA.Meteo;
+import PIIA.PopUp.EventPopUp;
+import PIIA.PopUp.PopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -128,6 +130,8 @@ public class Plante extends BorderPane {
             Scene popUpScene = new Scene(popUp);
             eventPopUp.setScene(popUpScene);
             eventPopUp.show();
+
+            //new PopUp(this.agenda.getStage(), popUp, "Planifier un evenement");
         });
         b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - ajouter.getPrefWidth()) / 3, Main.HEIGHT / 10f);
