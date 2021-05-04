@@ -3,11 +3,9 @@ package PIIA.Agenda;
 import PIIA.PopUp.EventPopUp;
 import PIIA.PopUp.PopUp;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;

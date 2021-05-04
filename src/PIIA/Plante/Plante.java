@@ -2,9 +2,8 @@ package PIIA.Plante;
 
 import PIIA.Agenda.Agenda;
 import PIIA.Main;
-import PIIA.Meteo;
-import PIIA.PopUp.EventPopUp;
-import PIIA.PopUp.PopUp;
+import PIIA.Meteo.Meteo;
+import PIIA.PopUp.PlantePopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -26,11 +25,11 @@ import java.util.ArrayList;
 
 public class Plante extends BorderPane {
     private final VBox left;
-    private VBox plantList = new VBox();
+    private final VBox plantList = new VBox();
     private ImageView imagePlante;
-    private static ArrayList<FichePlante> plantes = new ArrayList<>();
-    private static ArrayList<VBox> noms = new ArrayList<>();
-    private ScrollPane scroll = new ScrollPane();
+    private static final ArrayList<FichePlante> plantes = new ArrayList<>();
+    private static final ArrayList<VBox> noms = new ArrayList<>();
+    private final ScrollPane scroll = new ScrollPane();
 
     private Agenda agenda;
     private Meteo meteo;
@@ -88,8 +87,8 @@ public class Plante extends BorderPane {
 
     private void addPlante(FichePlante fp) {
         plantes.add(fp);
-        //preview.add(new Image(path));
-        //plantes.add(path);
+        /*preview.add(new Image(path));
+        plantes.add(path);*/
     }
 
     private void listPlante() {
@@ -99,18 +98,8 @@ public class Plante extends BorderPane {
 
         //Création de la liste
         for (int i = 0; i < plantes.size(); i++) {
-            int index = i;
             String text = "No." + (i + 1) + " " + plantes.get(i).getNom();
-            VBox box = new VBox();
-            Button b = new Button(text);
-            b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> imagePlante.setImage(plantes.get(index).getImage()));
-            b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(plantes.get(index)));
-            b.setSkin(new TransparentButton(b));
-            b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
-            b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth()) / 3, Main.HEIGHT / 10f);
-            b.setText(text);
-            box.getChildren().add(b);
-            noms.add(box);
+            boxCreator(i, text);
         }
         for (VBox vb : noms) {
             plantList.getChildren().add(vb);
@@ -130,8 +119,6 @@ public class Plante extends BorderPane {
             Scene popUpScene = new Scene(popUp);
             eventPopUp.setScene(popUpScene);
             eventPopUp.show();
-
-            //new PopUp(this.agenda.getStage(), popUp, "Planifier un evenement");
         });
         b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - ajouter.getPrefWidth()) / 3, Main.HEIGHT / 10f);
@@ -144,7 +131,7 @@ public class Plante extends BorderPane {
                         "Alphabetique",
                         "Date d'ajout"
                 );
-        final ComboBox comboBox = new ComboBox(filtres);
+        final ComboBox<String> comboBox = new ComboBox<>(filtres);
         comboBox.getItems().addAll();
         comboBox.getSelectionModel().select(0); //La liste est triée par numéro par défaut
 
@@ -169,6 +156,16 @@ public class Plante extends BorderPane {
         addPlante(new FichePlante(nomPlante, this));
         int index = noms.size();
         String text = "No." + (index + 1) + " " + nomPlante;
+        boxCreator(index, text);
+        plantList.getChildren().clear();
+        for (VBox vb : noms) {
+            plantList.getChildren().add(vb);
+        }
+
+        for (FichePlante fp : plantes) fp.listPlante(); //maj de la liste des plantes de chaque plante
+    }
+
+    private void boxCreator(int index, String text) {
         VBox box = new VBox();
         Button b = new Button(text);
         b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> imagePlante.setImage(plantes.get(index).getImage()));
@@ -179,12 +176,6 @@ public class Plante extends BorderPane {
         b.setText(text);
         box.getChildren().add(b);
         noms.add(box);
-        plantList.getChildren().clear();
-        for (VBox vb : noms) {
-            plantList.getChildren().add(vb);
-        }
-
-        for (FichePlante fp : plantes) fp.listPlante(); //maj de la liste des plantes de chaque plante
     }
 
     private void setButtonActions() {

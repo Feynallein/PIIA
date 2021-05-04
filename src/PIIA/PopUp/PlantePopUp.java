@@ -1,20 +1,21 @@
-package PIIA.Plante;
+package PIIA.PopUp;
 
+import PIIA.Plante.Plante;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class PlantePopUp extends GridPane {
-    private Plante plante;
+public class PlantePopUp extends PopUpPane {
+    private final Plante plante;
 
     public PlantePopUp(Plante plante) {
         this.plante = plante;
         display();
     }
 
-    private void display() {
+    @Override
+    void display() {
         /* Plante */
         Text nameT = new Text("Nom de la plante :");
         add(nameT, 0, 0);

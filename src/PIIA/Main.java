@@ -1,6 +1,7 @@
 package PIIA;
 
 import PIIA.Agenda.Agenda;
+import PIIA.Meteo.Meteo;
 import PIIA.Plante.Plante;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -31,7 +32,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    private VBox createLeftMenu(){
+    private VBox createLeftMenu() {
         Button b1 = new Button("agenda");
         b1.setPrefSize(225, 50);
         b1.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));

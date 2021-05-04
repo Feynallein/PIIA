@@ -1,4 +1,4 @@
-package PIIA;
+package PIIA.Meteo;
 
 import PIIA.Agenda.Agenda;
 import PIIA.Plante.Plante;
@@ -6,7 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 public class Meteo extends BorderPane {
-    private Agenda agenda;
+    private final Agenda agenda;
     private Plante plante;
     private final VBox left;
 
@@ -18,12 +18,12 @@ public class Meteo extends BorderPane {
         setButtonActions();
     }
 
-    private void setButtonActions(){
+    private void setButtonActions() {
         left.getChildren().get(0).setOnMouseClicked(mouseEvent -> getScene().setRoot(agenda));
         left.getChildren().get(1).setOnMouseClicked(mouseEvent -> getScene().setRoot(plante));
     }
 
-    public void setAgenda(Agenda agenda) { this.agenda = agenda; }
-
-    public void setPlante(Plante plante) { this.plante = plante; }
+    public void setPlante(Plante plante) {
+        this.plante = plante;
+    }
 }
