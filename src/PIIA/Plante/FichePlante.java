@@ -217,7 +217,6 @@ public class FichePlante extends StackPane {
             }
         });
 
-
         //Les différent élément sont agencée dans la gridpane gb
         gb.add(titre, 1, 1);
         gb.add(layout, 1, 2);
@@ -229,7 +228,6 @@ public class FichePlante extends StackPane {
     /**
      * Ajoute une photo dans la liste des images associée à la plante
      */
-
     private void addPhoto(String path) {
         this.images.add(new Image(path));
         if (this.images.size() == 1) { //Si la fiche n'a qu'une seule image
@@ -247,7 +245,6 @@ public class FichePlante extends StackPane {
         previewPlante();
         this.getChildren().remove(this.getChildren().size() - 1);
         this.getChildren().remove(overlay);
-
     }
 
 
@@ -315,7 +312,7 @@ public class FichePlante extends StackPane {
 
         //Mesures
         FlowPane mesure = new FlowPane();
-        mesure.setPrefWidth(infoWidth / 2);
+        mesure.setPrefWidth(infoWidth / 2.);
         mesure.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
@@ -339,7 +336,7 @@ public class FichePlante extends StackPane {
 
         //Bouton page précédente
         FlowPane precedent = new FlowPane();
-        precedent.setPrefWidth(infoWidth / 3);
+        precedent.setPrefWidth(infoWidth / 3.);
         precedent.setAlignment(Pos.CENTER_RIGHT);
         //Button before = new Button("page precedente");
         ImageView before = new ImageView("flecheG.png");
@@ -356,7 +353,7 @@ public class FichePlante extends StackPane {
         ImageView page1 = new ImageView("p1.png");
         FlowPane centre = new FlowPane();
         centre.setAlignment(Pos.CENTER);
-        centre.setPrefWidth(infoWidth / 3);
+        centre.setPrefWidth(infoWidth / 3.);
         centre.getChildren().add(page1);
 
         sub.setCenter(centre);
@@ -371,7 +368,7 @@ public class FichePlante extends StackPane {
 
     private void dateClef(BorderPane bp) {
         FlowPane date = new FlowPane();
-        date.setPrefWidth(infoWidth / 2);
+        date.setPrefWidth(infoWidth / 2.);
         date.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         date.setAlignment(Pos.CENTER_LEFT);
@@ -380,7 +377,7 @@ public class FichePlante extends StackPane {
         GridPane gp = new GridPane();
         gp.setAlignment(Pos.CENTER_LEFT);
         gp.setHgap(20);
-        gp.setVgap(infoHeight / 8);
+        gp.setVgap(infoHeight / 8.);
         int column = 1;
         Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 10);
         Text plantation = new Text("Date de plantation : ");
@@ -510,8 +507,8 @@ public class FichePlante extends StackPane {
 
         //on recupere l'id de la fiche
         int idx = -1;
-        for (int i = 0; i < plante.getPlantes().size(); i++) {
-            if (plante.getPlantes().get(i) == this)
+        for (int i = 0; i < Plante.getPlantes().size(); i++) {
+            if (Plante.getPlantes().get(i) == this)
                 idx = i;
         }
 
@@ -564,7 +561,7 @@ public class FichePlante extends StackPane {
 
         //Bouton page suivante
         FlowPane suivant = new FlowPane();
-        suivant.setPrefWidth(infoWidth / 3);
+        suivant.setPrefWidth(infoWidth / 3.);
         suivant.setAlignment(Pos.CENTER_LEFT);
         //Button next = new Button("page suivante");
         ImageView next = new ImageView("flecheD.png");
@@ -575,7 +572,7 @@ public class FichePlante extends StackPane {
 
         //Bouton page précédente
         FlowPane precedent = new FlowPane();
-        precedent.setPrefWidth(infoWidth / 3);
+        precedent.setPrefWidth(infoWidth / 3.);
         precedent.setAlignment(Pos.CENTER_RIGHT);
         //Button before = new Button("page precedente");
         ImageView before = new ImageView("flecheG.png");
@@ -592,7 +589,7 @@ public class FichePlante extends StackPane {
         ImageView page1 = new ImageView("p2.png");
         FlowPane centre = new FlowPane();
         centre.setAlignment(Pos.CENTER);
-        centre.setPrefWidth(infoWidth / 3);
+        centre.setPrefWidth(infoWidth / 3.);
         centre.getChildren().add(page1);
         sub.setCenter(centre);
 
@@ -636,7 +633,7 @@ public class FichePlante extends StackPane {
 
         //bouton page suivante
         FlowPane suivant = new FlowPane();
-        suivant.setPrefWidth(infoWidth / 3);
+        suivant.setPrefWidth(infoWidth / 3.);
         suivant.setAlignment(Pos.CENTER_LEFT);
         //Button next = new Button("page suivante");
         ImageView next = new ImageView("flecheD.png");
@@ -649,7 +646,7 @@ public class FichePlante extends StackPane {
 
         //bouton page précédente
         FlowPane precedent = new FlowPane();
-        precedent.setPrefWidth(infoWidth / 3);
+        precedent.setPrefWidth(infoWidth / 3.);
         precedent.setAlignment(Pos.CENTER_RIGHT);
         //Button before = new Button("page precedente");
         ImageView before = new ImageView("flecheG.png");
@@ -663,7 +660,7 @@ public class FichePlante extends StackPane {
         ImageView page1 = new ImageView("p3.png");
         FlowPane centre = new FlowPane();
         centre.setAlignment(Pos.CENTER);
-        centre.setPrefWidth(infoWidth / 3);
+        centre.setPrefWidth(infoWidth / 3.);
         centre.getChildren().add(page1);
 
         sub.setCenter(centre);
