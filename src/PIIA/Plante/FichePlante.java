@@ -3,6 +3,7 @@ package PIIA.Plante;
 import PIIA.Main;
 import PIIA.PopUp.EventPopUp;
 import PIIA.PopUp.PopUp;
+import PIIA.PopUp.PromptPopUp;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -198,6 +199,8 @@ public class FichePlante extends StackPane {
         //Bouton ajouter une photo
         VBox add = new VBox();
         Button ajouter = new Button("Ajouter photo");
+        ajouter.setSkin(new TransparentButton(ajouter));
+        ajouter.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, Insets.EMPTY)));
         add.getChildren().add(ajouter);
         ajouter.setOnAction(actionEvent -> {
             //On ne peut selectionner que des images
@@ -211,6 +214,8 @@ public class FichePlante extends StackPane {
             if (f != null) {
                 String imageUrl = "file:///".concat(f.getPath());
                 addPhoto(imageUrl);
+                new PopUp(plante.getAgenda().getStage(), new PromptPopUp("Photo ajoutée avec succès !"), "Confirmation");
+
             }
         });
 

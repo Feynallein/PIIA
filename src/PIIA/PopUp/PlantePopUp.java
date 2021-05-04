@@ -29,6 +29,7 @@ public class PlantePopUp extends PopUpPane {
             if (!nameTF.getText().equals("")) {
                 plante.createPlante(nameTF.getText());
                 ((Stage) b.getScene().getWindow()).close();
+                new PopUp(plante.getAgenda().getStage(), new PromptPopUp("Plante ajoutée !"), "Confirmation");
             }
         });
         add(b, 0, 9);
