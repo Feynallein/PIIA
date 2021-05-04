@@ -2,12 +2,14 @@ package PIIA.Plante;
 
 import PIIA.Main;
 import PIIA.PopUp.EventPopUp;
+import PIIA.PopUp.MesurePopUp;
 import PIIA.PopUp.PopUp;
 import PIIA.PopUp.PromptPopUp;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.skin.DatePickerSkin;
@@ -15,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,7 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 
-
+import java.awt.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -309,10 +310,7 @@ public class FichePlante extends StackPane {
         dateClef(bp);
 
         //Mesures
-        FlowPane mesure = new FlowPane();
-        mesure.setPrefWidth(infoWidth / 2.);
-        mesure.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        mesure(bp);
 
 
         BorderPane sub = new BorderPane(); //va contenir les boutons pour faire défiler les pages
@@ -357,7 +355,6 @@ public class FichePlante extends StackPane {
         sub.setCenter(centre);
 
         bp.setTop(header);
-        bp.setRight(mesure);
         bp.setBottom(sub);
 
 
@@ -435,6 +432,33 @@ public class FichePlante extends StackPane {
         bp.setLeft(date);
     }
 
+    private void mesure(BorderPane bp){
+        BorderPane layout = new BorderPane();
+        FlowPane sub = new FlowPane();
+        sub.setPrefWidth(infoWidth / 2.);
+        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        layout.setCenter(sub);
+
+        FlowPane bottom = new FlowPane();
+        bottom.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        bottom.setAlignment(Pos.CENTER);
+        Button ajouter = new Button("Ajouter une mesure");
+        ajouter.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),
+                new MesurePopUp(this), "Ajouter une mesure"));
+        ajouter.setSkin(new TransparentButton(ajouter));
+        ajouter.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, Insets.EMPTY)));
+        bottom.getChildren().add(ajouter);
+        layout.setBottom(bottom);
+
+        bp.setRight(layout);
+
+    }
+
+    private void ajouterMesure(String nom, String value, ComboBox cb, BorderPane bp){
+
+    }
     private void littleCalendar() {
         overlay = new Overlay(-10, 0, (int) fenetre.getWidth(), (int) fenetre.getHeight());
         this.getChildren().add(overlay); //permet de créer le fond noir
@@ -551,7 +575,6 @@ public class FichePlante extends StackPane {
         FlowPane suivant = new FlowPane();
         suivant.setPrefWidth(infoWidth / 3.);
         suivant.setAlignment(Pos.CENTER_LEFT);
-        //Button next = new Button("page suivante");
         ImageView next = new ImageView("flecheD.png");
         next.setFitHeight(50);
         next.setFitWidth(30);
@@ -562,7 +585,6 @@ public class FichePlante extends StackPane {
         FlowPane precedent = new FlowPane();
         precedent.setPrefWidth(infoWidth / 3.);
         precedent.setAlignment(Pos.CENTER_RIGHT);
-        //Button before = new Button("page precedente");
         ImageView before = new ImageView("flecheG.png");
         before.setFitHeight(50);
         before.setFitWidth(30);

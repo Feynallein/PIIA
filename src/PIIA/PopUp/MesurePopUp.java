@@ -44,7 +44,6 @@ public class MesurePopUp extends PopUpPane {
         Button b = new Button("Done !");
         b.setOnMouseClicked(mouseEvent -> {
 
-                //plante.createPlante(nameTF.getText());
                 //fp.ajouterMesure(nameTF.toString(),valeurTF.toString(),comboBox.getId(),fp.getFenetre());
                 ((Stage) b.getScene().getWindow()).close();
             
