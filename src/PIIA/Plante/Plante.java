@@ -4,6 +4,7 @@ import PIIA.Agenda.Agenda;
 import PIIA.Main;
 import PIIA.Meteo.Meteo;
 import PIIA.PopUp.PlantePopUp;
+import PIIA.PopUp.PopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -110,16 +111,7 @@ public class Plante extends BorderPane {
         //Bouton pour ajouter une nouvelle plante
         VBox ajouter = new VBox();
         Button b = new Button("Ajouter Plante");
-        b.setOnMouseClicked(mouseEvent -> {
-            final Stage eventPopUp = new Stage();
-            eventPopUp.setTitle("Ajouter une plante");
-            eventPopUp.initModality(Modality.APPLICATION_MODAL);
-            //eventPopUp.initOwner(stage);
-            PlantePopUp popUp = new PlantePopUp(this);
-            Scene popUpScene = new Scene(popUp);
-            eventPopUp.setScene(popUpScene);
-            eventPopUp.show();
-        });
+        b.setOnMouseClicked(mouseEvent -> new PopUp(this.agenda.getStage(), new PlantePopUp(this), "Nouvelle Plante"));
         b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
         b.setPrefSize((Main.WIDTH - left.getPrefWidth() - ajouter.getPrefWidth()) / 3, Main.HEIGHT / 10f);
         ajouter.getChildren().add(b);

@@ -2,6 +2,7 @@ package PIIA.Plante;
 
 import PIIA.Main;
 import PIIA.PopUp.EventPopUp;
+import PIIA.PopUp.PopUp;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -480,13 +481,8 @@ public class FichePlante extends StackPane {
             LocalDate date = datePicker.getValue();
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
-            eventPopUp.setTitle("Event Creator");
-            eventPopUp.initModality(Modality.APPLICATION_MODAL);
-            eventPopUp.initOwner(plante.getAgenda().getStage());
-            EventPopUp popUp = new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), finalIdx);
-            Scene popUpScene = new Scene(popUp);
-            eventPopUp.setScene(popUpScene);
-            eventPopUp.show();
+            new PopUp(plante.getAgenda().getStage(),
+                    new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), finalIdx), "Planifier un événement");
         });
     }
 
@@ -518,16 +514,10 @@ public class FichePlante extends StackPane {
         int finalIdx = idx;
         datePickerSkin.getPopupContent().setOnMouseClicked(mouseEvent -> {
             LocalDate date = datePicker.getValue();
-            b.setText(date.toString());
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
-            eventPopUp.setTitle("Event Creator");
-            eventPopUp.initModality(Modality.APPLICATION_MODAL);
-            eventPopUp.initOwner(plante.getAgenda().getStage());
-            EventPopUp popUp = new EventPopUp(plante.getAgenda(), date, text, plante.getAgenda().getFilters(), finalIdx);
-            Scene popUpScene = new Scene(popUp);
-            eventPopUp.setScene(popUpScene);
-            eventPopUp.show();
+            new PopUp(plante.getAgenda().getStage(),
+                    new EventPopUp(plante.getAgenda(), date, plante.getAgenda().getFilters(), finalIdx), "Planifier un événement");
         });
     }
 
