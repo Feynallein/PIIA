@@ -50,11 +50,11 @@ public class Event {
         return label;
     }
 
-    public Filter getFilter(){
+    public Filter getFilter() {
         return filter;
     }
 
-    public String getPlantName(){
+    public String getPlantName() {
         return plantName;
     }
 }

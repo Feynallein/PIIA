@@ -21,11 +21,11 @@ public class Filter {
         return color;
     }
 
-    public void unTick(){
+    public void unTick() {
         isTicked = false;
     }
 
-    public void tick(){
+    public void tick() {
         isTicked = true;
     }
 

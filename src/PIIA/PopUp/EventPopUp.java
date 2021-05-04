@@ -1,5 +1,8 @@
-package PIIA.Agenda;
+package PIIA.PopUp;
 
+import PIIA.Agenda.Agenda;
+import PIIA.Agenda.Event;
+import PIIA.Agenda.Filter;
 import PIIA.Plante.FichePlante;
 import PIIA.Plante.Plante;
 import javafx.collections.FXCollections;
@@ -7,43 +10,55 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class EventPopUp extends GridPane {
+public class EventPopUp extends PopUpPane {
     private final Agenda agenda;
     private final int plantIdx;
+    private final LocalDate date;
+    private int startingTime;
+    private final String name;
+    private final ArrayList<Filter> filters;
 
     public EventPopUp(Agenda agenda, LocalDate date, int startingTime, ArrayList<Filter> filters) {
+        super();
         this.agenda = agenda;
-        this.setHgap(10);
-        this.setVgap(3);
+        this.date = date;
+        this.startingTime = startingTime;
+        this.name = "";
+        this.filters = filters;
         plantIdx = 0;
-        display(date, startingTime, "", filters);
+        display();
     }
 
     public EventPopUp(Agenda agenda, LocalDate date, ArrayList<Filter> filters, int idx) {
+        super();
         this.agenda = agenda;
+        this.date = date;
+        this.filters = filters;
+        this.startingTime = 0;
+        this.name = "";
         this.plantIdx = idx + 1;
-        this.setHgap(10);
-        this.setVgap(3);
-        display(date, -1, "", filters);
+        display();
     }
 
     public EventPopUp(Agenda agenda, LocalDate date, String name, ArrayList<Filter> filters, int idx) {
+        super();
         this.agenda = agenda;
         this.plantIdx = idx + 1;
-        this.setHgap(10);
-        this.setVgap(3);
-        display(date, -1, name, filters);
+        this.date = date;
+        this.name = name;
+        this.filters = filters;
+        this.startingTime = 0;
+        display();
     }
 
-    private void display(LocalDate date, int startingTime, String name, ArrayList<Filter> filters) {
+    @Override
+    void display() {
         int yPos = 0;
 
         /* Label */
@@ -51,7 +66,7 @@ public class EventPopUp extends GridPane {
         add(labelT, 0, yPos);
 
         TextField labelTF = new TextField(name);
-        if(!name.equals("")) labelTF.setDisable(true);
+        if (!name.equals("")) labelTF.setDisable(true);
         add(labelTF, 1, yPos);
 
         yPos++;
@@ -70,7 +85,7 @@ public class EventPopUp extends GridPane {
         Text startingTimeT = new Text("Starting time :");
         add(startingTimeT, 0, yPos);
 
-        if(startingTime == -1) {
+        if (startingTime == 0) {
             ObservableList<String> array = FXCollections.observableArrayList();
             for (int i = 0; i < 24; i++) {
                 array.add(i + ":00");
@@ -81,8 +96,7 @@ public class EventPopUp extends GridPane {
             add(startingTimeCB, 1, yPos);
             String[] splits = startingTimeCB.getValue().split(":");
             startingTime = Integer.parseInt(splits[0]);
-        }
-        else {
+        } else {
             TextField startingTimeTF = new TextField(startingTime + ":00");
             startingTimeTF.setDisable(true);
             add(startingTimeTF, 1, yPos);
@@ -168,6 +182,7 @@ public class EventPopUp extends GridPane {
             String[] splits = endingTimeCB.getValue().split(":");
             agenda.createNewEvent(new Event(selectedFilter, date, finalStartingTime, Integer.parseInt(splits[0]), labelTF.getText(), plantCB.getValue()));
             ((Stage) b.getScene().getWindow()).close();
+            new PopUp(agenda.getStage(), new PromptPopUp("Event created!"), "Confirmation");
         });
         add(b, 0, yPos);
     }

@@ -1,5 +1,7 @@
 package PIIA.Agenda;
 
+import PIIA.PopUp.EventPopUp;
+import PIIA.PopUp.PopUp;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -58,7 +60,7 @@ public class Cell extends Region {
         Text txt = new Text(text);
         txt.setFill(Color.WHITE);
         VBox box = new VBox(txt);
-        if(!plant.equals("")) box.getChildren().add(new Text(plant));
+        if (!plant.equals("")) box.getChildren().add(new Text(plant));
         getChildren().setAll(box);
     }
 
@@ -68,16 +70,8 @@ public class Cell extends Region {
     }
 
     private void updateOnClick() {
-        if (!this.hasEvent) setOnMouseClicked(mouseEvent -> {
-            final Stage eventPopUp = new Stage();
-            eventPopUp.setTitle("Event Creator");
-            eventPopUp.initModality(Modality.APPLICATION_MODAL);
-            eventPopUp.initOwner(stage);
-            EventPopUp popUp = new EventPopUp(agenda, date, startingTime, filters);
-            Scene popUpScene = new Scene(popUp);
-            eventPopUp.setScene(popUpScene);
-            eventPopUp.show();
-        });
+        if (!this.hasEvent)
+            setOnMouseClicked(mouseEvent -> new PopUp(stage, new EventPopUp(agenda, date, startingTime, filters), "Event Creator"));
         else setOnMouseClicked(null);
     }
 }

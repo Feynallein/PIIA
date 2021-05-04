@@ -1,24 +1,25 @@
-package PIIA.Agenda;
+package PIIA.PopUp;
 
+import PIIA.Agenda.Agenda;
+import PIIA.Agenda.Filter;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class FilterPopUp extends GridPane {
+public class FilterPopUp extends PopUpPane {
     private final Agenda agenda;
 
     public FilterPopUp(Agenda agenda) {
+        super();
         this.agenda = agenda;
-        this.setHgap(10);
-        this.setVgap(3);
         display();
     }
 
-    private void display() {
+    @Override
+    void display() {
         int yPos = 0;
 
         /* Label */
@@ -52,6 +53,7 @@ public class FilterPopUp extends GridPane {
             if (!labelTF.getText().equals("")) {
                 agenda.createNewFilter(new Filter(labelTF.getText(), colorPicker.getValue()));
                 ((Stage) b.getScene().getWindow()).close();
+                new PopUp(agenda.getStage(), new PromptPopUp("Filter created!"), "Confirmation");
             }
         });
         add(b, 0, yPos);

@@ -42,13 +42,13 @@ public class Plante extends BorderPane {
         this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
 
         //Remplissage de la liste
-        addPlante(new FichePlante("Abelia","abelia.jpg" ,this));
-        addPlante(new FichePlante("Example","example.jpg" ,this));
-        addPlante(new FichePlante("Lychnis","lychnis.jpg",this ));
-        addPlante(new FichePlante("Macchia","Macchia.jpg" ,this));
-        addPlante(new FichePlante("Plante","plante.jpg" ,this));
-        addPlante(new FichePlante("Sedum","sedum.jpg",this ));
-        addPlante(new FichePlante("Silene","silene.jpg",this ));
+        addPlante(new FichePlante("Abelia", "abelia.jpg", this));
+        addPlante(new FichePlante("Example", "example.jpg", this));
+        addPlante(new FichePlante("Lychnis", "lychnis.jpg", this));
+        addPlante(new FichePlante("Macchia", "Macchia.jpg", this));
+        addPlante(new FichePlante("Plante", "plante.jpg", this));
+        addPlante(new FichePlante("Sedum", "sedum.jpg", this));
+        addPlante(new FichePlante("Silene", "silene.jpg", this));
 
         /*addPlante(new FichePlante("Abelia","abelia.jpg" ));
         addPlante(new FichePlante("Example","example.jpg" ));
@@ -59,7 +59,7 @@ public class Plante extends BorderPane {
         addPlante(new FichePlante("Silene","silene.jpg" ));*/
 
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setPrefHeight((Main.HEIGHT/10f) * 7);
+        scroll.setPrefHeight((Main.HEIGHT / 10f) * 7);
         listPlante();
         previewPlante();
         setAgenda(agenda);
@@ -70,7 +70,7 @@ public class Plante extends BorderPane {
     }
 
 
-    private void previewPlante(){
+    private void previewPlante() {
         GridPane gb = new GridPane();
         gb.setHgap(50);
         gb.setVgap(50);
@@ -81,44 +81,44 @@ public class Plante extends BorderPane {
         layout.getChildren().add(imagePlante);
 
         Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
-        Text titre = new Text("Liste des Plantes :" );
+        Text titre = new Text("Liste des Plantes :");
         titre.setUnderline(true);
         titre.setFont(font);
 
-        gb.add(titre,1,0);
-        gb.add(layout, 1,2);
+        gb.add(titre, 1, 0);
+        gb.add(layout, 1, 2);
         setCenter(gb);
 
         System.out.println(plantes);
     }
 
-    private void addPlante(FichePlante fp){
+    private void addPlante(FichePlante fp) {
         plantes.add(fp);
         //preview.add(new Image(path));
         //plantes.add(path);
     }
 
-    private void listPlante(){
+    private void listPlante() {
         GridPane gb = new GridPane();
         gb.setHgap(50);
         gb.setVgap(50);
 
         //Création de la liste
-        for(int i = 0; i<plantes.size();i++){
+        for (int i = 0; i < plantes.size(); i++) {
             int index = i;
-            String text = "No." + (i+1) +" " + plantes.get(i).getNom();
+            String text = "No." + (i + 1) + " " + plantes.get(i).getNom();
             VBox box = new VBox();
             Button b = new Button(text);
             b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> imagePlante.setImage(plantes.get(index).getImage()));
             b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(plantes.get(index)));
             b.setSkin(new TransparentButton(b));
-            b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,new Insets(0,0,0,0))));
-            b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth())/3, Main.HEIGHT/10f);
+            b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+            b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth()) / 3, Main.HEIGHT / 10f);
             b.setText(text);
             box.getChildren().add(b);
             noms.add(box);
         }
-        for(VBox vb : noms){
+        for (VBox vb : noms) {
             plantList.getChildren().add(vb);
         }
         //Ajout de la liste dans un ScrollPane
@@ -137,8 +137,8 @@ public class Plante extends BorderPane {
             eventPopUp.setScene(popUpScene);
             eventPopUp.show();
         });
-        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,new Insets(0,0,0,0))));
-        b.setPrefSize((Main.WIDTH - left.getPrefWidth() - ajouter.getPrefWidth())/3, Main.HEIGHT/10f);
+        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+        b.setPrefSize((Main.WIDTH - left.getPrefWidth() - ajouter.getPrefWidth()) / 3, Main.HEIGHT / 10f);
         ajouter.getChildren().add(b);
 
         //Bouton de tri de la liste
@@ -156,42 +156,42 @@ public class Plante extends BorderPane {
         GridPane subGb = new GridPane();
         subGb.setHgap(20);
         subGb.setVgap(20);
-        subGb.add(filtresT,4,0);
-        subGb.add(comboBox,5,0);
+        subGb.add(filtresT, 4, 0);
+        subGb.add(comboBox, 5, 0);
 
-        gb.add(subGb,0,0);
-        gb.add(scroll,0,1);
-        gb.add(ajouter,0,2);
+        gb.add(subGb, 0, 0);
+        gb.add(scroll, 0, 1);
+        gb.add(ajouter, 0, 2);
 
-        for(FichePlante fp : plantes) fp.listPlante(); //maj de la liste de plantes de chaque fiche plante
+        for (FichePlante fp : plantes) fp.listPlante(); //maj de la liste de plantes de chaque fiche plante
 
         setRight(gb);
     }
 
-    public void createPlante(String nomPlante){
+    public void createPlante(String nomPlante) {
         //addPlante("sedum.jpg");
-        addPlante(new FichePlante(nomPlante,this));
+        addPlante(new FichePlante(nomPlante, this));
         int index = noms.size();
-        String text = "No." + (index+1) +" " + nomPlante;
+        String text = "No." + (index + 1) + " " + nomPlante;
         VBox box = new VBox();
         Button b = new Button(text);
         b.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> imagePlante.setImage(plantes.get(index).getImage()));
         b.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> getScene().setRoot(plantes.get(index)));
         b.setSkin(new TransparentButton(b));
-        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,new Insets(0,0,0,0))));
-        b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth())/3, Main.HEIGHT/10f);
+        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
+        b.setPrefSize((Main.WIDTH - left.getPrefWidth() - box.getPrefWidth()) / 3, Main.HEIGHT / 10f);
         b.setText(text);
         box.getChildren().add(b);
         noms.add(box);
         plantList.getChildren().clear();
-        for(VBox vb : noms){
+        for (VBox vb : noms) {
             plantList.getChildren().add(vb);
         }
 
-        for(FichePlante fp : plantes) fp.listPlante(); //maj de la liste des plantes de chaque plante
+        for (FichePlante fp : plantes) fp.listPlante(); //maj de la liste des plantes de chaque plante
     }
 
-    private void setButtonActions(){
+    private void setButtonActions() {
         left.getChildren().get(0).setOnMouseClicked(mouseEvent -> getScene().setRoot(agenda));
         left.getChildren().get(2).setOnMouseClicked(mouseEvent -> getScene().setRoot(meteo));
     }

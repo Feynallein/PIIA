@@ -3,26 +3,19 @@ package PIIA.Agenda;
 import PIIA.Main;
 import PIIA.Meteo;
 import PIIA.Plante.Plante;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import PIIA.PopUp.FilterPopUp;
+import PIIA.PopUp.PopUp;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.skin.DatePickerSkin;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +27,7 @@ public class Agenda extends BorderPane {
     private Meteo meteo;
     private final VBox left;
     private HBox center = new HBox();
-    private DatePicker datePicker = new DatePicker(LocalDate.now());
+    private final DatePicker datePicker = new DatePicker(LocalDate.now());
     private final ArrayList<VBox> days = new ArrayList<>();
     private final DayOfWeek[] week = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
     private final ArrayList<Event> events = new ArrayList<>();
@@ -68,16 +61,7 @@ public class Agenda extends BorderPane {
         button.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
         button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         button.setTextFill(Color.WHITE);
-        button.setOnMouseClicked(mouseEvent -> {
-            final Stage eventPopUp = new Stage();
-            eventPopUp.setTitle("Filter Creator");
-            eventPopUp.initModality(Modality.APPLICATION_MODAL);
-            eventPopUp.initOwner(stage);
-            FilterPopUp popUp = new FilterPopUp(this);
-            Scene popUpScene = new Scene(popUp);
-            eventPopUp.setScene(popUpScene);
-            eventPopUp.show();
-        });
+        button.setOnMouseClicked(mouseEvent -> new PopUp(stage, new FilterPopUp(this), "Filter Creator"));
         left.getChildren().add(button);
     }
 
@@ -89,7 +73,7 @@ public class Agenda extends BorderPane {
             checkBox.setSelected(f.isTicked());
             checkBox.setPrefWidth(left.getPrefWidth());
             checkBox.setOnMouseClicked(mouseEvent -> {
-                if(checkBox.isSelected()) f.tick();
+                if (checkBox.isSelected()) f.tick();
                 else f.unTick();
                 center = new HBox();
                 days.clear();
@@ -100,9 +84,9 @@ public class Agenda extends BorderPane {
         left.getChildren().add(box);
     }
 
-    private boolean checkIfFilterIsTicked(Filter filter){
-        for(Filter f : filters){
-            if(f == filter && f.isTicked()) return true;
+    private boolean checkIfFilterIsTicked(Filter filter) {
+        for (Filter f : filters) {
+            if (f == filter && f.isTicked()) return true;
         }
         return false;
     }
@@ -182,7 +166,7 @@ public class Agenda extends BorderPane {
         left.getChildren().get(2).setOnMouseClicked(mouseEvent -> getScene().setRoot(meteo));
     }
 
-    public ArrayList<Filter> getFilters(){
+    public ArrayList<Filter> getFilters() {
         return filters;
     }
 
