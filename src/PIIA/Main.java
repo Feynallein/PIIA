@@ -40,15 +40,15 @@ public class Main extends Application {
 
         Button b2 = new Button("plantedex");
         b2.setPrefSize(225, 50);
-        b2.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
-        b2.setTextFill(Color.WHITE);
+        b2.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+        b2.setTextFill(Color.BLACK);
         b2.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         Button b3 = new Button("meteo");
         b3.setPrefSize(225, 50);
-        b3.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        b3.setBackground(new Background(new BackgroundFill(Color.LIGHTCYAN, CornerRadii.EMPTY, Insets.EMPTY)));
         b3.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        b3.setTextFill(Color.WHITE);
+        b3.setTextFill(Color.BLACK);
 
         return new VBox(b1, b2, b3);
     }

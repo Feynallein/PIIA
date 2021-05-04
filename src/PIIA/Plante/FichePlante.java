@@ -1,8 +1,9 @@
 package PIIA.Plante;
 
-import PIIA.PopUp.EventPopUp;
+import PIIA.Agenda.EventPopUp;
 import PIIA.Main;
 import PIIA.Overlay;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -28,6 +29,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FichePlante extends StackPane {
     private String nom;
