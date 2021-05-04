@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EventPopUp extends PopUpPane {
     private final Agenda agenda;
@@ -85,18 +86,16 @@ public class EventPopUp extends PopUpPane {
         Text startingTimeT = new Text("Starting time :");
         add(startingTimeT, 0, yPos);
 
+        ObservableList<String> array = FXCollections.observableArrayList();
+        for (int i = 0; i < 24; i++) {
+            array.add(i + ":00");
+        }
+        ComboBox<String> startingTimeCB = new ComboBox<>(array);
+
         if (startingTime == 0) {
-            ObservableList<String> array = FXCollections.observableArrayList();
-            for (int i = 0; i < 24; i++) {
-                array.add(i + ":00");
-            }
-            ComboBox<String> startingTimeCB = new ComboBox<>(array);
             startingTimeCB.setValue(array.get(0));
             startingTimeCB.setVisibleRowCount(7);
             add(startingTimeCB, 1, yPos);
-            String[] splits = startingTimeCB.getValue().split(":");
-            startingTime = Integer.parseInt(splits[0]);
-            System.out.println(startingTime);
         } else {
             TextField startingTimeTF = new TextField(startingTime + ":00");
             startingTimeTF.setDisable(true);
@@ -171,7 +170,6 @@ public class EventPopUp extends PopUpPane {
 
         /* Done !*/
         Button b = new Button("Ok");
-        int finalStartingTime = startingTime;
         b.setOnMouseClicked(mouseEvent -> {
             Filter selectedFilter = null;
             for (Filter f : filters) {
@@ -180,8 +178,12 @@ public class EventPopUp extends PopUpPane {
                     break;
                 }
             }
+            if(startingTime == 0){
+                String[] splits = startingTimeCB.getValue().split(":");
+                startingTime = Integer.parseInt(splits[0]);
+            }
             String[] splits = endingTimeCB.getValue().split(":");
-            agenda.createNewEvent(new Event(selectedFilter, date, finalStartingTime, Integer.parseInt(splits[0]), labelTF.getText(), plantCB.getValue()));
+            agenda.createNewEvent(new Event(selectedFilter, date, startingTime, Integer.parseInt(splits[0]), labelTF.getText(), plantCB.getValue()));
             ((Stage) b.getScene().getWindow()).close();
             new PopUp(agenda.getStage(), new PromptPopUp("Event created!"), "Confirmation");
         });
