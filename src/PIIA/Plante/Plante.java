@@ -55,7 +55,6 @@ public class Plante extends BorderPane {
         previewPlante();
         setAgenda(agenda);
 
-
         setPadding(new Insets(5, 10, 10, 0));
     }
 
@@ -82,8 +81,6 @@ public class Plante extends BorderPane {
 
     private void addPlante(FichePlante fp) {
         plantes.add(fp);
-        /*preview.add(new Image(path));
-        plantes.add(path);*/
     }
 
     private void listPlante() {
@@ -114,8 +111,7 @@ public class Plante extends BorderPane {
         ObservableList<String> filtres =
                 FXCollections.observableArrayList(
                         "No.",
-                        "Alphabetique",
-                        "Date d'ajout"
+                        "Alphabetique"
                 );
         final ComboBox<String> comboBox = new ComboBox<>(filtres);
         comboBox.getItems().addAll();
