@@ -385,9 +385,7 @@ public class FichePlante extends StackPane {
         plantation.setFont(font);
 
         Button bPlantation = new Button("Cliquer pour ajouter une date");
-        bPlantation.setOnMouseClicked(mouseEvent -> {
-            ajoutDate("Arrosage de la plante " + this.nom, bPlantation);
-        });
+        bPlantation.setOnMouseClicked(mouseEvent -> ajoutDate("Arrosage de la plante " + this.nom, bPlantation));
         bPlantation.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
         bPlantation.setSkin(new TransparentButton(bPlantation));
 
@@ -395,9 +393,7 @@ public class FichePlante extends StackPane {
         Text rempotage = new Text("Date de rempotage : ");
         rempotage.setFont(font);
         Button bRempotage = new Button("Cliquer pour ajouter une date");
-        bRempotage.setOnMouseClicked(mouseEvent -> {
-            ajoutDate("Arrosage de la plante " + this.nom, bRempotage);
-        });
+        bRempotage.setOnMouseClicked(mouseEvent -> ajoutDate("Arrosage de la plante " + this.nom, bRempotage));
         bRempotage.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
         bRempotage.setSkin(new TransparentButton(bRempotage));
 
@@ -405,9 +401,7 @@ public class FichePlante extends StackPane {
         Text arrosage = new Text("Date d'arrosage : ");
         arrosage.setFont(font);
         Button bArrosage = new Button("Cliquer pour ajouter une date");
-        bArrosage.setOnMouseClicked(mouseEvent -> {
-            ajoutDate("Arrosage de la plante " + this.nom, bArrosage);
-        });
+        bArrosage.setOnMouseClicked(mouseEvent -> ajoutDate("Arrosage de la plante " + this.nom, bArrosage));
         bArrosage.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
         bArrosage.setSkin(new TransparentButton(bArrosage));
 
@@ -415,9 +409,7 @@ public class FichePlante extends StackPane {
         Text entretien = new Text("Date d'entretien/ coupe : ");
         entretien.setFont(font);
         Button bEntretien = new Button("Cliquer pour ajouter une date");
-        bEntretien.setOnMouseClicked(mouseEvent -> {
-            ajoutDate("Arrosage de la plante " + this.nom, bEntretien);
-        });
+        bEntretien.setOnMouseClicked(mouseEvent -> ajoutDate("Arrosage de la plante " + this.nom, bEntretien));
         bEntretien.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
         bEntretien.setSkin(new TransparentButton(bEntretien));
 
@@ -425,9 +417,7 @@ public class FichePlante extends StackPane {
         Text recolte = new Text("Date de recolte : ");
         recolte.setFont(font);
         Button bRecolte = new Button("Cliquer pour ajouter une date");
-        bRecolte.setOnMouseClicked(mouseEvent -> {
-            ajoutDate("Arrosage de la plante " + this.nom, bRecolte);
-        });
+        bRecolte.setOnMouseClicked(mouseEvent -> ajoutDate("Arrosage de la plante " + this.nom, bRecolte));
         bRecolte.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, new Insets(0, 0, 0, 0))));
         bRecolte.setSkin(new TransparentButton(bRecolte));
 
@@ -468,8 +458,8 @@ public class FichePlante extends StackPane {
 
         //on recupere l'id de la fiche
         int idx = -1;
-        for (int i = 0; i < plante.getPlantes().size(); i++) {
-            if (plante.getPlantes().get(i) == this)
+        for (int i = 0; i < Plante.getPlantes().size(); i++) {
+            if (Plante.getPlantes().get(i) == this)
                 idx = i;
         }
 
@@ -629,9 +619,7 @@ public class FichePlante extends StackPane {
         ImageView next = new ImageView("flecheD.png");
         next.setFitHeight(50);
         next.setFitWidth(30);
-        next.setOnMouseClicked(mouseEvent -> {
-            infoBox();
-        });
+        next.setOnMouseClicked(mouseEvent -> infoBox());
         suivant.getChildren().add(next);
 
         //bouton page précédente
