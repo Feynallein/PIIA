@@ -37,6 +37,7 @@ public class FichePlante extends StackPane {
     private int indexCurrent = 0; //L'index de l'image choisis comme photo principale
     private ImageView imagePlante;
     private final ScrollPane scroll = new ScrollPane();
+    private VBox mesures = new VBox();
 
     /**
      * dimmension de l'info box
@@ -61,6 +62,7 @@ public class FichePlante extends StackPane {
         bottom();
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setPrefHeight((Main.HEIGHT / 10f));
+
 
         fenetre.setPadding(new Insets(10, 10, 0, 10));
 
@@ -433,11 +435,42 @@ public class FichePlante extends StackPane {
 
     private void mesure(BorderPane bp){
         BorderPane layout = new BorderPane();
-        FlowPane sub = new FlowPane();
-        sub.setPrefWidth(infoWidth / 2.);
-        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        layout.setCenter(sub);
+        FlowPane subL = new FlowPane();
+        subL.setAlignment(Pos.CENTER_LEFT);
+        subL.setPrefWidth(infoWidth / 4.);
+        //subL.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        BorderPane uneMesure = new BorderPane();
+
+        //VBox mesures = new VBox();
+        mesures.setAlignment(Pos.CENTER_LEFT);
+        Button bMesure = new Button("Cliquer pour changer le nom");
+        bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,Insets.EMPTY)));
+
+
+        mesures.getChildren().add(bMesure);
+        subL.getChildren().add(mesures);
+
+        VBox boxValeur = new VBox();
+        boxValeur.setAlignment(Pos.CENTER_LEFT);
+        FlowPane subR = new FlowPane();
+        subR.setAlignment(Pos.CENTER_LEFT);
+        subR.setPrefWidth(infoWidth / 4.);
+
+
+        Button bValeur = new Button("Cliquer pour ajouter une valeur");
+        bValeur.setOnMouseClicked(mouseEvent -> {
+            new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,boxValeur,bValeur,true),"ajouter valeur");
+        });
+        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        boxValeur.getChildren().add(bValeur);
+        subR.getChildren().add(boxValeur);
+
+
+        uneMesure.setLeft(subL);
+        uneMesure.setCenter(subR);
+
+        layout.setCenter(uneMesure);
 
         FlowPane bottom = new FlowPane();
         bottom.setBorder(new Border(new BorderStroke(Color.BLACK,
@@ -455,9 +488,34 @@ public class FichePlante extends StackPane {
 
     }
 
-    private void ajouterMesure(String nom, String value, ComboBox cb, BorderPane bp){
+    public void ajouterMesure(){
+        Button bMesure = new Button("Cliquer pour changer le nom");
+        bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,Insets.EMPTY)));
+        mesures.getChildren().add(bMesure);
+    }
+
+    public void ajouterValeur(VBox vb, String value, String unite,Button b){
+
+        Button bValeur = new Button("Cliquer pour ajouter une valeur");
+        bValeur.setOnMouseClicked(mouseEvent -> {
+            new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,vb,bValeur,true),"ajouter valeur");
+        });
+        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        vb.getChildren().add(bValeur);
+        b.setText(value + " " + unite);
 
     }
+
+    public void modifierValeur(VBox vb, String value, String unite,Button b){
+        b.setText(value + " " + unite);
+        b.setOnMouseClicked(mouseEvent -> {
+            new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,vb,b,false),"modifier valeur");
+        });
+        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+
+    }
+
+
     private void littleCalendar() {
         overlay = new Overlay(-10, 0, (int) fenetre.getWidth(), (int) fenetre.getHeight());
         this.getChildren().add(overlay); //permet de créer le fond noir
