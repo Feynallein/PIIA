@@ -10,7 +10,9 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -55,7 +57,9 @@ public class Plante extends BorderPane {
         previewPlante();
         setAgenda(agenda);
 
-        setPadding(new Insets(5, 10, 10, 0));
+        left.getChildren().add(new DatePickerSkin(new DatePicker()).getPopupContent());
+
+        setPadding(new Insets(0, 10, 10, 0));
     }
 
 
