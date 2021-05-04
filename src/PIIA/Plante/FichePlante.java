@@ -501,6 +501,7 @@ public class FichePlante extends StackPane {
         int finalIdx = idx;
         datePickerSkin.getPopupContent().setOnMouseClicked(mouseEvent -> {
             LocalDate date = datePicker.getValue();
+            b.setText(date.toString());
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
             new PopUp(plante.getAgenda().getStage(),
