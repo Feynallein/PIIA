@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EventPopUp extends PopUpPane {
     private final Agenda agenda;
@@ -178,7 +177,7 @@ public class EventPopUp extends PopUpPane {
                     break;
                 }
             }
-            if(startingTime == 0){
+            if (startingTime == 0) {
                 String[] splits = startingTimeCB.getValue().split(":");
                 startingTime = Integer.parseInt(splits[0]);
             }

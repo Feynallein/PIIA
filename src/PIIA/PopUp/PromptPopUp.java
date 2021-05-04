@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class PromptPopUp extends PopUpPane {
     private final String text;
 
-    public PromptPopUp(String text){
+    public PromptPopUp(String text) {
         super();
         this.text = text;
         display();
