@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class TransparentButton extends ButtonSkin {
-
     public TransparentButton(Button b) {
         super(b);
 
@@ -29,8 +28,6 @@ public class TransparentButton extends ButtonSkin {
             b.setBorder(null);
         });
 
-
         b.setOpacity(0.6);
     }
-
 }
