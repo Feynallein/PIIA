@@ -2,7 +2,7 @@ package PIIA.Plante;
 
 import PIIA.Agenda.Agenda;
 import PIIA.Main;
-import PIIA.Meteo.Weather;
+import PIIA.Weather.Weather;
 import PIIA.PopUp.PlantePopUp;
 import PIIA.PopUp.PopUp;
 import javafx.collections.FXCollections;

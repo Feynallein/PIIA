@@ -1,7 +1,7 @@
 package PIIA;
 
 import PIIA.Agenda.Agenda;
-import PIIA.Meteo.Weather;
+import PIIA.Weather.Weather;
 import PIIA.Plante.Plante;
 import javafx.application.Application;
 import javafx.geometry.Insets;

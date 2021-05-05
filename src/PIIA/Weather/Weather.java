@@ -1,12 +1,10 @@
-package PIIA.Meteo;
+package PIIA.Weather;
 
 import PIIA.Agenda.Agenda;
 import PIIA.Plante.Plante;
 import PIIA.PopUp.CityPopUp;
-import PIIA.PopUp.FilterPopUp;
 import PIIA.PopUp.PopUp;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.skin.DatePickerSkin;

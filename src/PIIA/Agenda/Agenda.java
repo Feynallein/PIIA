@@ -1,7 +1,7 @@
 package PIIA.Agenda;
 
 import PIIA.Main;
-import PIIA.Meteo.Weather;
+import PIIA.Weather.Weather;
 import PIIA.Plante.Plante;
 import PIIA.PopUp.FilterPopUp;
 import PIIA.PopUp.PopUp;

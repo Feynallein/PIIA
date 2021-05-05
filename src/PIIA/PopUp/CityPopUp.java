@@ -1,7 +1,7 @@
 package PIIA.PopUp;
 
 import PIIA.Agenda.Agenda;
-import PIIA.Meteo.Weather;
+import PIIA.Weather.Weather;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
