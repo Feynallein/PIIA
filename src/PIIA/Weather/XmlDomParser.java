@@ -75,7 +75,7 @@ public class XmlDomParser {
                     /* Get precipitation */
                     NodeList precipitationList = element.getElementsByTagName("precipitation");
                     hm.put("precipitationProbability", precipitationList.item(0).getAttributes().getNamedItem("probability").getTextContent());
-                    if(Float.parseFloat(hm.get("precipitationProbability")) <= 0.2){
+                    if(precipitationList.item(0).getAttributes().getLength() <= 1){
                         hm.put("precipitationVolume", "0");
                         hm.put("precipitationType", "Aucune");
                     }
@@ -132,7 +132,12 @@ public class XmlDomParser {
 
                     /* Get wind */
                     res.put("windSpeed", element.getElementsByTagName("speed").item(0).getAttributes().getNamedItem("value").getTextContent());
-                    res.put("windDirection", element.getElementsByTagName("direction").item(0).getAttributes().getNamedItem("code").getTextContent());
+                    if(element.getElementsByTagName("direction").item(0).getAttributes().getLength() > 1)
+                        res.put("windDirection", element.getElementsByTagName("direction").item(0).getAttributes().getNamedItem("code").getTextContent());
+                    else res.put("windDirection", "");
+                    if(element.getElementsByTagName("gusts").item(0).getAttributes().getLength() > 1)
+                        res.put("gusts", element.getElementsByTagName("gusts").item(0).getAttributes().getNamedItem("value").getTextContent());
+                    else res.put("gusts", "");
 
                     /* Get precipitation */
                     NodeList precipitationList = element.getElementsByTagName("precipitation");
