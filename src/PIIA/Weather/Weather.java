@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Timer;
 
 public class Weather extends BorderPane {
     private final Agenda agenda;
@@ -49,6 +50,8 @@ public class Weather extends BorderPane {
         changeCityButton();
         left.getChildren().add(txt("Ville sélectionnée : ", 20));
         left.getChildren().add(txt(city, 25));
+
+        new Timer();
     }
 
     private void weathered() {
@@ -73,6 +76,9 @@ public class Weather extends BorderPane {
         this.city = city;
         weathered();
         center();
+        left.getChildren().remove(6);
+        left.getChildren().add(txt(city, 25));
+        this.setRight(new VBox(informationPane(), nextDayForecastPane()));
     }
 
     private FlowPane dayPane(int i){
