@@ -75,11 +75,10 @@ public class XmlDomParser {
                     /* Get precipitation */
                     NodeList precipitationList = element.getElementsByTagName("precipitation");
                     hm.put("precipitationProbability", precipitationList.item(0).getAttributes().getNamedItem("probability").getTextContent());
-                    if(precipitationList.item(0).getAttributes().getLength() <= 1){
+                    if (precipitationList.item(0).getAttributes().getLength() <= 1) {
                         hm.put("precipitationVolume", "0");
                         hm.put("precipitationType", "Aucune");
-                    }
-                    else {
+                    } else {
                         hm.put("precipitationVolume", precipitationList.item(0).getAttributes().getNamedItem("value").getTextContent());
                         hm.put("precipitationType", precipitationList.item(0).getAttributes().getNamedItem("type").getTextContent());
                     }
@@ -132,10 +131,10 @@ public class XmlDomParser {
 
                     /* Get wind */
                     res.put("windSpeed", element.getElementsByTagName("speed").item(0).getAttributes().getNamedItem("value").getTextContent());
-                    if(element.getElementsByTagName("direction").item(0).getAttributes().getLength() > 1)
+                    if (element.getElementsByTagName("direction").item(0).getAttributes().getLength() > 1)
                         res.put("windDirection", element.getElementsByTagName("direction").item(0).getAttributes().getNamedItem("code").getTextContent());
                     else res.put("windDirection", "");
-                    if(element.getElementsByTagName("gusts").item(0).getAttributes().getLength() > 1)
+                    if (element.getElementsByTagName("gusts").item(0).getAttributes().getLength() > 1)
                         res.put("gusts", element.getElementsByTagName("gusts").item(0).getAttributes().getNamedItem("value").getTextContent());
                     else res.put("gusts", "");
 

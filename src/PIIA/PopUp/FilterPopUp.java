@@ -23,7 +23,7 @@ public class FilterPopUp extends PopUpPane {
         int yPos = 0;
 
         /* Label */
-        Text labelT = new Text("Filter's name :");
+        Text labelT = new Text("Nom du filtre :");
         add(labelT, 0, yPos);
 
         TextField labelTF = new TextField();
@@ -32,11 +32,10 @@ public class FilterPopUp extends PopUpPane {
         yPos++;
 
         /* Color */
-        Text colorLT = new Text("Color :");
+        Text colorLT = new Text("Couleur :");
         add(colorLT, 0, yPos);
 
         ColorPicker colorPicker = new ColorPicker();
-        //todo: proposition : mettre un couleur aléatoire non deja prise par un filtre existant?
         add(colorPicker, 1, yPos);
 
         Rectangle rectangle = new Rectangle(50, 25);
@@ -53,7 +52,7 @@ public class FilterPopUp extends PopUpPane {
             if (!labelTF.getText().equals("")) {
                 agenda.createNewFilter(new Filter(labelTF.getText(), colorPicker.getValue()));
                 ((Stage) b.getScene().getWindow()).close();
-                new PopUp(agenda.getStage(), new PromptPopUp("Filter created!"), "Confirmation");
+                new PopUp(agenda.getStage(), new PromptPopUp("Filtre créer!"), "Confirmation");
             }
         });
         add(b, 0, yPos);

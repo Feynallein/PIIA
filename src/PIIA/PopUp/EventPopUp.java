@@ -62,7 +62,7 @@ public class EventPopUp extends PopUpPane {
         int yPos = 0;
 
         /* Label */
-        Text labelT = new Text("Event's name :");
+        Text labelT = new Text("Nom de l'évènement :");
         add(labelT, 0, yPos);
 
         TextField labelTF = new TextField(name);
@@ -82,7 +82,7 @@ public class EventPopUp extends PopUpPane {
         yPos++;
 
         /* Starting time */
-        Text startingTimeT = new Text("Starting time :");
+        Text startingTimeT = new Text("Temps de début :");
         add(startingTimeT, 0, yPos);
 
         ObservableList<String> array = FXCollections.observableArrayList();
@@ -104,7 +104,7 @@ public class EventPopUp extends PopUpPane {
         yPos++;
 
         /* Ending time */
-        Text endingTimeT = new Text("Ending time : ");
+        Text endingTimeT = new Text("Temps de fin : ");
         add(endingTimeT, 0, yPos);
 
         ObservableList<String> arr = FXCollections.observableArrayList();
@@ -119,7 +119,7 @@ public class EventPopUp extends PopUpPane {
         yPos++;
 
         /* Filters */
-        Text filtersT = new Text("Filter :");
+        Text filtersT = new Text("Filtre :");
         add(filtersT, 0, yPos);
 
         ObservableList<String> filtersArr = FXCollections.observableArrayList();
@@ -139,11 +139,11 @@ public class EventPopUp extends PopUpPane {
         add(recurrenceT, 0, yPos);
 
         ObservableList<String> recurrences = FXCollections.observableArrayList();
-        recurrences.add("Never");
-        recurrences.add("Daily");
-        recurrences.add("Weekly");
-        recurrences.add("Monthly");
-        recurrences.add("Yearly");
+        recurrences.add("Jamais");
+        recurrences.add("Journalier");
+        recurrences.add("Quotidien");
+        recurrences.add("Mensuel");
+        recurrences.add("Annuel");
 
         ComboBox<String> recurrenceCB = new ComboBox<>(recurrences);
         recurrenceCB.setValue(recurrences.get(0));
@@ -152,7 +152,7 @@ public class EventPopUp extends PopUpPane {
         yPos++;
 
         /* Plant */
-        Text plantT = new Text("Plant :");
+        Text plantT = new Text("Plante :");
         add(plantT, 0, yPos);
 
         ObservableList<String> plants = FXCollections.observableArrayList();
@@ -184,7 +184,7 @@ public class EventPopUp extends PopUpPane {
             String[] splits = endingTimeCB.getValue().split(":");
             agenda.createNewEvent(new Event(selectedFilter, date, startingTime, Integer.parseInt(splits[0]), labelTF.getText(), plantCB.getValue()));
             ((Stage) b.getScene().getWindow()).close();
-            new PopUp(agenda.getStage(), new PromptPopUp("Event created!"), "Confirmation");
+            new PopUp(agenda.getStage(), new PromptPopUp("Évèvenement créer!"), "Confirmation");
         });
         add(b, 0, yPos);
     }

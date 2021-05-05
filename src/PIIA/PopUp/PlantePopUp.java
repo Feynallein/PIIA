@@ -24,7 +24,7 @@ public class PlantePopUp extends PopUpPane {
         add(nameTF, 1, 0);
 
         /* Done !*/
-        Button b = new Button("Done !");
+        Button b = new Button("Ok");
         b.setOnMouseClicked(mouseEvent -> {
             if (!nameTF.getText().equals("")) {
                 plante.createPlante(nameTF.getText());

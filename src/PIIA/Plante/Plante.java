@@ -182,10 +182,6 @@ public class Plante extends BorderPane {
         return agenda;
     }
 
-    public static ArrayList<VBox> getNoms() {
-        return noms;
-    }
-
     public static ArrayList<FichePlante> getPlantes() {
         return plantes;
     }

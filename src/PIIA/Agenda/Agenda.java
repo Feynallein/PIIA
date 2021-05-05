@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Agenda extends BorderPane {
     public final static DayOfWeek[] week = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
@@ -35,14 +36,14 @@ public class Agenda extends BorderPane {
     private final Stage stage;
 
     public Agenda(VBox left, final Stage stage) {
-        filters.add(new Filter("None", Color.WHITE)); // Always here
+        filters.add(new Filter("Pas de filtre", Color.WHITE)); // Always here
 
         /* Examples of filters & events */
-        filters.add(new Filter("School", Color.GREEN));
-        filters.add(new Filter("Work", Color.BLUEVIOLET));
-        events.add(new Event(filters.get(1), LocalDate.now().with(week[0]), 12, "Event 1", ""));
-        events.add(new Event(filters.get(2), LocalDate.now().with(week[5]), 12, 16, "Event 2", "plante au pif"));
-        events.add(new Event(filters.get(2), LocalDate.of(2021, 5, 12), 12, 16, "Event 3", ""));
+        filters.add(new Filter("Fac", Color.GREEN));
+        filters.add(new Filter("Travail", Color.BLUEVIOLET));
+        events.add(new Event(filters.get(1), LocalDate.now().with(week[0]), 12, "Evenement 1", ""));
+        events.add(new Event(filters.get(2), LocalDate.now().with(week[5]), 12, 16, "Evenement 2", "plante au pif"));
+        events.add(new Event(filters.get(2), LocalDate.of(2021, 5, 12), 12, 16, "Evenement 3", ""));
 
         this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
         this.left = left;
@@ -61,7 +62,7 @@ public class Agenda extends BorderPane {
         button.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
         button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         button.setTextFill(Color.WHITE);
-        button.setOnMouseClicked(mouseEvent -> new PopUp(stage, new FilterPopUp(this), "Filter Creator"));
+        button.setOnMouseClicked(mouseEvent -> new PopUp(stage, new FilterPopUp(this), "Createur de filtre"));
         left.getChildren().add(button);
     }
 
@@ -115,7 +116,7 @@ public class Agenda extends BorderPane {
 
             /* Adding the name of the week */
             dayCell.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth()) / 7, Main.HEIGHT / 25f);
-            dayCell.setText(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(datePicker.getValue().with(week[i])), "");
+            dayCell.setText(DateTimeFormatter.ofPattern("EEEE dd MMM yyyy", Locale.FRENCH).format(datePicker.getValue().with(week[i])), "");
             box.getChildren().add(dayCell);
 
             /* Adding other cells */

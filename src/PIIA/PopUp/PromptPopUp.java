@@ -6,8 +6,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.concurrent.Flow;
-
 public class PromptPopUp extends PopUpPane {
     private final String text;
 
