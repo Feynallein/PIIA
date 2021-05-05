@@ -115,38 +115,38 @@ public class XmlDomParser {
 
             /* forecast */
             NodeList list = doc.getElementsByTagName("current");
-            for (int temp = 0; temp < list.getLength(); temp++) {
-                Node node = list.item(temp);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element = (Element) node;
+            for (int i = 0; i < list.getLength(); i++) {
+                Node n = list.item(i);
+                if (n.getNodeType() == Node.ELEMENT_NODE) {
+                    Element e = (Element) n;
 
                     /* Get temperature */
-                    res.put("temperature", element.getElementsByTagName("temperature").item(0).getAttributes().getNamedItem("value").getTextContent());
+                    res.put("temperature", e.getElementsByTagName("temperature").item(0).getAttributes().getNamedItem("value").getTextContent());
 
                     /* Get feels like */
-                    res.put("feelsLike", element.getElementsByTagName("feels_like").item(0).getAttributes().getNamedItem("value").getTextContent());
+                    res.put("feelsLike", e.getElementsByTagName("feels_like").item(0).getAttributes().getNamedItem("value").getTextContent());
 
                     /* Get humidity */
-                    res.put("humidity", element.getElementsByTagName("humidity").item(0).getAttributes().getNamedItem("value").getTextContent());
+                    res.put("humidity", e.getElementsByTagName("humidity").item(0).getAttributes().getNamedItem("value").getTextContent());
 
                     /* Get wind */
-                    res.put("windSpeed", element.getElementsByTagName("speed").item(0).getAttributes().getNamedItem("value").getTextContent());
-                    if (element.getElementsByTagName("direction").item(0).getAttributes().getLength() > 1)
-                        res.put("windDirection", element.getElementsByTagName("direction").item(0).getAttributes().getNamedItem("code").getTextContent());
+                    res.put("windSpeed", e.getElementsByTagName("speed").item(0).getAttributes().getNamedItem("value").getTextContent());
+                    if (e.getElementsByTagName("direction").item(0).getAttributes().getLength() > 1)
+                        res.put("windDirection", e.getElementsByTagName("direction").item(0).getAttributes().getNamedItem("code").getTextContent());
                     else res.put("windDirection", "");
-                    if (element.getElementsByTagName("gusts").item(0).getAttributes().getLength() > 1)
-                        res.put("gusts", element.getElementsByTagName("gusts").item(0).getAttributes().getNamedItem("value").getTextContent());
+                    if (e.getElementsByTagName("gusts").item(0).getAttributes().getLength() > 1)
+                        res.put("gusts", e.getElementsByTagName("gusts").item(0).getAttributes().getNamedItem("value").getTextContent());
                     else res.put("gusts", "");
 
                     /* Get precipitation */
-                    NodeList precipitationList = element.getElementsByTagName("precipitation");
+                    NodeList precipitationList = e.getElementsByTagName("precipitation");
                     res.put("precipitation", precipitationList.item(0).getAttributes().getNamedItem("mode").getTextContent());
                     if (!res.get("precipitation").equals("no"))
                         res.put("precipitationType", precipitationList.item(0).getAttributes().getNamedItem("value").getTextContent());
                     else res.put("precipitationType", "");
 
                     /* Get clouds */
-                    res.put("clouds", element.getElementsByTagName("clouds").item(0).getAttributes().getNamedItem("name").getTextContent());
+                    res.put("clouds", e.getElementsByTagName("clouds").item(0).getAttributes().getNamedItem("name").getTextContent());
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
