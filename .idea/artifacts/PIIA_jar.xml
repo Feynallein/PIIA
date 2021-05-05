@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PIIA:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PIIA_jar</output-path>
+    <root id="archive" name="PIIA.jar">
+      <element id="module-output" name="PIIA" />
+      <element id="library" level="project" name="JavaFX" />
+    </root>
+  </artifact>
+</component>
