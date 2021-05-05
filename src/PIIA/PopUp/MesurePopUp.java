@@ -36,14 +36,6 @@ public class MesurePopUp extends PopUpPane {
         displayNom();
     }
 
-    public MesurePopUp(FichePlante fp, VBox vb, ScrollPane scroll) {
-        super();
-        this.fp = fp;
-        this.vb = vb;
-        this.scroll = scroll;
-        display2();
-    }
-
 
     @Override
     void display() {
@@ -70,7 +62,7 @@ public class MesurePopUp extends PopUpPane {
 
     void displayNom() {
         /* Mesure */
-        Text nameT = new Text("Valeur  :");
+        Text nameT = new Text(" Nom de la Valeur  :");
         add(nameT, 0, 0);
 
         TextField valeurTF = new TextField();
@@ -92,21 +84,4 @@ public class MesurePopUp extends PopUpPane {
         add(done, 0, 9);
     }
 
-    void display2() {
-        /* Mesure */
-        Text nameT = new Text("Nom de la valeur  :");
-        add(nameT, 0, 0);
-
-        TextField nameTF = new TextField();
-        add(nameTF, 1, 0);
-
-        /* Done !*/
-        Button done = new Button("Done !");
-        done.setOnMouseClicked(mouseEvent -> {
-            fp.ajouterMesure(vb,scroll);
-            ((Stage) done.getScene().getWindow()).close();
-
-        });
-        add(done, 0, 9);
-    }
 }
