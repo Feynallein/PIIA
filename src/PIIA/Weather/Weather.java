@@ -4,6 +4,10 @@ import PIIA.Agenda.Agenda;
 import PIIA.Plante.Plante;
 import PIIA.PopUp.CityPopUp;
 import PIIA.PopUp.PopUp;
+import javafx.animation.KeyFrame;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -12,16 +16,15 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Timer;
+import java.util.*;
 
 public class Weather extends BorderPane {
     private final Agenda agenda;
@@ -51,7 +54,14 @@ public class Weather extends BorderPane {
         left.getChildren().add(txt("Ville sélectionnée : ", 20));
         left.getChildren().add(txt(city, 25));
 
-        new Timer();
+        /* Updating the timer*/
+        String[] splits = LocalDateTime.now().toString().split("T");
+        String[] splitTime = splits[1].split(":");
+        int secs = (int) Float.parseFloat(splitTime[2]);
+        Timeline timeline;
+        timeline = new Timeline(new KeyFrame(Duration.seconds(60), actionEvent -> center()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.playFrom(Duration.seconds(secs));
     }
 
     private void weathered() {
