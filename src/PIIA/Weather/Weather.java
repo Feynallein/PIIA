@@ -242,7 +242,7 @@ public class Weather extends BorderPane {
     private void center() {
         /* Date */
         String[] splits = LocalDate.now().toString().split("-");
-        Text date = txt(days[Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2] + " " + splits[2] + " " + months[Integer.parseInt(splits[1])] + " " + splits[0], 50);
+        Text date = txt(days[Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2] + " " + splits[2] + " " + months[Integer.parseInt(splits[1]) - 1] + " " + splits[0], 50);
 
         /* Time */
         String[] splits2 = LocalDateTime.now().toString().split("T");
