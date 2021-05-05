@@ -556,7 +556,7 @@ public class FichePlante extends StackPane {
     }
 
 
-    private void littleCalendar() {
+    public void littleCalendar() {
         overlay = new Overlay(-10, 0, (int) fenetre.getWidth(), (int) fenetre.getHeight());
         this.getChildren().add(overlay); //permet de créer le fond noir
 

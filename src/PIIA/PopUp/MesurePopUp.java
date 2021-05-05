@@ -46,6 +46,9 @@ public class MesurePopUp extends PopUpPane {
         TextField valeurTF = new TextField();
         add(valeurTF, 1, 0);
 
+        Button plan = new Button("selectionner une date");
+        plan.setOnMouseClicked(mouseEvent ->{} );
+        add(plan, 0, 3);
 
         /* Done !*/
         Button done = new Button("Done !");
