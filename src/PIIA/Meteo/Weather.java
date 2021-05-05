@@ -2,8 +2,12 @@ package PIIA.Meteo;
 
 import PIIA.Agenda.Agenda;
 import PIIA.Plante.Plante;
+import PIIA.PopUp.CityPopUp;
+import PIIA.PopUp.FilterPopUp;
+import PIIA.PopUp.PopUp;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.layout.*;
@@ -24,10 +28,11 @@ public class Weather extends BorderPane {
     private final Agenda agenda;
     private Plante plante;
     private final VBox left;
-    private final ArrayList<HashMap<String, String>> forecastWeather;
-    private final HashMap<String, String> weather;
+    private ArrayList<HashMap<String, String>> forecastWeather;
+    private HashMap<String, String> weather;
     public static final String[] months = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"};
     public static final String[] days = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+    private String city = "Saint-Chéron";
 
     public Weather(VBox left, Plante plante, Agenda agenda) {
         this.left = left;
@@ -36,17 +41,40 @@ public class Weather extends BorderPane {
         this.agenda = agenda;
         setButtonActions();
 
-        /* Getting the weather */
-        getWeather();
-        getForecastWeather();
-        forecastWeather = XmlDomParser.forecastParse("Resources/WeatherXML/forecastWeather.xml");
-        weather = XmlDomParser.parse("Resources/WeatherXML/weather.xml");
+        weathered();
 
         /* Display things */
         this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
         center();
         this.setRight(new VBox(informationPane(), nextDayForecastPane()));
         left.getChildren().add(new DatePickerSkin(new DatePicker()).getPopupContent());
+        changeCityButton();
+        left.getChildren().add(txt("Ville sélectionnée : ", 20));
+        left.getChildren().add(txt(city, 25));
+    }
+
+    private void weathered() {
+        /* Getting the weather */
+        getWeather();
+        getForecastWeather();
+        forecastWeather = XmlDomParser.forecastParse("Resources/WeatherXML/forecastWeather.xml");
+        weather = XmlDomParser.parse("Resources/WeatherXML/weather.xml");
+    }
+
+    private void changeCityButton() {
+        Button button = new Button("Changer de ville");
+        button.setPrefSize(225, 50);
+        button.setBackground(new Background(new BackgroundFill(Color.rgb(60, 60, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        button.setTextFill(Color.WHITE);
+        button.setOnMouseClicked(mouseEvent -> new PopUp(agenda.getStage(), new CityPopUp(agenda, this), "Filter Creator"));
+        left.getChildren().add(button);
+    }
+
+    public void changeCity(String city){
+        this.city = city;
+        weathered();
+        center();
     }
 
     private FlowPane dayPane(int i){
@@ -221,13 +249,13 @@ public class Weather extends BorderPane {
     }
 
     private void getForecastWeather() {
-        String api = "https://api.openweathermap.org/data/2.5/forecast/daily?q=Paris&cnt=11&mode=xml&appid=d5d132013b7e8d4712976e55c8e2121b&units=metric&lang=fr";
+        String api = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&cnt=11&mode=xml&appid=d5d132013b7e8d4712976e55c8e2121b&units=metric&lang=fr";
         String path = "Resources/WeatherXML/forecastWeather.xml";
         generateXML(api, path);
     }
 
     private void getWeather() {
-        String api = "https://api.openweathermap.org/data/2.5/weather?q=Paris&units=metric&lang=fr&appid=d5d132013b7e8d4712976e55c8e2121b&mode=xml";
+        String api = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&lang=fr&appid=d5d132013b7e8d4712976e55c8e2121b&mode=xml";
         String path = "Resources/WeatherXML/weather.xml";
         generateXML(api, path);
     }

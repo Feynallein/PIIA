@@ -75,7 +75,7 @@ public class XmlDomParser {
                     /* Get precipitation */
                     NodeList precipitationList = element.getElementsByTagName("precipitation");
                     hm.put("precipitationProbability", precipitationList.item(0).getAttributes().getNamedItem("probability").getTextContent());
-                    if(Float.parseFloat(hm.get("precipitationProbability")) < 0.1){
+                    if(Float.parseFloat(hm.get("precipitationProbability")) <= 0.2){
                         hm.put("precipitationVolume", "0");
                         hm.put("precipitationType", "Aucune");
                     }
