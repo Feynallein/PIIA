@@ -50,6 +50,7 @@ public class FichePlante extends StackPane {
     private final Text text = new Text();
     private final TextArea commentaires = new TextArea();        //Zone de texte pour écrire des observations
     private final Plante plante;
+    private VBox contenu = new VBox();
 
     public FichePlante(String nom, String photo, Plante plante) {
         this.plante = plante;
@@ -443,7 +444,7 @@ public class FichePlante extends StackPane {
     }
 
     private void mesure(BorderPane bp){
-        VBox contenu = new VBox();
+
         BorderPane layout = new BorderPane();
         layout.setPrefHeight(infoHeight);
         FlowPane subL = new FlowPane();
