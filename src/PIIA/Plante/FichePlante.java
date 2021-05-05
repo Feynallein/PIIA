@@ -24,7 +24,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 
-import java.awt.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,7 +35,9 @@ public class FichePlante extends StackPane {
     private final ArrayList<Image> images = new ArrayList<>(); //la liste des images de la plante
     private int indexCurrent = 0; //L'index de l'image choisis comme photo principale
     private ImageView imagePlante;
-    private final ScrollPane scroll = new ScrollPane();
+    private final ScrollPane scrollTop = new ScrollPane();
+    private VBox mesures = new VBox();
+    private ScrollPane scrollMesure = new ScrollPane();
 
     /**
      * dimmension de l'info box
@@ -59,8 +60,14 @@ public class FichePlante extends StackPane {
         previewPlante();
         infoBox();
         bottom();
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setPrefHeight((Main.HEIGHT / 10f));
+        scrollTop.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollTop.setPrefHeight((Main.HEIGHT / 10f));
+
+        //scrollMesure.setPrefHeight(infoHeight);
+        scrollMesure.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollMesure.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollMesure.setPrefHeight(infoHeight);
+
 
         fenetre.setPadding(new Insets(10, 10, 0, 10));
 
@@ -74,8 +81,12 @@ public class FichePlante extends StackPane {
         previewPlante();
         infoBox();
         bottom();
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setPrefHeight((Main.HEIGHT / 10f));
+        scrollTop.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollTop.setPrefHeight((Main.HEIGHT / 10f));
+
+        scrollMesure.setPrefHeight(infoHeight);
+        scrollMesure.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollMesure.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
         fenetre.setPadding(new Insets(10, 10, 0, 10));
 
@@ -276,8 +287,8 @@ public class FichePlante extends StackPane {
             box.getChildren().add(b);
             plantList.getChildren().add(box);
         }
-        scroll.setContent(plantList);
-        fenetre.setTop(scroll);
+        scrollTop.setContent(plantList);
+        fenetre.setTop(scrollTop);
     }
 
     /**
@@ -320,7 +331,7 @@ public class FichePlante extends StackPane {
 
         //Bouton page suivante
         FlowPane suivant = new FlowPane();
-        suivant.setPrefWidth(infoWidth / 3);
+        suivant.setPrefWidth(infoWidth / 3.);
         suivant.setAlignment(Pos.CENTER_LEFT);
         //Button next = new Button("page suivante");
         ImageView next = new ImageView("flecheD.png");
@@ -432,32 +443,118 @@ public class FichePlante extends StackPane {
     }
 
     private void mesure(BorderPane bp){
+        VBox contenu = new VBox();
         BorderPane layout = new BorderPane();
-        FlowPane sub = new FlowPane();
-        sub.setPrefWidth(infoWidth / 2.);
-        sub.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        layout.setCenter(sub);
+        layout.setPrefHeight(infoHeight);
+        FlowPane subL = new FlowPane();
+        subL.setAlignment(Pos.TOP_LEFT);
+        subL.setPrefWidth(infoWidth / 4.);
+        //subL.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        GridPane uneMesure = new GridPane();
+
+        //VBox mesures = new VBox();
+        mesures.setAlignment(Pos.CENTER_LEFT);
+        Button bMesure = new Button("Cliquer pour changer le nom");
+        bMesure.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,bMesure),"choisir nom valeur"));
+        bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,Insets.EMPTY)));
+
+
+        subL.getChildren().add(bMesure);
+
+        VBox boxValeur = new VBox();
+        boxValeur.setAlignment(Pos.CENTER_LEFT);
+        FlowPane subR = new FlowPane();
+        subR.setAlignment(Pos.CENTER_LEFT);
+        subR.setPrefWidth(infoWidth / 4.);
+
+
+        Button bValeur = new Button("Cliquer pour ajouter une valeur");
+        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,boxValeur,bValeur,true),"ajouter valeur"));
+        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        boxValeur.getChildren().add(bValeur);
+        subR.getChildren().add(boxValeur);
+
+        uneMesure.add(subL,0,0);
+        uneMesure.add(subR,1,0);
+
+        contenu.getChildren().add(uneMesure);
+        scrollMesure.setContent(contenu);
+        scrollMesure.setPrefHeight(infoHeight);
+        layout.setCenter(scrollMesure);
 
         FlowPane bottom = new FlowPane();
         bottom.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         bottom.setAlignment(Pos.CENTER);
         Button ajouter = new Button("Ajouter une mesure");
-        ajouter.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),
-                new MesurePopUp(this), "Ajouter une mesure"));
+        ajouter.setOnMouseClicked(mouseEvent -> ajouterMesure(contenu, scrollMesure));
         ajouter.setSkin(new TransparentButton(ajouter));
         ajouter.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, Insets.EMPTY)));
         bottom.getChildren().add(ajouter);
         layout.setBottom(bottom);
 
+
         bp.setRight(layout);
 
     }
 
-    private void ajouterMesure(String nom, String value, ComboBox cb, BorderPane bp){
+    public void ajouterMesure(VBox contenu, ScrollPane layout){
+        GridPane uneMesure = new GridPane();
+        FlowPane subL = new FlowPane();
+        subL.setAlignment(Pos.TOP_LEFT);
+        subL.setPrefWidth(infoWidth / 4.);
+
+        //VBox mesures = new VBox();
+        mesures.setAlignment(Pos.CENTER_LEFT);
+        Button bMesure = new Button("Cliquer pour changer le nom");
+        bMesure.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,bMesure),"choisir nom valeur"));
+        bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,Insets.EMPTY)));
+
+        subL.getChildren().add(bMesure);
+
+        VBox boxValeur = new VBox();
+        boxValeur.setAlignment(Pos.CENTER_LEFT);
+        FlowPane subR = new FlowPane();
+        subR.setAlignment(Pos.CENTER_LEFT);
+        subR.setPrefWidth(infoWidth / 4.);
+
+
+        Button bValeur = new Button("Cliquer pour ajouter une valeur");
+        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,boxValeur,bValeur,true),"ajouter valeur"));
+        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        boxValeur.getChildren().add(bValeur);
+        subR.getChildren().add(boxValeur);
+
+        uneMesure.add(subL,0,0);
+        uneMesure.add(subR,1,0);
+
+        contenu.getChildren().add(uneMesure);
+        layout.setContent(contenu);
+    }
+
+    public void choisirNom(String nomValeur, String unite,Button b){
+        b.setText(nomValeur + " (" + unite + ") :");
+    }
+
+    public void ajouterValeur(VBox vb, String value,Button b){
+
+        Button bValeur = new Button("Cliquer pour ajouter une valeur");
+        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,vb,bValeur,true),"ajouter valeur"));
+        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        vb.getChildren().add(bValeur);
+        b.setText(value);
 
     }
+
+    public void modifierValeur(VBox vb, String value,Button b){
+        b.setText(value);
+        b.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,vb,b,false),"modifier valeur"));
+        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+
+    }
+
+
     private void littleCalendar() {
         overlay = new Overlay(-10, 0, (int) fenetre.getWidth(), (int) fenetre.getHeight());
         this.getChildren().add(overlay); //permet de créer le fond noir
