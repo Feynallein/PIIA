@@ -44,14 +44,6 @@ public class Cell extends Region {
         updateOnClick();
     }
 
-    public void setTime(int time) {
-        this.startingTime = time;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public void setText(String text, String plant) {
         this.hasEvent = true;
         updateOnClick();
@@ -69,7 +61,7 @@ public class Cell extends Region {
 
     private void updateOnClick() {
         if (!this.hasEvent)
-            setOnMouseClicked(mouseEvent -> new PopUp(stage, new EventPopUp(agenda, date, startingTime, filters), "Event Creator"));
+            setOnMouseClicked(mouseEvent -> new PopUp(stage, new EventPopUp(agenda, date, startingTime, filters), "Createur d'evenement"));
         else setOnMouseClicked(null);
     }
 }

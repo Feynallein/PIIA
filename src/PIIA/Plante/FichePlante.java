@@ -36,8 +36,8 @@ public class FichePlante extends StackPane {
     private int indexCurrent = 0; //L'index de l'image choisis comme photo principale
     private ImageView imagePlante;
     private final ScrollPane scrollTop = new ScrollPane();
-    private VBox mesures = new VBox();
-    private ScrollPane scrollMesure = new ScrollPane();
+    private final VBox mesures = new VBox();
+    private final ScrollPane scrollMesure = new ScrollPane();
 
     /**
      * dimmension de l'info box
@@ -50,7 +50,7 @@ public class FichePlante extends StackPane {
     private final Text text = new Text();
     private final TextArea commentaires = new TextArea();        //Zone de texte pour écrire des observations
     private final Plante plante;
-    private VBox contenu = new VBox();
+    private final VBox contenu = new VBox();
 
     public FichePlante(String nom, String photo, Plante plante) {
         this.plante = plante;
@@ -443,7 +443,7 @@ public class FichePlante extends StackPane {
         bp.setLeft(date);
     }
 
-    private void mesure(BorderPane bp){
+    private void mesure(BorderPane bp) {
 
         BorderPane layout = new BorderPane();
         layout.setPrefHeight(infoHeight);
@@ -457,8 +457,8 @@ public class FichePlante extends StackPane {
         //VBox mesures = new VBox();
         mesures.setAlignment(Pos.CENTER_LEFT);
         Button bMesure = new Button("Cliquer pour changer le nom");
-        bMesure.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,bMesure),"choisir nom valeur"));
-        bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,Insets.EMPTY)));
+        bMesure.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(), new MesurePopUp(this, bMesure), "choisir nom valeur"));
+        bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, Insets.EMPTY)));
 
 
         subL.getChildren().add(bMesure);
@@ -471,13 +471,13 @@ public class FichePlante extends StackPane {
 
 
         Button bValeur = new Button("Cliquer pour ajouter une valeur");
-        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,boxValeur,bValeur,true),"ajouter valeur"));
-        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(), new MesurePopUp(this, boxValeur, bValeur, true), "ajouter valeur"));
+        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null, Insets.EMPTY)));
         boxValeur.getChildren().add(bValeur);
         subR.getChildren().add(boxValeur);
 
-        uneMesure.add(subL,0,0);
-        uneMesure.add(subR,1,0);
+        uneMesure.add(subL, 0, 0);
+        uneMesure.add(subR, 1, 0);
 
         contenu.getChildren().add(uneMesure);
         scrollMesure.setContent(contenu);
@@ -500,7 +500,7 @@ public class FichePlante extends StackPane {
 
     }
 
-    public void ajouterMesure(VBox contenu, ScrollPane layout){
+    public void ajouterMesure(VBox contenu, ScrollPane layout) {
         GridPane uneMesure = new GridPane();
         FlowPane subL = new FlowPane();
         subL.setAlignment(Pos.TOP_LEFT);
@@ -509,8 +509,8 @@ public class FichePlante extends StackPane {
         //VBox mesures = new VBox();
         mesures.setAlignment(Pos.CENTER_LEFT);
         Button bMesure = new Button("Cliquer pour changer le nom");
-        bMesure.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,bMesure),"choisir nom valeur"));
-        bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null,Insets.EMPTY)));
+        bMesure.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(), new MesurePopUp(this, bMesure), "choisir nom valeur"));
+        bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, Insets.EMPTY)));
 
         subL.getChildren().add(bMesure);
 
@@ -522,36 +522,36 @@ public class FichePlante extends StackPane {
 
 
         Button bValeur = new Button("Cliquer pour ajouter une valeur");
-        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,boxValeur,bValeur,true),"ajouter valeur"));
-        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(), new MesurePopUp(this, boxValeur, bValeur, true), "ajouter valeur"));
+        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null, Insets.EMPTY)));
         boxValeur.getChildren().add(bValeur);
         subR.getChildren().add(boxValeur);
 
-        uneMesure.add(subL,0,0);
-        uneMesure.add(subR,1,0);
+        uneMesure.add(subL, 0, 0);
+        uneMesure.add(subR, 1, 0);
 
         contenu.getChildren().add(uneMesure);
         layout.setContent(contenu);
     }
 
-    public void choisirNom(String nomValeur, String unite,Button b){
+    public void choisirNom(String nomValeur, String unite, Button b) {
         b.setText(nomValeur + " (" + unite + ") :");
     }
 
-    public void ajouterValeur(VBox vb, String value,Button b){
+    public void ajouterValeur(VBox vb, String value, Button b) {
 
         Button bValeur = new Button("Cliquer pour ajouter une valeur");
-        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,vb,bValeur,true),"ajouter valeur"));
-        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(), new MesurePopUp(this, vb, bValeur, true), "ajouter valeur"));
+        bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null, Insets.EMPTY)));
         vb.getChildren().add(bValeur);
         b.setText(value);
 
     }
 
-    public void modifierValeur(VBox vb, String value,Button b){
+    public void modifierValeur(VBox vb, String value, Button b) {
         b.setText(value);
-        b.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(),new MesurePopUp(this,vb,b,false),"modifier valeur"));
-        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null,Insets.EMPTY)));
+        b.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(), new MesurePopUp(this, vb, b, false), "modifier valeur"));
+        b.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null, Insets.EMPTY)));
 
     }
 
@@ -633,7 +633,7 @@ public class FichePlante extends StackPane {
             this.getChildren().remove(bp);
             this.getChildren().remove(overlay);
             new PopUp(plante.getAgenda().getStage(),
-                    new EventPopUp(plante.getAgenda(), date,text, plante.getAgenda().getFilters(), finalIdx), "Planifier un événement");
+                    new EventPopUp(plante.getAgenda(), date, text, plante.getAgenda().getFilters(), finalIdx), "Planifier un événement");
         });
     }
 

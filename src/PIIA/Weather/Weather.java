@@ -5,9 +5,6 @@ import PIIA.Plante.Plante;
 import PIIA.PopUp.CityPopUp;
 import PIIA.PopUp.PopUp;
 import javafx.animation.KeyFrame;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -28,7 +25,7 @@ import java.util.*;
 
 public class Weather extends BorderPane {
     private final Agenda agenda;
-    private Plante plante;
+    private final Plante plante;
     private final VBox left;
     private ArrayList<HashMap<String, String>> forecastWeather;
     private HashMap<String, String> weather;
@@ -82,7 +79,7 @@ public class Weather extends BorderPane {
         left.getChildren().add(button);
     }
 
-    public void changeCity(String city){
+    public void changeCity(String city) {
         this.city = city;
         weathered();
         center();
@@ -91,10 +88,10 @@ public class Weather extends BorderPane {
         this.setRight(new VBox(informationPane(), nextDayForecastPane()));
     }
 
-    private FlowPane dayPane(int i){
+    private FlowPane dayPane(int i) {
         int size = 10;
         String[] splits = forecastWeather.get(i).get("date").split("-");
-        Text date = txt(days[(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2 + i)%7] + " " + splits[2] + " " + months[Integer.parseInt(splits[1])] + " " + splits[0], size);
+        Text date = txt(days[(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2 + i) % 7] + " " + splits[2] + " " + months[Integer.parseInt(splits[1])] + " " + splits[0], size);
         Text min = txt("Température min : " + forecastWeather.get(i).get("temperatureMin") + "°C", size);
         Text max = txt("Température max : " + forecastWeather.get(i).get("temperatureMax") + "°C", size);
         Text weatherTxt = txt("Météo globale : " + forecastWeather.get(i).get("weather"), size);
@@ -114,8 +111,8 @@ public class Weather extends BorderPane {
 
     private GridPane nextDayForecastPane() {
         GridPane res = new GridPane();
-        for(int i = 1; i < forecastWeather.size(); i++){
-            res.add(dayPane(i), (i-1)%2, (i-1)/2);
+        for (int i = 1; i < forecastWeather.size(); i++) {
+            res.add(dayPane(i), (i - 1) % 2, (i - 1) / 2);
         }
         return res;
     }
@@ -296,9 +293,5 @@ public class Weather extends BorderPane {
     private void setButtonActions() {
         left.getChildren().get(0).setOnMouseClicked(mouseEvent -> getScene().setRoot(agenda));
         left.getChildren().get(1).setOnMouseClicked(mouseEvent -> getScene().setRoot(plante));
-    }
-
-    public void setPlante(Plante plante) {
-        this.plante = plante;
     }
 }
