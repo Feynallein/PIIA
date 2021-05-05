@@ -39,7 +39,7 @@ public class Main extends Application {
         b1.setTextFill(Color.WHITE);
         b1.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-        Button b2 = new Button("plantedex");
+        Button b2 = new Button("plante");
         b2.setPrefSize(225, 50);
         b2.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
         b2.setTextFill(Color.BLACK);
