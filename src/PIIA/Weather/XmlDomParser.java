@@ -1,4 +1,4 @@
-package PIIA.Meteo;
+package PIIA.Weather;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class XmlDomParser {
@@ -21,9 +22,10 @@ public class XmlDomParser {
      * @param path path the file
      * @return the hashmap of desired information
      */
-    public static HashMap<String, String> forecastParse(String path) {
+    public static ArrayList<HashMap<String, String>> forecastParse(String path) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        HashMap<String, String> res = new HashMap<>();
+        ArrayList<HashMap<String, String>> res = new ArrayList<>();
+
         try {
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -31,52 +33,64 @@ public class XmlDomParser {
             doc.getDocumentElement().normalize();
 
             /* forecast */
-            NodeList list = doc.getElementsByTagName("forecast");
+            NodeList list = doc.getElementsByTagName("time");
             for (int temp = 0; temp < list.getLength(); temp++) {
+                HashMap<String, String> hm = new HashMap<>();
                 Node node = list.item(temp);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
 
+                    /* Get the day */
+                    hm.put("date", element.getAttribute("day"));
+
                     /* Get sunrise & sunset */
                     NodeList sunList = element.getElementsByTagName("sun");
-                    res.put("sunrise", sunList.item(0).getAttributes().getNamedItem("rise").getTextContent());
-                    res.put("sunset", sunList.item(0).getAttributes().getNamedItem("set").getTextContent());
+                    hm.put("sunrise", sunList.item(0).getAttributes().getNamedItem("rise").getTextContent());
+                    hm.put("sunset", sunList.item(0).getAttributes().getNamedItem("set").getTextContent());
 
                     /* Get temperature */
                     NodeList temperatureList = element.getElementsByTagName("temperature");
-                    res.put("temperatureDay", temperatureList.item(0).getAttributes().getNamedItem("day").getTextContent());
-                    res.put("temperatureNight", temperatureList.item(0).getAttributes().getNamedItem("night").getTextContent());
-                    res.put("temperatureEve", temperatureList.item(0).getAttributes().getNamedItem("eve").getTextContent());
-                    res.put("temperatureMorn", temperatureList.item(0).getAttributes().getNamedItem("morn").getTextContent());
-                    res.put("temperatureMax", temperatureList.item(0).getAttributes().getNamedItem("min").getTextContent());
-                    res.put("temperatureMin", temperatureList.item(0).getAttributes().getNamedItem("max").getTextContent());
+                    hm.put("temperatureDay", temperatureList.item(0).getAttributes().getNamedItem("day").getTextContent());
+                    hm.put("temperatureNight", temperatureList.item(0).getAttributes().getNamedItem("night").getTextContent());
+                    hm.put("temperatureEve", temperatureList.item(0).getAttributes().getNamedItem("eve").getTextContent());
+                    hm.put("temperatureMorn", temperatureList.item(0).getAttributes().getNamedItem("morn").getTextContent());
+                    hm.put("temperatureMax", temperatureList.item(0).getAttributes().getNamedItem("min").getTextContent());
+                    hm.put("temperatureMin", temperatureList.item(0).getAttributes().getNamedItem("max").getTextContent());
 
                     /* Get feels like */
                     NodeList feelsLikeList = element.getElementsByTagName("feels_like");
-                    res.put("feelsLikeDay", feelsLikeList.item(0).getAttributes().getNamedItem("day").getTextContent());
-                    res.put("feelsLikeNight", feelsLikeList.item(0).getAttributes().getNamedItem("night").getTextContent());
-                    res.put("feelsLikeEve", feelsLikeList.item(0).getAttributes().getNamedItem("eve").getTextContent());
-                    res.put("feelsLikeMorn", feelsLikeList.item(0).getAttributes().getNamedItem("morn").getTextContent());
+                    hm.put("feelsLikeDay", feelsLikeList.item(0).getAttributes().getNamedItem("day").getTextContent());
+                    hm.put("feelsLikeNight", feelsLikeList.item(0).getAttributes().getNamedItem("night").getTextContent());
+                    hm.put("feelsLikeEve", feelsLikeList.item(0).getAttributes().getNamedItem("eve").getTextContent());
+                    hm.put("feelsLikeMorn", feelsLikeList.item(0).getAttributes().getNamedItem("morn").getTextContent());
 
                     /* Get humidity */
-                    res.put("humidity", element.getElementsByTagName("humidity").item(0).getAttributes().getNamedItem("value").getTextContent());
+                    hm.put("humidity", element.getElementsByTagName("humidity").item(0).getAttributes().getNamedItem("value").getTextContent());
 
                     /* Get wind */
-                    res.put("windSpeed", element.getElementsByTagName("windSpeed").item(0).getAttributes().getNamedItem("mps").getTextContent());
-                    res.put("windDirection", element.getElementsByTagName("windDirection").item(0).getAttributes().getNamedItem("code").getTextContent());
-                    res.put("windGust", element.getElementsByTagName("windGust").item(0).getAttributes().getNamedItem("gust").getTextContent());
+                    hm.put("windSpeed", element.getElementsByTagName("windSpeed").item(0).getAttributes().getNamedItem("mps").getTextContent());
+                    hm.put("windDirection", element.getElementsByTagName("windDirection").item(0).getAttributes().getNamedItem("code").getTextContent());
+                    hm.put("windGust", element.getElementsByTagName("windGust").item(0).getAttributes().getNamedItem("gust").getTextContent());
 
                     /* Get precipitation */
                     NodeList precipitationList = element.getElementsByTagName("precipitation");
-                    res.put("precipitationProbability", precipitationList.item(0).getAttributes().getNamedItem("probability").getTextContent());
-                    res.put("precipitationType", precipitationList.item(0).getAttributes().getNamedItem("type").getTextContent());
-                    res.put("precipitationVolume", precipitationList.item(0).getAttributes().getNamedItem("value").getTextContent());
+                    hm.put("precipitationProbability", precipitationList.item(0).getAttributes().getNamedItem("probability").getTextContent());
+                    if(Float.parseFloat(hm.get("precipitationProbability")) <= 0.2){
+                        hm.put("precipitationVolume", "0");
+                        hm.put("precipitationType", "Aucune");
+                    }
+                    else {
+                        hm.put("precipitationVolume", precipitationList.item(0).getAttributes().getNamedItem("value").getTextContent());
+                        hm.put("precipitationType", precipitationList.item(0).getAttributes().getNamedItem("type").getTextContent());
+                    }
 
                     /* Get weather */
-                    res.put("weather", element.getElementsByTagName("symbol").item(0).getAttributes().getNamedItem("name").getTextContent());
+                    hm.put("weather", element.getElementsByTagName("symbol").item(0).getAttributes().getNamedItem("name").getTextContent());
 
                     /* Get clouds */
-                    res.put("clouds", element.getElementsByTagName("clouds").item(0).getAttributes().getNamedItem("value").getTextContent());
+                    hm.put("clouds", element.getElementsByTagName("clouds").item(0).getAttributes().getNamedItem("value").getTextContent());
+
+                    res.add(hm);
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {

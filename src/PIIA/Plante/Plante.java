@@ -2,7 +2,7 @@ package PIIA.Plante;
 
 import PIIA.Agenda.Agenda;
 import PIIA.Main;
-import PIIA.Meteo.Meteo;
+import PIIA.Weather.Weather;
 import PIIA.PopUp.PlantePopUp;
 import PIIA.PopUp.PopUp;
 import javafx.collections.FXCollections;
@@ -32,7 +32,7 @@ public class Plante extends BorderPane {
     private final ScrollPane scroll = new ScrollPane();
 
     private Agenda agenda;
-    private Meteo meteo;
+    private Weather weather;
 
     public Plante(VBox left, Agenda agenda) {
         this.left = left;
@@ -166,12 +166,12 @@ public class Plante extends BorderPane {
 
     private void setButtonActions() {
         left.getChildren().get(0).setOnMouseClicked(mouseEvent -> getScene().setRoot(agenda));
-        left.getChildren().get(2).setOnMouseClicked(mouseEvent -> getScene().setRoot(meteo));
+        left.getChildren().get(2).setOnMouseClicked(mouseEvent -> getScene().setRoot(weather));
     }
 
 
-    public void setMeteo(Meteo meteo) {
-        this.meteo = meteo;
+    public void setWeather(Weather weather) {
+        this.weather = weather;
     }
 
     public void setAgenda(Agenda agenda) {

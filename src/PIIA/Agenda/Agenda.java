@@ -1,7 +1,7 @@
 package PIIA.Agenda;
 
 import PIIA.Main;
-import PIIA.Meteo.Meteo;
+import PIIA.Weather.Weather;
 import PIIA.Plante.Plante;
 import PIIA.PopUp.FilterPopUp;
 import PIIA.PopUp.PopUp;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class Agenda extends BorderPane {
     public final static DayOfWeek[] week = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
     private Plante plante;
-    private Meteo meteo;
+    private Weather weather;
     private final VBox left;
     private HBox center = new HBox();
     private final DatePicker datePicker = new DatePicker(LocalDate.now());
@@ -163,7 +163,7 @@ public class Agenda extends BorderPane {
 
     private void setButtonActions() {
         left.getChildren().get(1).setOnMouseClicked(mouseEvent -> getScene().setRoot(plante));
-        left.getChildren().get(2).setOnMouseClicked(mouseEvent -> getScene().setRoot(meteo));
+        left.getChildren().get(2).setOnMouseClicked(mouseEvent -> getScene().setRoot(weather));
     }
 
     public ArrayList<Filter> getFilters() {
@@ -178,7 +178,7 @@ public class Agenda extends BorderPane {
         this.plante = plante;
     }
 
-    public void setMeteo(Meteo meteo) {
-        this.meteo = meteo;
+    public void setWeather(Weather weather) {
+        this.weather = weather;
     }
 }
