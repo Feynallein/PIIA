@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Agenda extends BorderPane {
     public final static DayOfWeek[] week = new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
@@ -115,7 +116,7 @@ public class Agenda extends BorderPane {
 
             /* Adding the name of the week */
             dayCell.setPrefSize((Main.WIDTH - left.getPrefWidth() - names.getPrefWidth()) / 7, Main.HEIGHT / 25f);
-            dayCell.setText(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(datePicker.getValue().with(week[i])), "");
+            dayCell.setText(DateTimeFormatter.ofPattern("EEEE dd MMM yyyy", Locale.FRENCH).format(datePicker.getValue().with(week[i])), "");
             box.getChildren().add(dayCell);
 
             /* Adding other cells */
