@@ -37,6 +37,7 @@ public class FichePlante extends StackPane {
     private ImageView imagePlante;
     private final ScrollPane scrollTop = new ScrollPane();
     private final VBox mesures = new VBox();
+    private FlowPane date = new FlowPane();
     private final ScrollPane scrollMesure = new ScrollPane();
 
     /**
@@ -51,6 +52,10 @@ public class FichePlante extends StackPane {
     private final TextArea commentaires = new TextArea();        //Zone de texte pour écrire des observations
     private final Plante plante;
     private final VBox contenu = new VBox();
+    private FlowPane subL = new FlowPane();//agencement gauche des mesures
+    private FlowPane subR = new FlowPane();//agencement droite des mesures
+
+
 
     public FichePlante(String nom, String photo, Plante plante) {
         this.plante = plante;
@@ -68,6 +73,16 @@ public class FichePlante extends StackPane {
         scrollMesure.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMesure.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollMesure.setPrefHeight(infoHeight);
+
+        date.setPrefWidth(infoWidth / 2.);
+        date.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        date.setAlignment(Pos.CENTER_LEFT);
+
+        subR.setAlignment(Pos.CENTER_LEFT);
+        subR.setPrefWidth(infoWidth / 4.);
+        subL.setAlignment(Pos.TOP_LEFT);
+        subL.setPrefWidth(infoWidth / 4.);
 
 
         fenetre.setPadding(new Insets(10, 10, 0, 10));
@@ -88,6 +103,16 @@ public class FichePlante extends StackPane {
         scrollMesure.setPrefHeight(infoHeight);
         scrollMesure.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMesure.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+        date.setPrefWidth(infoWidth / 2.);
+        date.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        date.setAlignment(Pos.CENTER_LEFT);
+
+        subR.setAlignment(Pos.CENTER_LEFT);
+        subR.setPrefWidth(infoWidth / 4.);
+        subL.setAlignment(Pos.TOP_LEFT);
+        subL.setPrefWidth(infoWidth / 4.);
 
         fenetre.setPadding(new Insets(10, 10, 0, 10));
 
@@ -318,10 +343,16 @@ public class FichePlante extends StackPane {
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         //Dates clées
-        dateClef(bp);
+        if(date.getChildren().isEmpty())
+            dateClef(bp);
+        else
+                bp.setLeft(date);
 
         //Mesures
-        mesure(bp);
+        if(mesures.getChildren().isEmpty())
+            mesure(bp);
+        else
+            bp.setRight(mesures);
 
 
         BorderPane sub = new BorderPane(); //va contenir les boutons pour faire défiler les pages
@@ -338,7 +369,11 @@ public class FichePlante extends StackPane {
         ImageView next = new ImageView("flecheD.png");
         next.setFitHeight(50);
         next.setFitWidth(30);
-        next.setOnMouseClicked(mouseEvent -> observations());
+        next.setOnMouseClicked(mouseEvent -> {
+            observations();
+            bp.setRight(null);
+            bp.setLeft(null);
+        });
         suivant.getChildren().add(next);
 
         //Bouton page précédente
@@ -373,11 +408,7 @@ public class FichePlante extends StackPane {
     }
 
     private void dateClef(BorderPane bp) {
-        FlowPane date = new FlowPane();
-        date.setPrefWidth(infoWidth / 2.);
-        date.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        date.setAlignment(Pos.CENTER_LEFT);
+
 
 
         GridPane gp = new GridPane();
@@ -447,9 +478,7 @@ public class FichePlante extends StackPane {
 
         BorderPane layout = new BorderPane();
         layout.setPrefHeight(infoHeight);
-        FlowPane subL = new FlowPane();
-        subL.setAlignment(Pos.TOP_LEFT);
-        subL.setPrefWidth(infoWidth / 4.);
+
         //subL.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         GridPane uneMesure = new GridPane();
@@ -461,20 +490,22 @@ public class FichePlante extends StackPane {
         bMesure.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, Insets.EMPTY)));
 
 
-        subL.getChildren().add(bMesure);
+
 
         VBox boxValeur = new VBox();
         boxValeur.setAlignment(Pos.CENTER_LEFT);
-        FlowPane subR = new FlowPane();
-        subR.setAlignment(Pos.CENTER_LEFT);
-        subR.setPrefWidth(infoWidth / 4.);
+
 
 
         Button bValeur = new Button("Cliquer pour ajouter une valeur");
         bValeur.setOnMouseClicked(mouseEvent -> new PopUp(plante.getAgenda().getStage(), new MesurePopUp(this, boxValeur, bValeur, true), "ajouter valeur"));
         bValeur.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, null, Insets.EMPTY)));
         boxValeur.getChildren().add(bValeur);
-        subR.getChildren().add(boxValeur);
+
+        if(subL.getChildren().isEmpty()) {
+            subL.getChildren().add(bMesure);
+            subR.getChildren().add(boxValeur);
+        }
 
         uneMesure.add(subL, 0, 0);
         uneMesure.add(subR, 1, 0);
