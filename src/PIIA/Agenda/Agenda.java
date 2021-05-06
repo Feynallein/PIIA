@@ -42,7 +42,7 @@ public class Agenda extends BorderPane {
         filters.add(new Filter("Fac", Color.GREEN));
         filters.add(new Filter("Travail", Color.BLUEVIOLET));
         events.add(new Event(filters.get(1), LocalDate.now().with(week[0]), 12, "Evenement 1", ""));
-        events.add(new Event(filters.get(2), LocalDate.now().with(week[5]), 12, 16, "Evenement 2", "agenda"));
+        events.add(new Event(filters.get(2), LocalDate.now().with(week[5]), 12, 16, "Evenement 2", "plante"));
         events.add(new Event(filters.get(2), LocalDate.of(2021, 5, 12), 12, 16, "Evenement 3", ""));
 
         this.setBackground(new Background(new BackgroundFill(Color.rgb(30, 30, 30), CornerRadii.EMPTY, Insets.EMPTY)));
