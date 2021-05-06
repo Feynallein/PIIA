@@ -369,11 +369,7 @@ public class FichePlante extends StackPane {
         ImageView next = new ImageView("flecheD.png");
         next.setFitHeight(50);
         next.setFitWidth(30);
-        next.setOnMouseClicked(mouseEvent -> {
-            observations();
-            bp.setRight(null);
-            bp.setLeft(null);
-        });
+        next.setOnMouseClicked(mouseEvent -> observations());
         suivant.getChildren().add(next);
 
         //Bouton page précédente

@@ -184,7 +184,7 @@ public class EventPopUp extends PopUpPane {
             String[] splits = endingTimeCB.getValue().split(":");
             agenda.createNewEvent(new Event(selectedFilter, date, startingTime, Integer.parseInt(splits[0]), labelTF.getText(), plantCB.getValue()));
             ((Stage) b.getScene().getWindow()).close();
-            new PopUp(agenda.getStage(), new PromptPopUp("Évèvenement créer!"), "Confirmation");
+            new PopUp(agenda.getStage(), new PromptPopUp("Évèvenement créé!"), "Confirmation");
         });
         add(b, 0, yPos);
     }
