@@ -36,7 +36,7 @@ public class Agenda extends BorderPane {
     private final Stage stage;
 
     public Agenda(VBox left, final Stage stage) {
-        filters.add(new Filter("Pas de filtre", Color.WHITE)); // Always here
+        filters.add(new Filter("Pas de filtre", Color.GREY)); // Always here
 
         /* Examples of filters & events */
         filters.add(new Filter("Fac", Color.GREEN));
