@@ -54,8 +54,8 @@ public class XmlDomParser {
                     hm.put("temperatureNight", temperatureList.item(0).getAttributes().getNamedItem("night").getTextContent());
                     hm.put("temperatureEve", temperatureList.item(0).getAttributes().getNamedItem("eve").getTextContent());
                     hm.put("temperatureMorn", temperatureList.item(0).getAttributes().getNamedItem("morn").getTextContent());
-                    hm.put("temperatureMax", temperatureList.item(0).getAttributes().getNamedItem("min").getTextContent());
-                    hm.put("temperatureMin", temperatureList.item(0).getAttributes().getNamedItem("max").getTextContent());
+                    hm.put("temperatureMax", temperatureList.item(0).getAttributes().getNamedItem("max").getTextContent());
+                    hm.put("temperatureMin", temperatureList.item(0).getAttributes().getNamedItem("min").getTextContent());
 
                     /* Get feels like */
                     NodeList feelsLikeList = element.getElementsByTagName("feels_like");
