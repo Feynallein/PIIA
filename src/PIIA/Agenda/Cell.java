@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
 public class Cell extends Region {
     private LocalDate date;
     private int startingTime;

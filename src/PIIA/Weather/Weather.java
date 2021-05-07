@@ -123,10 +123,10 @@ public class Weather extends BorderPane {
         Text clouds = txt("Climat du jour  : " + weather.get("clouds"), size - 3);
         Text gust = txt("Vitesse des rafales : " + (weather.get("gusts").equals("") ? "NA" : weather.get("gusts") + " m/s"), size);
         Text wind = txt("Vitesse du vent : " + (weather.get("windSpeed").equals("") ? "NA" : weather.get("windSpeed") + " m/s") + " m/s", size);
-        Text windDir = txt("Direction du vent : " + (weather.get("windDirection").equals("") ? "NA" : weather.get("windDirection") + " m/s"), size);
+        Text windDir = txt("Direction du vent : " + (weather.get("windDirection").equals("") ? "NA" : weather.get("windDirection")), size);
         Text humidity = txt("Humidité : " + weather.get("humidity") + "%", size);
         Text precipitationProbability = txt("Probabilité de précipitations : " + forecastWeather.get(0).get("precipitationProbability"), size - 3);
-        Text precipitationType = txt("Type de précipitation : " + forecastWeather.get(0).get("precipitationType"), size);
+        Text precipitationType = txt("Type de précipitation : " + (forecastWeather.get(0).get("precipitationType").equals("aucune") ? "aucun" : forecastWeather.get(0).get("precipitationType")), size);
         Text precipitationVolume = txt("Précipitation attendue : " + forecastWeather.get(0).get("precipitationVolume") + " mm", size - 3);
         Text actualPrecipitation = txt("Precipitation en cours : " + (weather.get("precipitation").equals("no") ? "aucune" : weather.get("precipitationType")), size);
 
